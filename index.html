@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Exposure Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://a.espncdn.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#07171F;
+  --panel:#0D2532;
+  --panel2:#123243;
+  --line:#1C4356;
+  --line-soft:#143446;
+  --text:#E4EFF2;
+  --muted:#87A9B7;
+  --bar:#7FB2C9;
+  --qb:#F2705A;
+  --rb:#57C46B;
+  --wr:#EFC245;
+  --te:#B18CF2;
+  --kd:#7C97A6;
+  --r:6px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--ink);color:var(--text);
+  font-family:'Archivo',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:26px 18px 80px}
+button{font-family:inherit;font-size:inherit;cursor:pointer;color:inherit}
+input,textarea{font-family:inherit;font-size:inherit}
+:focus-visible{outline:2px solid var(--bar);outline-offset:2px}
+
+h1{font-size:30px;font-weight:700;letter-spacing:-.025em;margin:0 0 16px;padding-bottom:14px;border-bottom:2px solid var(--line)}
+h1 span{color:var(--muted);font-weight:500}
+
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.tab{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);padding:9px 14px;font-weight:600;margin-bottom:-1px}
+.tab[aria-selected="true"]{color:var(--text);border-bottom-color:var(--bar)}
+
+.controls{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-bottom:14px}
+.field{background:var(--panel);border:1px solid var(--line-soft);color:var(--text);border-radius:var(--r);padding:8px 11px}
+.field::placeholder{color:#5F8494}
+.chipbar{display:flex;gap:5px;flex-wrap:wrap}
+.chip{background:transparent;border:1px solid var(--line-soft);color:var(--muted);border-radius:100px;padding:5px 12px;font-size:13px;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--panel2);color:var(--text);border-color:var(--bar)}
+.chip.multi{display:inline-flex;align-items:center;gap:5px}
+.tick{color:var(--bar);font-size:11px;line-height:1}
+.toggle{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:14px;cursor:pointer;user-select:none}
+.toggle input{accent-color:var(--bar);width:16px;height:16px}
+
+/* ---------- exposure ladder ---------- */
+.head-row,.row{
+  display:grid;
+  grid-template-columns:24px minmax(120px,1fr) 46px 54px 86px 74px 30px;
+  grid-template-areas:"rank player pos teams risk bank chev";
+  gap:10px;align-items:center;text-align:left;
+}
+.head-row{color:var(--muted);font-size:12.5px;font-weight:600;padding:0 10px 8px;border-bottom:1px solid var(--line)}
+.head-row button{background:none;border:0;color:inherit;font:inherit;padding:0;text-align:inherit}
+.head-row button:hover{color:var(--text)}
+.item{border-bottom:1px solid var(--line-soft)}
+.row{width:100%;background:none;border:0;padding:10px;font:inherit;text-align:left}
+.row:hover{background:#0B2431}
+.item.open .row{background:#0B2431}
+.c-rank{grid-area:rank;color:#527687;font-size:13px;text-align:right}
+.c-player{grid-area:player;display:flex;align-items:center;gap:10px;min-width:0}
+.c-pos{grid-area:pos}
+.c-teams{grid-area:teams;text-align:right}
+.c-risk{grid-area:risk;text-align:right;font-weight:700}
+.c-bank{grid-area:bank;text-align:right;color:var(--muted)}
+.c-chev{grid-area:chev;text-align:center;color:var(--muted);transition:transform .15s}
+.item.open .c-chev{transform:rotate(180deg);color:var(--text)}
+.pname{font-weight:600;letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pname small{display:block;color:var(--muted);font-weight:400;font-size:12.5px}
+.tlogo{object-fit:contain;flex:none}
+.tlogo.blank{display:inline-block;border:1px dashed var(--line);border-radius:50%;opacity:.4}
+.lbl{display:none;color:var(--muted);font-size:11.5px;font-weight:400}
+
+.pos{font-size:12px;font-weight:700;color:#0A1D26;border-radius:3px;padding:1px 5px;display:inline-block;min-width:31px;text-align:center;background:var(--kd)}
+.pos.QB{background:var(--qb)}.pos.RB{background:var(--rb)}.pos.WR{background:var(--wr)}.pos.TE{background:var(--te)}
+
+.detail{display:none;padding:0 12px 14px 44px}
+.item.open .detail{display:block}
+.leagues{display:flex;gap:6px;flex-wrap:wrap}
+.lg{font-size:12.5px;border:1px solid var(--line);border-radius:100px;padding:3px 11px;color:var(--text);background:var(--panel);font-weight:500}
+.lg.bench{color:var(--muted);background:transparent;border-style:dashed;font-weight:400}
+.dnote{color:var(--muted);font-size:12px;margin:8px 0 0}
+
+/* ---------- breakdown ---------- */
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:26px;margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
+.split h3{font-size:15px;margin:0 0 12px;font-weight:600}
+.brow{display:grid;grid-template-columns:62px 1fr 62px;gap:10px;align-items:center;margin-bottom:8px;font-size:13.5px}
+.brow .num{text-align:right;color:var(--muted)}
+.bar{height:6px;background:var(--line-soft);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--bar);border-radius:3px}
+.note{color:var(--muted);font-size:12.5px;margin-top:8px;max-width:46ch}
+
+/* ---------- teams ---------- */
+#teamList{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.team{border:1px solid var(--line-soft);border-radius:var(--r);overflow:hidden}
+.team-hd{padding:12px 15px;background:var(--panel)}
+.team-hd h3{margin:0;font-size:17px;font-weight:600;letter-spacing:-.015em}
+.team-hd .meta{color:var(--muted);font-size:13px}
+.roster{padding:4px 15px 14px}
+.slot{display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid var(--line-soft);font-size:14px}
+.slot:last-child{border-bottom:0}
+.slot .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.slot.bn .nm{color:var(--muted)}
+.rgroup{color:var(--muted);font-size:12.5px;font-weight:600;margin:12px 0 2px}
+
+/* ---------- start/sit ---------- */
+#ssList{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.ss-hd .meta b{color:var(--text);font-weight:600}
+.ss-delta{color:var(--rb);font-weight:700}
+.ss-ok{color:var(--muted)}
+.moves{padding:10px 15px;border-bottom:1px solid var(--line-soft);background:#0B2431}
+.mv{font-size:13px;padding:3px 0;color:var(--text)}
+.mv b{color:var(--rb)}
+.mv s{color:var(--muted)}
+.slot .pj{flex:none;width:46px;text-align:right;font-weight:600}
+.slot .pj.na{color:#527687;font-weight:400}
+.slot.up{background:rgba(87,196,107,.09)}
+.slot.up .nm,.slot.up .pj{color:var(--rb)}
+.slot.sit .nm,.slot.sit .pj{color:var(--qb)}
+.ss-warn{color:var(--muted);font-size:12px;padding:8px 15px 12px}
+
+/* ---------- takes ---------- */
+.take-form{border:1px solid var(--line-soft);border-radius:var(--r);padding:14px;background:var(--panel);margin-bottom:22px}
+.take-form .grid{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:9px}
+.take-form input{flex:1;min-width:150px}
+textarea{width:100%;min-height:88px;resize:vertical;background:var(--panel2);border:1px solid var(--line-soft);color:var(--text);border-radius:var(--r);padding:10px;line-height:1.55}
+.save{margin-top:10px;background:var(--panel2);border:1px solid var(--bar);color:var(--text);border-radius:var(--r);padding:9px 18px;font-weight:600}
+.save:hover{background:#17435a}
+.daygroup{margin-bottom:24px}
+.daygroup>h3{font-size:14px;font-weight:600;color:var(--muted);margin:0 0 10px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.take{padding:12px 0 14px;border-bottom:1px solid var(--line-soft);display:flex;gap:12px}
+.take-body{flex:1;min-width:0}
+.take-body p{margin:0;white-space:pre-wrap;max-width:72ch;line-height:1.6}
+.take-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:5px}
+.tname{font-weight:600}
+.texp{color:var(--bar);font-size:13px}
+.tag{font-size:12px;color:var(--muted);border:1px solid var(--line-soft);border-radius:100px;padding:1px 8px}
+.del{background:none;border:0;color:var(--muted);padding:4px 8px;font-size:16px;line-height:1}
+.del:hover{color:var(--qb)}
+.empty{color:var(--muted);padding:30px 0;max-width:58ch}
+.hidden{display:none !important}
+
+/* ---------- mobile ---------- */
+@media (max-width:720px){
+  .wrap{padding:20px 14px 60px}
+  h1{font-size:25px}
+  .head-row{display:none}
+  .row{
+    grid-template-columns:32px 1fr 1fr 68px;
+    grid-template-areas:
+      "rank player player chev"
+      "pos  teams  risk   bank";
+    gap:8px 10px;padding:11px 6px;
+  }
+  .c-rank{text-align:left;padding-left:2px}
+  .c-teams,.c-risk,.c-bank{text-align:left}
+  .c-bank{text-align:right}
+  .lbl{display:block}
+  .detail{padding:0 6px 14px 42px}
+  #teamList,#ssList{grid-template-columns:1fr}
+  .split{gap:22px;margin-top:24px}
+  .chip{padding:6px 13px}
+  .take-form input{min-width:120px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Exposure Book <span>2026</span></h1>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" data-tab="exp" aria-selected="true">Exposures</button>
+    <button class="tab" role="tab" data-tab="ss" aria-selected="false">Start/Sit</button>
+    <button class="tab" role="tab" data-tab="teams" aria-selected="false">Teams</button>
+    <button class="tab" role="tab" data-tab="takes" aria-selected="false">Takes</button>
+  </nav>
+
+  <section id="tab-exp">
+    <div class="controls">
+      <input class="field" id="search" placeholder="Find a player" style="min-width:170px">
+      <div class="chipbar" id="posFilter"></div>
+      <div class="chipbar" id="siteFilter"></div>
+      <label class="toggle"><input type="checkbox" id="startersOnly"> Starting lineups only</label>
+    </div>
+    <div class="head-row">
+      <span class="c-rank"></span>
+      <button class="c-player" data-sort="name">Player</button>
+      <span class="c-pos">Pos</span>
+      <button class="c-teams" data-sort="teams">Teams</button>
+      <button class="c-risk" data-sort="dollars">At risk</button>
+      <button class="c-bank" data-sort="dollars">% of roll</button>
+      <span class="c-chev"></span>
+    </div>
+    <div id="expList"></div>
+    <div class="split">
+      <div><h3>Position mix</h3><div id="byPos"></div><p class="note">Share of roster spots, weighted by buy-in.</p></div>
+      <div><h3>Money by site</h3><div id="bySite"></div><p class="note">Actual dollars committed.</p></div>
+      <div><h3>NFL team mix</h3><div id="byNfl"></div><p class="note" id="nflNote"></p></div>
+    </div>
+  </section>
+
+  <section id="tab-ss" class="hidden">
+    <div class="controls">
+      <label class="save" style="margin-top:0">Load projections CSV
+        <input type="file" id="ssFile" accept=".csv,text/csv" hidden>
+      </label>
+      <span class="note" id="ssMeta" style="margin-top:0"></span>
+      <button class="chip hidden" id="ssClear">Clear</button>
+      <div class="chipbar" id="ssSiteFilter"></div>
+    </div>
+    <div id="ssList"></div>
+    <p class="note">Projections stay in this browser only. Green rows are bench players who outproject someone they can legally replace; the starter they'd bump is in red. Numbers use each league's own scoring column.</p>
+  </section>
+
+  <section id="tab-teams" class="hidden"><div id="teamList"></div></section>
+
+  <section id="tab-takes" class="hidden">
+    <div class="take-form">
+      <div class="grid">
+        <input class="field" type="date" id="tkDate" style="flex:0 0 auto">
+        <input class="field" id="tkPlayer" list="playerList" placeholder="Player (optional)">
+        <datalist id="playerList"></datalist>
+        <input class="field" id="tkTags" placeholder="Tags, comma separated">
+      </div>
+      <textarea id="tkText" placeholder="What's the take?"></textarea>
+      <button class="save" id="btnSaveTake">Save take</button>
+    </div>
+    <div class="controls"><input class="field" id="tkSearch" placeholder="Search takes" style="min-width:220px"></div>
+    <div id="takeList"></div>
+    <p class="note" id="storeNote"></p>
+  </section>
+
+</div>
+
+<script>
+/* ============================ rosters ============================
+   Teams live here in the file, so adding a draft means editing this
+   block and redeploying. Takes are the only thing kept in the browser.
+   Format: "POS|Player Name|NFL"
+================================================================== */
+const SEED={
+  teams:[
+    { site:"ESPN", buyin:50, label:"Marquee League", cfg:"ESPN_STD", proj:"Full PPR Proj",
+      starters:["QB|Josh Allen|BUF","RB|Jahmyr Gibbs|DET","RB|J.K. Dobbins|DEN","WR|Chris Olave|NO","WR|Luther Burden III|CHI","TE|Tucker Kraft|GB","WR|Jaylen Waddle|DEN","DST|LAC D/ST|LAC","K|Tyler Loop|BAL"],
+      bench:["WR|Parker Washington|JAX","RB|Jordan Mason|MIN","RB|Jacory Croskey-Merritt|WAS","TE|Terrance Ferguson|LAR","WR|KC Concepcion|CLE","RB|Chris Rodriguez Jr.|JAX","RB|Keaton Mitchell|LAC"] },
+
+    /* FFPC Big Gorilla #104907, double-TE build. Live lineup 9/9: Bowers (knee) and Henderson (out) benched; Mayer and Harvey in. */
+    { site:"FFPC", buyin:350, label:"Bene Gesserit (FFPC)", cfg:"FFPC", proj:"FFPC Proj",
+      starters:["QB|Jaxson Dart|NYG","RB|Travis Etienne|NO","RB|RJ Harvey|DEN","WR|Jaylen Waddle|DEN","WR|Davante Adams|LAR","TE|Colston Loveland|CHI","WR|DK Metcalf|PIT","TE|Michael Mayer|LV","K|Cameron Dicker|LAC","DST|LAC D/ST|LAC"],
+      bench:["QB|Patrick Mahomes|KC","RB|TreVeyon Henderson|NE","RB|Keaton Mitchell|LAC","RB|Emmett Johnson|KC","RB|Kimani Vidal|LAC","WR|Josh Downs|IND","WR|Makai Lemon|PHI","WR|Pat Bryant|DEN","WR|Travis Hunter|JAX","TE|Brock Bowers|LV"] },
+
+    { site:"FFPC", buyin:350, label:"Lisan al-Gaib (FFPC)", cfg:"FFPC", proj:"FFPC Proj",
+      starters:["QB|Matthew Stafford|LAR","RB|James Cook|BUF","RB|Ashton Jeanty|LV","WR|Zay Flowers|BAL","WR|Ladd McConkey|LAC","TE|Tucker Kraft|GB","WR|Josh Downs|IND","TE|Sam LaPorta|DET","K|Jason Myers|SEA","DST|JAX D/ST|JAX"],
+      bench:["QB|Bo Nix|DEN","RB|Blake Corum|LAR","RB|Aaron Jones|MIN","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","WR|De'Zhaun Stribling|SF","WR|Jordan Addison|MIN","WR|Pat Bryant|DEN","WR|Travis Hunter|JAX","TE|AJ Barner|SEA"] },
+
+    { site:"FFPC", buyin:350, label:"Shai-Hulud", cfg:"FFPC", proj:"FFPC Proj",
+      starters:["QB|Jalen Hurts|PHI","RB|Kenneth Walker|KC","RB|Travis Etienne|NO","WR|CeeDee Lamb|DAL","WR|Zay Flowers|BAL","TE|Dallas Goedert|PHI","WR|Christian Watson|GB","WR|Parker Washington|JAX","K|Will Reichard|MIN","DST|JAX D/ST|JAX"],
+      bench:["QB|Jordan Love|GB","RB|Blake Corum|LAR","RB|Tank Bigsby|PHI","RB|Brian Robinson|ATL","RB|Kaleb Johnson|GB","WR|Matthew Golden|GB","WR|Khalil Shakir|BUF","TE|Chig Okonkwo|WAS","TE|Cade Otton|TB","TE|Eli Raridon|NE"] },
+
+    /* $250 Keeper League #16. Bench refreshed 9/9. */
+    { site:"NFFC", buyin:250, label:"Lisan al-Gaib (NFFC)", cfg:"NFFC", proj:"Full PPR Proj",
+      starters:["QB|Justin Herbert|LAC","RB|Saquon Barkley|PHI","RB|Bhayshul Tuten|JAX","WR|CeeDee Lamb|DAL","WR|Zay Flowers|BAL","WR|Jaylen Waddle|DEN","TE|Tucker Kraft|GB","WR|DK Metcalf|PIT","K|BAL Team K|BAL","DST|GB D/ST|GB"],
+      bench:["QB|Jordan Love|GB","RB|Keaton Mitchell|LAC","RB|Blake Corum|LAR","RB|Malik Davis|DAL","WR|Jordyn Tyson|NO","WR|Romeo Doubs|NE","WR|Travis Hunter|JAX","WR|Ja'Kobi Lane|BAL","WR|Pat Bryant|DEN","TE|Kenyon Sadiq|NYJ"] },
+
+    /* $250 Cash League #1525 (personal). Full roster from 9/9 screenshot. */
+    { site:"NFFC", buyin:250, label:"Bene Gesserit (NFFC)", cfg:"NFFC", proj:"Full PPR Proj",
+      starters:["QB|Matthew Stafford|LAR","RB|Jeremiyah Love|ARI","RB|RJ Harvey|DEN","WR|Amon-Ra St. Brown|DET","WR|Drake London|ATL","WR|Ladd McConkey|LAC","TE|Tyler Warren|IND","WR|Luther Burden III|CHI","K|SEA Team K|SEA","DST|JAX D/ST|JAX"],
+      bench:["RB|Kenneth Gainwell|TB","WR|Matthew Golden|GB","RB|Rachaad White|WAS","QB|Jordan Love|GB","TE|Terrance Ferguson|LAR","WR|Ryan Flournoy|DAL","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","WR|Jaylin Noel|HOU","WR|Travis Hunter|JAX"] },
+
+    /* $250 Cash League #1289, shared entry at $83. */
+    { site:"NFFC", buyin:83, label:"Drake Maye Fan Club", cfg:"NFFC", proj:"Full PPR Proj",
+      starters:["QB|Josh Allen|BUF","RB|Bijan Robinson|ATL","RB|Bucky Irving|TB","WR|Emeka Egbuka|TB","WR|Carnell Tate|TEN","WR|Josh Downs|IND","TE|Brock Bowers|LV","WR|Jayden Reed|GB","K|SF Team K|SF","DST|TEN D/ST|TEN"],
+      bench:["QB|Aaron Rodgers|PIT","RB|Jonah Coleman|DEN","RB|Emmett Johnson|KC","RB|Kimani Vidal|LAC","WR|Romeo Doubs|NE","WR|Denzel Boston|CLE","WR|Ryan Flournoy|DAL","WR|Omar Cooper Jr.|NYJ","WR|Jalen Nailor|LV","WR|Travis Hunter|JAX"] },
+
+    /* $500 Cash League #1937, split entry at $225. */
+    { site:"NFFC", buyin:225, label:"Cousin Greg IX", cfg:"NFFC", proj:"Full PPR Proj",
+      starters:["QB|Drake Maye|NE","RB|Christian McCaffrey|SF","RB|Breece Hall|NYJ","WR|Nico Collins|HOU","WR|Jameson Williams|DET","WR|Parker Washington|JAX","TE|Tucker Kraft|GB","RB|Jaylen Warren|PIT","K|LAC Team K|LAC","DST|PHI D/ST|PHI"],
+      bench:["QB|Patrick Mahomes|KC","RB|Keaton Mitchell|LAC","RB|Kaleb Johnson|GB","WR|Makai Lemon|PHI","WR|Khalil Shakir|BUF","WR|Denzel Boston|CLE","WR|Jauan Jennings|MIN","WR|Antonio Williams|WAS","TE|Kenyon Sadiq|NYJ","TE|AJ Barner|SEA"] },
+
+    /* Roster view showed no lineup split, so all 15 are recorded as active. */
+    { site:"ESPN", buyin:150, label:"Dynasty (ESPN)", cfg:"ESPN_STD", proj:"Full PPR Proj",
+      starters:["QB|Josh Allen|BUF","RB|D'Andre Swift|CHI","RB|Rhamondre Stevenson|NE","WR|Ja'Marr Chase|CIN","WR|Jaxon Smith-Njigba|SEA","TE|Harold Fannin Jr.|CLE","RB|Blake Corum|LAR","DST|LAC D/ST|LAC","K|Jason Myers|SEA"],
+      bench:["WR|Parker Washington|JAX","WR|Jayden Reed|GB","TE|Dalton Kincaid|BUF","RB|Jonah Coleman|DEN","RB|Emmett Johnson|KC","WR|Jalen Coker|CAR"] },
+
+    { site:"ESPN", buyin:50, label:"2 QB Justin League", cfg:"ESPN_2QB", proj:"Half PPR Proj",
+      starters:["QB|Jaxson Dart|NYG","QB|Justin Herbert|LAC","RB|Bijan Robinson|ATL","RB|D'Andre Swift|CHI","WR|A.J. Brown|NE","WR|Zay Flowers|BAL","TE|Terrance Ferguson|LAR","RB|Rhamondre Stevenson|NE","WR|Christian Watson|GB","DST|LAC D/ST|LAC","K|Cairo Santos|CHI"],
+      bench:["RB|Blake Corum|LAR","QB|Michael Penix Jr.|ATL","WR|Wan'Dale Robinson|TEN","RB|RJ Harvey|DEN","RB|Chris Rodriguez Jr.|JAX","TE|Kenyon Sadiq|NYJ","WR|Adonai Mitchell|NYJ"] }
+  ]
+};
+
+/* ============================ helpers ============================ */
+const POSITIONS=['QB','RB','WR','TE','K','DST'];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const usd=n=>'$'+Math.round(n).toLocaleString('en-US');
+const pct=n=>{const v=n*100; return (Math.round(v*10)/10>=10?v.toFixed(0):v.toFixed(1))+'%';};
+const uid=()=>Math.random().toString(36).slice(2,9);
+const key=name=>String(name).toLowerCase().replace(/\b(jr|sr|ii|iii|iv|v)\b\.?/g,'').replace(/[^a-z]/g,'');
+
+const ALIAS={JAC:'JAX',WSH:'WAS',LA:'LAR',ARZ:'ARI'};
+const canon=t=>ALIAS[t]||t;
+const ESPN_SLUG={WAS:'wsh',LAR:'lar',LA:'lar',STL:'lar',OAK:'lv',SD:'lac',JAC:'jax',ARZ:'ari'};
+function logo(code,size){
+  const c=canon(String(code||'').replace(/[^A-Za-z]/g,'').toUpperCase());
+  if(!c) return `<span class="tlogo blank" style="width:${size}px;height:${size}px"></span>`;
+  const slug=(ESPN_SLUG[c]||c).toLowerCase();
+  return `<img class="tlogo" src="https://a.espncdn.com/i/teamlogos/nfl/500/${slug}.png" alt="${esc(c)}" title="${esc(c)}"
+    width="${size}" height="${size}" style="width:${size}px;height:${size}px" loading="lazy" decoding="async"
+    onerror="this.style.visibility='hidden'">`;
+}
+
+function parseSeed(s,starter){ const [pos,name,nfl]=String(s).split('|'); return {pos:pos||'',name:name||'',nfl:nfl||'',starter}; }
+function roster(t){
+  return [].concat((t.starters||[]).map(s=>parseSeed(s,true)),(t.bench||[]).map(s=>parseSeed(s,false)));
+}
+const TEAMS=SEED.teams;
+function bankroll(){ return TEAMS.reduce((a,t)=>a+(+t.buyin||0),0); }
+
+/* ======================= start/sit engine =======================
+   Lineup shapes per league type. FLEX takes RB/WR/TE everywhere.
+   A team with cfg:null gets projections only, no optimizer.
+================================================================== */
+const LINEUPS={
+  FFPC:    ['QB','RB','RB','WR','WR','TE','FLEX','FLEX','K','DST'],
+  NFFC:    ['QB','RB','RB','WR','WR','WR','TE','FLEX','K','DST'],
+  ESPN_STD:['QB','RB','RB','WR','WR','TE','FLEX','K','DST'],
+  ESPN_2QB:['QB','QB','RB','RB','WR','WR','TE','FLEX','FLEX','K','DST']
+};
+const FLEX_OK=new Set(['RB','WR','TE']);
+const PROJ_KEY='ffx.proj.v1';
+
+function csvParse(text){
+  const rows=[]; let row=[],cell='',q=false;
+  const s=String(text).replace(/^\uFEFF/,'');
+  for(let i=0;i<s.length;i++){
+    const c=s[i];
+    if(q){ if(c==='"'){ if(s[i+1]==='"'){cell+='"';i++;} else q=false; } else cell+=c; }
+    else if(c==='"') q=true;
+    else if(c===','){ row.push(cell); cell=''; }
+    else if(c==='\n'||c==='\r'){ if(c==='\r'&&s[i+1]==='\n') i++;
+      row.push(cell); cell=''; if(row.some(v=>v!=='')) rows.push(row); row=[]; }
+    else cell+=c;
+  }
+  row.push(cell); if(row.some(v=>v!=='')) rows.push(row);
+  if(!rows.length) return [];
+  const head=rows[0];
+  return rows.slice(1).map(r=>{ const o={}; head.forEach((h,i)=>o[h]=r[i]??''); return o; });
+}
+
+let PROJ=null, PROJMETA=null, PROJIDX=null;
+function indexProj(rows){
+  const idx={};
+  rows.forEach(r=>{ const k=key(r.Player); (idx[k]=idx[k]||[]).push(r); });
+  return idx;
+}
+function loadStoredProj(){
+  try{ const raw=localStorage.getItem(PROJ_KEY); if(!raw) return;
+    const o=JSON.parse(raw); PROJ=csvParse(o.csv); PROJIDX=indexProj(PROJ);
+    PROJMETA={name:o.name,ts:o.ts};
+  }catch(e){ PROJ=null; }
+}
+function setProj(name,csv){
+  PROJ=csvParse(csv); PROJIDX=indexProj(PROJ); PROJMETA={name,ts:Date.now()};
+  try{ localStorage.setItem(PROJ_KEY,JSON.stringify({name,ts:PROJMETA.ts,csv})); }catch(e){}
+}
+function clearProj(){ PROJ=PROJIDX=PROJMETA=null; try{ localStorage.removeItem(PROJ_KEY); }catch(e){} }
+
+/* Match a roster entry to a CSV row. Name key first; when one name maps to
+   several rows, prefer matching position, then matching NFL team. Site
+   kickers stored as "XXX Team K" resolve to that team's kicker row. */
+function projRow(p){
+  if(!PROJIDX) return null;
+  let rows=PROJIDX[key(p.name)];
+  if(!rows && p.pos==='K' && /team k/i.test(p.name)){
+    const t=canon(p.nfl);
+    rows=(PROJ||[]).filter(r=>r.Pos==='K'&&canon(r.Team)===t);
+  }
+  if(!rows||!rows.length) return null;
+  if(rows.length>1){
+    const byPos=rows.filter(r=>r.Pos===p.pos); if(byPos.length) rows=byPos;
+    const byTeam=rows.filter(r=>canon(r.Team)===canon(p.nfl)); if(byTeam.length) rows=byTeam;
+  }
+  return rows[0];
+}
+function projVal(p,col){
+  const r=projRow(p); if(!r) return null;
+  const v=parseFloat(r[col]); return isNaN(v)?null:v;
+}
+
+/* Optimal lineup: fill dedicated slots with the best remaining player at
+   that position, then flex slots with the best remaining flex-eligible.
+   Optimal because flex eligibility is a strict superset of the slots it
+   competes with. Unmatched projections count as 0. */
+function optimizeTeam(t){
+  const cfg=LINEUPS[t.cfg];
+  const players=roster(t).map((p,i)=>({...p,id:i,val:projVal(p,t.proj)}));
+  const currentPts=players.filter(p=>p.starter).reduce((a,p)=>a+(p.val||0),0);
+  if(!cfg) return {players,cfg:null,currentPts};
+  const v=p=>p.val||0;
+  const pool=[...players].sort((a,b)=>v(b)-v(a));
+  const used=new Set();
+  cfg.filter(s=>s!=='FLEX').forEach(s=>{
+    const p=pool.find(x=>!used.has(x.id)&&x.pos===s); if(p) used.add(p.id);
+  });
+  cfg.filter(s=>s==='FLEX').forEach(()=>{
+    const p=pool.find(x=>!used.has(x.id)&&FLEX_OK.has(x.pos)); if(p) used.add(p.id);
+  });
+  const optPts=players.filter(p=>used.has(p.id)).reduce((a,p)=>a+(p.val||0),0);
+  const promote=players.filter(p=>!p.starter&&used.has(p.id));
+  const demote=players.filter(p=>p.starter&&!used.has(p.id));
+  /* pair moves for readability: same position first, then flex-eligible */
+  const moves=[]; const dpool=[...demote].sort((a,b)=>v(a)-v(b));
+  [...promote].sort((a,b)=>v(b)-v(a)).forEach(p=>{
+    let j=dpool.findIndex(d=>d.pos===p.pos);
+    if(j<0) j=dpool.findIndex(d=>FLEX_OK.has(d.pos)&&FLEX_OK.has(p.pos));
+    const d=j>=0?dpool.splice(j,1)[0]:null;
+    moves.push({up:p,down:d});
+  });
+  dpool.forEach(d=>moves.push({up:null,down:d}));
+  return {players,cfg,currentPts,optPts,delta:optPts-currentPts,
+    upSet:new Set(promote.map(p=>p.id)),downSet:new Set(demote.map(p=>p.id)),moves};
+}
+
+/* takes are the only stored state */
+const KEY='exposure-book-takes-v1';
+let canPersist=true, memory=[];
+function loadTakes(){
+  try{ const raw=localStorage.getItem(KEY); return raw?JSON.parse(raw):[]; }
+  catch(e){ canPersist=false; return memory; }
+}
+function saveTakes(){
+  memory=takes;
+  try{ localStorage.setItem(KEY,JSON.stringify(takes)); }
+  catch(e){ canPersist=false; renderNote(); }
+}
+let takes=loadTakes();
+
+/* ---- exposure math ---- */
+function exposures(opts){
+  opts=opts||{};
+  const sites=opts.sites;
+  const map=new Map();
+  const pool=TEAMS.filter(t=>!sites||!sites.size||sites.has(t.site));
+  pool.forEach(t=>{
+    const seen=new Set();
+    roster(t).forEach(p=>{
+      if(opts.startersOnly && !p.starter) return;
+      const k=key(p.name); if(!k) return;
+      if(!map.has(k)) map.set(k,{name:p.name,pos:p.pos,nfl:p.nfl,teams:0,dollars:0,spots:[]});
+      const e=map.get(k);
+      if(p.nfl&&!e.nfl) e.nfl=p.nfl;
+      if(p.pos&&!e.pos) e.pos=p.pos;
+      if(!seen.has(k)){ seen.add(k); e.teams++; e.dollars+=(+t.buyin||0); }
+      e.spots.push({site:t.site,label:t.label,buyin:+t.buyin||0,starter:p.starter});
+    });
+  });
+  const cash=pool.reduce((a,t)=>a+(+t.buyin||0),0)||1;
+  return [...map.values()].map(e=>({...e,pctBank:e.dollars/cash}));
+}
+
+/* ============================ rendering ============================ */
+let ui={tab:'exp',pos:'ALL',sites:new Set(),ssSites:new Set(),sort:'dollars',dir:-1,q:'',startersOnly:false,tq:'',open:new Set()};
+
+function renderNote(){
+  $('#storeNote').textContent = canPersist
+    ? 'Takes are saved in this browser. Send them over any time and I can bake them into the file so they follow you across devices.'
+    : 'This browser is blocking local storage, so takes will not survive a reload here.';
+}
+
+function renderFilters(){
+  $('#posFilter').innerHTML=['ALL',...POSITIONS].map(p=>
+    `<button class="chip" data-pos="${p}" aria-pressed="${ui.pos===p}">${p==='ALL'?'All':p}</button>`).join('');
+  const sites=[...new Set(TEAMS.map(t=>t.site))];
+  const none=ui.sites.size===0;
+  $('#siteFilter').innerHTML=
+    `<button class="chip" data-site="ALL" aria-pressed="${none}">All sites</button>`+
+    sites.map(s=>{
+      const on=ui.sites.has(s);
+      return `<button class="chip multi" data-site="${esc(s)}" aria-pressed="${on}">${on?'<span class="tick">✓</span>':''}${esc(s)}</button>`;
+    }).join('');
+}
+
+function renderExposures(){
+  let rows=exposures({sites:ui.sites,startersOnly:ui.startersOnly});
+  if(ui.pos!=='ALL') rows=rows.filter(r=>r.pos===ui.pos);
+  if(ui.q){ const q=ui.q.toLowerCase(); rows=rows.filter(r=>r.name.toLowerCase().includes(q)); }
+  rows.sort((a,b)=>{
+    const v = ui.sort==='name' ? a.name.localeCompare(b.name)
+            : ui.sort==='teams' ? (a.teams-b.teams)||(a.dollars-b.dollars)
+            : (a.dollars-b.dollars)||(a.teams-b.teams);
+    return v*ui.dir;
+  });
+  const host=$('#expList');
+  if(!rows.length){ host.innerHTML='<p class="empty">No players match those filters.</p>'; renderBreakdown(); return; }
+  host.innerHTML=rows.map((r,i)=>{
+    const k=key(r.name), open=ui.open.has(k);
+    return `<div class="item${open?' open':''}" data-k="${esc(k)}">
+      <button class="row" aria-expanded="${open}">
+        <span class="c-rank">${i+1}</span>
+        <span class="c-player">${logo(r.nfl,26)}<span class="pname">${esc(r.name)}<small>${esc(r.nfl||'—')}</small></span></span>
+        <span class="c-pos"><span class="pos ${esc(r.pos)}">${esc(r.pos||'?')}</span></span>
+        <span class="c-teams">${r.teams}<span class="lbl">teams</span></span>
+        <span class="c-risk">${usd(r.dollars)}<span class="lbl">at risk</span></span>
+        <span class="c-bank">${pct(r.pctBank)}<span class="lbl">of roll</span></span>
+        <span class="c-chev">⌄</span>
+      </button>
+      <div class="detail">
+        <div class="leagues">${r.spots.map(s=>`<span class="lg ${s.starter?'':'bench'}">${esc(s.label)}</span>`).join('')}</div>
+        ${r.spots.some(s=>!s.starter)?'<p class="dnote">Dashed means bench.</p>':''}
+      </div>
+    </div>`;
+  }).join('');
+  renderBreakdown();
+  $('#playerList').innerHTML=exposures({}).map(e=>`<option value="${esc(e.name)}">`).join('');
+}
+
+function renderBreakdown(){
+  const all=exposures({});
+  const byPos={}; all.forEach(e=>byPos[e.pos||'?']=(byPos[e.pos||'?']||0)+e.dollars);
+  const posSum=Object.values(byPos).reduce((a,v)=>a+v,0)||1;
+  const posMax=Math.max(1,...Object.values(byPos));
+  $('#byPos').innerHTML=Object.entries(byPos).sort((a,b)=>b[1]-a[1]).map(([p,v])=>`
+    <div class="brow"><span><span class="pos ${esc(p)}">${esc(p)}</span></span>
+      <span class="bar"><i style="width:${(v/posMax*100).toFixed(1)}%"></i></span>
+      <span class="num">${pct(v/posSum)}</span></div>`).join('');
+
+  const bySite={}; TEAMS.forEach(t=>bySite[t.site]=(bySite[t.site]||0)+(+t.buyin||0));
+  const siteMax=Math.max(1,...Object.values(bySite));
+  $('#bySite').innerHTML=Object.entries(bySite).sort((a,b)=>b[1]-a[1]).map(([s,v])=>`
+    <div class="brow"><span style="font-size:13px">${esc(s)}</span>
+      <span class="bar"><i style="width:${(v/siteMax*100).toFixed(1)}%"></i></span>
+      <span class="num">${usd(v)}</span></div>`).join('');
+
+  const byNfl={}; all.forEach(e=>{ if(e.nfl) byNfl[e.nfl]=(byNfl[e.nfl]||0)+e.dollars; });
+  const ranked=Object.entries(byNfl).sort((a,b)=>b[1]-a[1]);
+  const nflSum=ranked.reduce((a,r)=>a+r[1],0)||1;
+  const nflMax=Math.max(1,...ranked.map(r=>r[1]));
+  $('#byNfl').innerHTML=ranked.slice(0,10).map(([t,v])=>`
+    <div class="brow"><span style="display:flex;align-items:center;gap:7px;font-size:13px">${logo(t,20)}${esc(t)}</span>
+      <span class="bar"><i style="width:${(v/nflMax*100).toFixed(1)}%"></i></span>
+      <span class="num">${pct(v/nflSum)}</span></div>`).join('');
+  $('#nflNote').textContent = ranked.length>10 ? `Top 10 of ${ranked.length} teams.` : '';
+}
+
+function renderTeams(){
+  $('#teamList').innerHTML=TEAMS.map(t=>{
+    const r=roster(t);
+    const grp=(list,title,cls)=>list.length?`<div class="rgroup">${title}</div>`+list.map(p=>`
+      <div class="slot ${cls}">
+        <span class="pos ${esc(p.pos)}">${esc(p.pos||'?')}</span>
+        ${logo(p.nfl,18)}
+        <span class="nm">${esc(p.name)}</span>
+      </div>`).join(''):'';
+    return `<div class="team">
+      <div class="team-hd">
+        <h3>${esc(t.label)}</h3>
+        <span class="meta">${usd(t.buyin)} buy-in at ${esc(t.site)}, ${r.length} players</span>
+      </div>
+      <div class="roster">
+        ${grp(r.filter(p=>p.starter),'Starters','')}
+        ${grp(r.filter(p=>!p.starter),'Bench','bn')}
+      </div></div>`;
+  }).join('');
+}
+
+function renderSS(){
+  const meta=$('#ssMeta'), host=$('#ssList');
+  $('#ssClear').classList.toggle('hidden',!PROJ);
+  const allSites=[...new Set(TEAMS.map(t=>t.site))];
+  const none=ui.ssSites.size===0;
+  $('#ssSiteFilter').innerHTML=
+    `<button class="chip" data-sssite="ALL" aria-pressed="${none}">All sites</button>`+
+    allSites.map(s=>{
+      const on=ui.ssSites.has(s);
+      return `<button class="chip multi" data-sssite="${esc(s)}" aria-pressed="${on}">${on?'<span class="tick">✓</span>':''}${esc(s)}</button>`;
+    }).join('');
+  if(!PROJ){
+    meta.textContent='No projections loaded yet.';
+    host.innerHTML='<p class="empty">Load the weekly projections CSV (Player / Pos / Team plus the scoring columns) and every team below gets scored in its own format, ordered by buy-in, with recommended lineup swaps flagged.</p>';
+    return;
+  }
+  meta.textContent=`${PROJMETA.name} · loaded ${new Date(PROJMETA.ts).toLocaleDateString('en-US',{month:'short',day:'numeric'})} · ${PROJ.length} players`;
+  const pts=n=>(Math.round(n*10)/10).toFixed(1);
+  const teams=[...TEAMS].sort((a,b)=>(+b.buyin||0)-(+a.buyin||0))
+    .filter(t=>ui.ssSites.size===0||ui.ssSites.has(t.site));
+  host.innerHTML=teams.map(t=>{
+    const r=optimizeTeam(t);
+    const line=(p,cls)=>`
+      <div class="slot ${cls}">
+        <span class="pos ${esc(p.pos)}">${esc(p.pos||'?')}</span>
+        ${logo(p.nfl,18)}
+        <span class="nm">${esc(p.name)}</span>
+        <span class="pj ${p.val==null?'na':''}">${p.val==null?'—':pts(p.val)}</span>
+      </div>`;
+    const starters=r.players.filter(p=>p.starter), bench=r.players.filter(p=>!p.starter);
+    let head, movesHtml='', warn='';
+    if(!r.cfg){
+      head=`<span class="ss-ok">projections only · lineup ${pts(r.currentPts)} pts</span>`;
+      warn='<div class="ss-warn">Lineup slots unknown for this league, so no swap advice here yet.</div>';
+    } else if(r.delta>0.05){
+      head=`lineup <b>${pts(r.currentPts)}</b> → <b>${pts(r.optPts)}</b> <span class="ss-delta">(+${pts(r.delta)})</span>`;
+      movesHtml=`<div class="moves">${r.moves.map(m=>{
+        if(m.up&&m.down) return `<div class="mv">Start <b>${esc(m.up.name)}</b> ${pts(m.up.val||0)} over <s>${esc(m.down.name)}</s> ${pts(m.down.val||0)}</div>`;
+        if(m.up) return `<div class="mv">Start <b>${esc(m.up.name)}</b> ${pts(m.up.val||0)}</div>`;
+        return `<div class="mv">Sit <s>${esc(m.down.name)}</s> ${pts(m.down.val||0)}</div>`;
+      }).join('')}</div>`;
+    } else {
+      head=`<span class="ss-ok">lineup optimal at ${pts(r.currentPts)} pts</span>`;
+    }
+    const missing=r.players.filter(p=>p.val==null);
+    if(missing.length) warn+=`<div class="ss-warn">No projection for: ${missing.map(p=>esc(p.name)).join(', ')}.</div>`;
+    return `<div class="team">
+      <div class="team-hd ss-hd">
+        <h3>${esc(t.label)}</h3>
+        <span class="meta">${usd(t.buyin)} at ${esc(t.site)} · ${esc(t.proj||'')} · ${head}</span>
+      </div>
+      ${movesHtml}
+      <div class="roster">
+        <div class="rgroup">Starters</div>${starters.map(p=>line(p,r.downSet&&r.downSet.has(p.id)?'sit':'')).join('')}
+        <div class="rgroup">Bench</div>${bench.map(p=>line(p,(r.upSet&&r.upSet.has(p.id)?'up ':'')+'bn')).join('')}
+      </div>
+      ${warn}</div>`;
+  }).join('');
+}
+
+function fmtDate(d){ const [y,m,dd]=d.split('-').map(Number);
+  return new Date(y,m-1,dd).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}); }
+
+function renderTakes(){
+  const host=$('#takeList');
+  let list=[...takes];
+  if(ui.tq){ const q=ui.tq.toLowerCase();
+    list=list.filter(t=>(t.text||'').toLowerCase().includes(q)||(t.player||'').toLowerCase().includes(q)||(t.tags||[]).join(' ').toLowerCase().includes(q)); }
+  list.sort((a,b)=> b.date.localeCompare(a.date) || b.created-a.created);
+  if(!list.length){ host.innerHTML='<p class="empty">Nothing logged yet. Write a take above and it gets stamped with the date so you can look back on it later.</p>'; renderNote(); return; }
+  const expMap={}; exposures({}).forEach(e=>expMap[key(e.name)]=e);
+  const days=[]; let cur=null;
+  list.forEach(t=>{ if(!cur||cur.d!==t.date){cur={d:t.date,items:[]};days.push(cur);} cur.items.push(t); });
+  host.innerHTML=days.map(d=>`
+    <div class="daygroup"><h3>${fmtDate(d.d)}</h3>${d.items.map(t=>{
+      const e=t.player?expMap[key(t.player)]:null;
+      return `<div class="take"><div class="take-body">
+        <div class="take-top">
+          ${t.player?`<span class="tname">${esc(t.player)}</span>`:''}
+          ${e?`<span class="texp">${usd(e.dollars)} on ${e.teams} team${e.teams>1?'s':''}</span>`:''}
+          ${(t.tags||[]).map(g=>`<span class="tag">${esc(g)}</span>`).join('')}
+        </div><p>${esc(t.text)}</p>
+      </div><button class="del" data-deltake="${t.id}" title="Delete take">×</button></div>`;
+    }).join('')}</div>`).join('');
+  renderNote();
+}
+
+function renderAll(){ renderFilters(); renderExposures(); renderTeams(); renderTakes(); renderSS(); }
+
+$('#ssFile').addEventListener('change',e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=()=>{ setProj(f.name,rd.result); renderSS(); };
+  rd.readAsText(f);
+  e.target.value='';
+});
+$('#ssSiteFilter').addEventListener('click',e=>{
+  const btn=e.target.closest('[data-sssite]'); if(!btn) return;
+  const s=btn.dataset.sssite;
+  if(s==='ALL') ui.ssSites.clear();
+  else {
+    ui.ssSites.has(s)?ui.ssSites.delete(s):ui.ssSites.add(s);
+    if(ui.ssSites.size===new Set(TEAMS.map(t=>t.site)).size) ui.ssSites.clear();
+  }
+  renderSS();
+});
+$('#ssClear').addEventListener('click',()=>{ if(confirm('Clear loaded projections?')){ clearProj(); renderSS(); } });
+
+/* ============================ events ============================ */
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+  ui.tab=b.dataset.tab;
+  document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===b));
+  ['exp','ss','teams','takes'].forEach(t=>$('#tab-'+t).classList.toggle('hidden',t!==ui.tab));
+}));
+$('#posFilter').addEventListener('click',e=>{ if(!e.target.dataset.pos) return; ui.pos=e.target.dataset.pos; renderFilters(); renderExposures(); });
+$('#siteFilter').addEventListener('click',e=>{
+  const btn=e.target.closest('[data-site]'); if(!btn) return;
+  const s=btn.dataset.site;
+  if(s==='ALL') ui.sites.clear();
+  else {
+    ui.sites.has(s)?ui.sites.delete(s):ui.sites.add(s);
+    // every site picked is the same view as none picked, so fall back to All
+    if(ui.sites.size===new Set(TEAMS.map(t=>t.site)).size) ui.sites.clear();
+  }
+  renderFilters(); renderExposures();
+});
+$('#search').addEventListener('input',e=>{ ui.q=e.target.value; renderExposures(); });
+$('#startersOnly').addEventListener('change',e=>{ ui.startersOnly=e.target.checked; renderExposures(); });
+document.querySelectorAll('.head-row button[data-sort]').forEach(b=>b.addEventListener('click',()=>{
+  const s=b.dataset.sort;
+  if(ui.sort===s) ui.dir*=-1; else { ui.sort=s; ui.dir=(s==='name'?1:-1); }
+  renderExposures();
+}));
+$('#expList').addEventListener('click',e=>{
+  const row=e.target.closest('.row'); if(!row) return;
+  const item=row.closest('.item'), k=item.dataset.k;
+  const open=!item.classList.contains('open');
+  item.classList.toggle('open',open);
+  row.setAttribute('aria-expanded',String(open));
+  open?ui.open.add(k):ui.open.delete(k);
+});
+
+$('#tkDate').value=new Date().toLocaleDateString('en-CA');
+$('#btnSaveTake').addEventListener('click',()=>{
+  const text=$('#tkText').value.trim(); if(!text){ $('#tkText').focus(); return; }
+  takes.push({id:uid(),date:$('#tkDate').value||new Date().toLocaleDateString('en-CA'),
+    player:$('#tkPlayer').value.trim(),
+    tags:$('#tkTags').value.split(',').map(s=>s.trim()).filter(Boolean),
+    text,created:Date.now()});
+  saveTakes(); $('#tkText').value=''; $('#tkPlayer').value=''; $('#tkTags').value=''; renderTakes();
+});
+$('#tkSearch').addEventListener('input',e=>{ ui.tq=e.target.value; renderTakes(); });
+$('#takeList').addEventListener('click',e=>{
+  const id=e.target.dataset.deltake; if(!id) return;
+  if(confirm('Delete this take?')){ takes=takes.filter(t=>t.id!==id); saveTakes(); renderTakes(); }
+});
+
+loadStoredProj();
+renderAll();
+</script>
+</body>
+</html>
