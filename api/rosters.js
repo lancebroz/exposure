@@ -48,9 +48,11 @@ function parseLineup(html) {
     const p = parsePlayerText(text);
     if (!p) continue;
     if (!p.pos) {
-      // POS column follows the player cell; look for the first bare cell value
-      const tail = html.slice(re.lastIndex, re.lastIndex + 800);
-      const pm = tail.match(/>\s*(QB|RB|WR|TE|PK|DST)\s*</);
+      // POS column follows the player cell in the same row; news blurbs can
+      // make that cell long, so scan to the end of the row, not a fixed window
+      const rowEnd = html.indexOf('</tr>', re.lastIndex);
+      const tail = html.slice(re.lastIndex, rowEnd > 0 ? rowEnd : re.lastIndex + 3000);
+      const pm = tail.match(/>\s*(?:&nbsp;)*\s*(QB|RB|WR|TE|PK|DST)\s*(?:&nbsp;)*\s*</);
       p.pos = pm ? pm[1] : '?';
     }
     if (p.pos === 'PK') p.pos = 'K';
