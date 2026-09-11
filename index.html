@@ -396,6 +396,13 @@ function clearProj(){ PROJ=PROJIDX=PROJMETA=null; try{ localStorage.removeItem(P
    from the five public FFPC lineup links, CDN-cached ~6h. Any team that
    fails validation keeps the roster baked into this file. */
 let FFPC_SYNC=null;
+/* positions the baked-in rosters already know, keyed by normalized name —
+   the last-resort fallback when a synced player has no parsed pos and no CSV row */
+const SEED_POS=(()=>{ const m={};
+  SEED.teams.forEach(t=>[...t.starters,...t.bench].forEach(s=>{
+    const [pos,name]=s.split('|'); const k=key(name); if(!m[k]) m[k]=pos;
+  })); return m; })();
+function seedPos(name){ return SEED_POS[key(name)]; }
 async function syncFFPC(){
   try{
     const res=await fetch('/api/rosters');
@@ -408,7 +415,7 @@ async function syncFFPC(){
       if(!rt.ok||(rt.starters||[]).length!==10||(rt.bench||[]).length<9){ skipped.push(rt.label); continue; }
       const fix=list=>list.map(p=>{
         let pos=p.pos;
-        if(!pos||pos==='?'){ const rows=PROJIDX&&PROJIDX[key(p.name)]; pos=(rows&&rows[0].Pos)||'?'; }
+        if(!pos||pos==='?'){ const rows=PROJIDX&&PROJIDX[key(p.name)]; pos=(rows&&rows[0].Pos)||seedPos(p.name)||'?'; }
         return `${pos}|${p.name}|${p.nfl}`;
       });
       t.starters=fix(rt.starters); t.bench=fix(rt.bench); applied.push(rt.label);
