@@ -391,12 +391,46 @@ function setProj(name,csv){
 }
 function clearProj(){ PROJ=PROJIDX=PROJMETA=null; try{ localStorage.removeItem(PROJ_KEY); }catch(e){} }
 
+/* ---- FFPC live sync ----
+   /api/rosters (Vercel serverless) returns fresh starters/bench parsed
+   from the five public FFPC lineup links, CDN-cached ~6h. Any team that
+   fails validation keeps the roster baked into this file. */
+let FFPC_SYNC=null;
+async function syncFFPC(){
+  try{
+    const res=await fetch('/api/rosters');
+    if(!res.ok) throw new Error('http '+res.status);
+    const data=await res.json();
+    let applied=[], skipped=[];
+    for(const rt of (data.teams||[])){
+      const t=TEAMS.find(x=>x.label===rt.label&&x.site==='FFPC');
+      if(!t) continue;
+      if(!rt.ok||(rt.starters||[]).length!==10||(rt.bench||[]).length<9){ skipped.push(rt.label); continue; }
+      const fix=list=>list.map(p=>{
+        let pos=p.pos;
+        if(!pos||pos==='?'){ const rows=PROJIDX&&PROJIDX[key(p.name)]; pos=(rows&&rows[0].Pos)||'?'; }
+        return `${pos}|${p.name}|${p.nfl}`;
+      });
+      t.starters=fix(rt.starters); t.bench=fix(rt.bench); applied.push(rt.label);
+    }
+    FFPC_SYNC={ok:true,applied,skipped,at:data.fetchedAt||Date.now()};
+  }catch(e){ FFPC_SYNC={ok:false}; }
+  renderAll();
+}
+
+/* Roster name -> CSV name aliases (both sides run through key()).
+   Add a line here whenever a projection file spells a player differently. */
+const NAME_ALIASES={
+  kennethgainwell:'kennygainwell'
+};
+
 /* Match a roster entry to a CSV row. Name key first; when one name maps to
    several rows, prefer matching position, then matching NFL team. Site
    kickers stored as "XXX Team K" resolve to that team's kicker row. */
 function projRow(p){
   if(!PROJIDX) return null;
-  let rows=PROJIDX[key(p.name)];
+  const k=key(p.name);
+  let rows=PROJIDX[k]||PROJIDX[NAME_ALIASES[k]];
   if(!rows && p.pos==='K' && /team k/i.test(p.name)){
     const t=canon(p.nfl);
     rows=(PROJ||[]).filter(r=>r.Pos==='K'&&canon(r.Team)===t);
@@ -606,6 +640,16 @@ function renderSS(){
     return;
   }
   meta.textContent=`${PROJMETA.name} · loaded ${new Date(PROJMETA.ts).toLocaleDateString('en-US',{month:'short',day:'numeric'})} · ${PROJ.length} players`;
+  if(FFPC_SYNC){
+    if(FFPC_SYNC.ok&&FFPC_SYNC.applied.length){
+      const t=new Date(FFPC_SYNC.at).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+      meta.textContent+=` · FFPC synced ${t} (${FFPC_SYNC.applied.length}/5${FFPC_SYNC.skipped.length?', '+FFPC_SYNC.skipped.length+' kept on file':''})`;
+    } else if(FFPC_SYNC.ok){
+      meta.textContent+=' · FFPC sync returned nothing usable — rosters on file';
+    } else {
+      meta.textContent+=' · FFPC sync offline — rosters on file';
+    }
+  }
   const pts=n=>(Math.round(n*10)/10).toFixed(1);
   const teams=[...TEAMS].sort((a,b)=>(+b.buyin||0)-(+a.buyin||0))
     .filter(t=>ui.ssSites.size===0||ui.ssSites.has(t.site));
@@ -748,6 +792,7 @@ $('#takeList').addEventListener('click',e=>{
 
 loadStoredProj();
 renderAll();
+syncFFPC();
 </script>
 </body>
 </html>
