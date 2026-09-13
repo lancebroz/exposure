@@ -117,6 +117,22 @@ h1 span{color:var(--muted);font-weight:500}
 .slot.bn .nm{color:var(--muted)}
 .rgroup{color:var(--muted);font-size:12.5px;font-weight:600;margin:12px 0 2px}
 
+/* ---------- start/sit ---------- */
+#ssList{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.ss-hd .meta b{color:var(--text);font-weight:600}
+.ss-delta{color:var(--rb);font-weight:700}
+.ss-ok{color:var(--muted)}
+.moves{padding:10px 15px;border-bottom:1px solid var(--line-soft);background:#0B2431}
+.mv{font-size:13px;padding:3px 0;color:var(--text)}
+.mv b{color:var(--rb)}
+.mv s{color:var(--muted)}
+.slot .pj{flex:none;width:46px;text-align:right;font-weight:600}
+.slot .pj.na{color:#527687;font-weight:400}
+.slot.up{background:rgba(87,196,107,.09)}
+.slot.up .nm,.slot.up .pj{color:var(--rb)}
+.slot.sit .nm,.slot.sit .pj{color:var(--qb)}
+.ss-warn{color:var(--muted);font-size:12px;padding:8px 15px 12px}
+
 /* ---------- takes ---------- */
 .take-form{border:1px solid var(--line-soft);border-radius:var(--r);padding:14px;background:var(--panel);margin-bottom:22px}
 .take-form .grid{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:9px}
@@ -155,7 +171,7 @@ textarea{width:100%;min-height:88px;resize:vertical;background:var(--panel2);bor
   .c-bank{text-align:right}
   .lbl{display:block}
   .detail{padding:0 6px 14px 42px}
-  #teamList{grid-template-columns:1fr}
+  #teamList,#ssList{grid-template-columns:1fr}
   .split{gap:22px;margin-top:24px}
   .chip{padding:6px 13px}
   .take-form input{min-width:120px}
@@ -170,6 +186,7 @@ textarea{width:100%;min-height:88px;resize:vertical;background:var(--panel2);bor
 
   <nav class="tabs" role="tablist">
     <button class="tab" role="tab" data-tab="exp" aria-selected="true">Exposures</button>
+    <button class="tab" role="tab" data-tab="ss" aria-selected="false">Start/Sit</button>
     <button class="tab" role="tab" data-tab="teams" aria-selected="false">Teams</button>
     <button class="tab" role="tab" data-tab="takes" aria-selected="false">Takes</button>
   </nav>
@@ -196,6 +213,19 @@ textarea{width:100%;min-height:88px;resize:vertical;background:var(--panel2);bor
       <div><h3>Money by site</h3><div id="bySite"></div><p class="note">Actual dollars committed.</p></div>
       <div><h3>NFL team mix</h3><div id="byNfl"></div><p class="note" id="nflNote"></p></div>
     </div>
+  </section>
+
+  <section id="tab-ss" class="hidden">
+    <div class="controls">
+      <label class="save" style="margin-top:0">Load projections CSV
+        <input type="file" id="ssFile" accept=".csv,text/csv" hidden>
+      </label>
+      <span class="note" id="ssMeta" style="margin-top:0"></span>
+      <button class="chip hidden" id="ssClear">Clear</button>
+      <div class="chipbar" id="ssSiteFilter"></div>
+    </div>
+    <div id="ssList"></div>
+    <p class="note">Projections stay in this browser only. Green rows are bench players who outproject someone they can legally replace; the starter they'd bump is in red. Numbers use each league's own scoring column.</p>
   </section>
 
   <section id="tab-teams" class="hidden"><div id="teamList"></div></section>
@@ -226,50 +256,65 @@ textarea{width:100%;min-height:88px;resize:vertical;background:var(--panel2);bor
 ================================================================== */
 const SEED={
   teams:[
-    { site:"ESPN", buyin:50, label:"Marquee League",
-      starters:["QB|Josh Allen|BUF","RB|Jahmyr Gibbs|DET","RB|Jordan Mason|MIN","WR|Chris Olave|NO","WR|Luther Burden III|CHI","TE|Tucker Kraft|GB","WR|Jaylen Waddle|DEN","DST|LAC D/ST|LAC","K|Tyler Loop|BAL"],
-      bench:["WR|Parker Washington|JAX","RB|J.K. Dobbins|DEN","RB|Jacory Croskey-Merritt|WAS","TE|Terrance Ferguson|LAR","WR|KC Concepcion|CLE","RB|Chris Rodriguez Jr.|JAX","RB|Keaton Mitchell|LAC"] },
+    { site:"ESPN", buyin:50, label:"Marquee League", cfg:"ESPN_STD", proj:"Full PPR Proj",
+      starters:["QB|Josh Allen|BUF","RB|Jahmyr Gibbs|DET","RB|J.K. Dobbins|DEN","WR|Chris Olave|NO","WR|Luther Burden III|CHI","TE|Tucker Kraft|GB","WR|Jaylen Waddle|DEN","DST|LAC D/ST|LAC","K|Tyler Loop|BAL"],
+      bench:["WR|Parker Washington|JAX","RB|Jordan Mason|MIN","RB|Jacory Croskey-Merritt|WAS","TE|Terrance Ferguson|LAR","WR|KC Concepcion|CLE","RB|Chris Rodriguez Jr.|JAX","RB|Keaton Mitchell|LAC"] },
 
-    { site:"FFPC", buyin:350, label:"Early Draft",
-      starters:["QB|Jaxson Dart|NYG","RB|Travis Etienne|NO","RB|TreVeyon Henderson|NE","WR|Jaylen Waddle|DEN","WR|Davante Adams|LAR","TE|Brock Bowers|LV","WR|DK Metcalf|PIT","TE|Colston Loveland|CHI","K|Cameron Dicker|LAC","DST|LAC D/ST|LAC"],
-      bench:["QB|Patrick Mahomes|KC","RB|RJ Harvey|DEN","RB|Keaton Mitchell|LAC","RB|Emmett Johnson|KC","RB|Kimani Vidal|LAC","WR|Josh Downs|IND","WR|Makai Lemon|PHI","WR|Pat Bryant|DEN","WR|Travis Hunter|JAX","TE|Michael Mayer|LV"] },
+    /* FFPC Big Gorilla #104907, double-TE build. Live lineup 9/9: Bowers (knee) and Henderson (out) benched; Mayer and Harvey in. */
+    { site:"FFPC", buyin:350, label:"Bene Gesserit (FFPC)", cfg:"FFPC", proj:"FFPC Proj",
+      starters:["QB|Jaxson Dart|NYG","RB|Travis Etienne|NO","RB|RJ Harvey|DEN","WR|Jaylen Waddle|DEN","WR|Davante Adams|LAR","TE|Colston Loveland|CHI","WR|DK Metcalf|PIT","TE|Michael Mayer|LV","K|Cameron Dicker|LAC","DST|LAC D/ST|LAC"],
+      bench:["QB|Patrick Mahomes|KC","RB|TreVeyon Henderson|NE","RB|Keaton Mitchell|LAC","RB|Emmett Johnson|KC","RB|Kimani Vidal|LAC","WR|Josh Downs|IND","WR|Makai Lemon|PHI","WR|Pat Bryant|DEN","WR|Travis Hunter|JAX","TE|Brock Bowers|LV"] },
 
-    { site:"FFPC", buyin:350, label:"Slow Draft",
+    { site:"FFPC", buyin:350, label:"Lisan al-Gaib (FFPC)", cfg:"FFPC", proj:"FFPC Proj",
       starters:["QB|Matthew Stafford|LAR","RB|James Cook|BUF","RB|Ashton Jeanty|LV","WR|Zay Flowers|BAL","WR|Ladd McConkey|LAC","TE|Tucker Kraft|GB","WR|Josh Downs|IND","TE|Sam LaPorta|DET","K|Jason Myers|SEA","DST|JAX D/ST|JAX"],
       bench:["QB|Bo Nix|DEN","RB|Blake Corum|LAR","RB|Aaron Jones|MIN","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","WR|De'Zhaun Stribling|SF","WR|Jordan Addison|MIN","WR|Pat Bryant|DEN","WR|Travis Hunter|JAX","TE|AJ Barner|SEA"] },
 
-    { site:"FFPC", buyin:350, label:"Take Kenneth Walker Team",
+    { site:"FFPC", buyin:350, label:"Shai-Hulud", cfg:"FFPC", proj:"FFPC Proj",
       starters:["QB|Jalen Hurts|PHI","RB|Kenneth Walker|KC","RB|Travis Etienne|NO","WR|CeeDee Lamb|DAL","WR|Zay Flowers|BAL","TE|Dallas Goedert|PHI","WR|Christian Watson|GB","WR|Parker Washington|JAX","K|Will Reichard|MIN","DST|JAX D/ST|JAX"],
       bench:["QB|Jordan Love|GB","RB|Blake Corum|LAR","RB|Tank Bigsby|PHI","RB|Brian Robinson|ATL","RB|Kaleb Johnson|GB","WR|Matthew Golden|GB","WR|Khalil Shakir|BUF","TE|Chig Okonkwo|WAS","TE|Cade Otton|TB","TE|Eli Raridon|NE"] },
 
-    { site:"NFFC", buyin:250, label:"Dynasty (NFFC)",
+    /* FFPC Big Gorilla #105275, drafted overnight 9/10 — roster from screenshot; public link lagged the draft. */
+    { site:"FFPC", buyin:350, label:"Spacing Guild", cfg:"FFPC", proj:"FFPC Proj",
+      starters:["QB|Caleb Williams|CHI","RB|James Cook|BUF","RB|Jadarian Price|SEA","WR|Ladd McConkey|LAC","WR|Tetairoa McMillan|CAR","TE|Colston Loveland|CHI","WR|Christian Watson|GB","WR|DK Metcalf|PIT","K|Brandon Aubrey|DAL","DST|JAX D/ST|JAX"],
+      bench:["QB|Jordan Love|GB","RB|Josh Jacobs|GB","RB|Keaton Mitchell|LAC","RB|Seth McGowan|IND","RB|Nicholas Singleton|TEN","WR|Matthew Golden|GB","WR|Denzel Boston|CLE","WR|Tre' Harris|LAC","WR|Omar Cooper Jr.|NYJ","TE|AJ Barner|SEA"] },
+
+    /* FFPC Big Gorilla #105165 (leaderboard shows Baby Gorilla contest — buy-in TBC), drafted morning 9/10. */
+    { site:"FFPC", buyin:350, label:"Gom Jabbar", cfg:"FFPC", proj:"FFPC Proj",
+      starters:["QB|Jalen Hurts|PHI","RB|Christian McCaffrey|SF","RB|Saquon Barkley|PHI","WR|George Pickens|DAL","WR|Garrett Wilson|NYJ","TE|Sam LaPorta|DET","RB|Rico Dowdle|PIT","WR|Rome Odunze|CHI","K|Will Reichard|MIN","DST|LAC D/ST|LAC"],
+      bench:["QB|Kyler Murray|MIN","RB|Emmett Johnson|KC","RB|Malik Davis|DAL","RB|Seth McGowan|IND","WR|Jayden Reed|GB","WR|Makai Lemon|PHI","WR|Ja'Kobi Lane|BAL","WR|Omar Cooper Jr.|NYJ","TE|Hunter Henry|NE","TE|Cade Otton|TB"] },
+
+    /* $250 Keeper League #16. Bench refreshed 9/9. */
+    { site:"NFFC", buyin:250, label:"Lisan al-Gaib (NFFC)", cfg:"NFFC", proj:"Full PPR Proj",
       starters:["QB|Justin Herbert|LAC","RB|Saquon Barkley|PHI","RB|Bhayshul Tuten|JAX","WR|CeeDee Lamb|DAL","WR|Zay Flowers|BAL","WR|Jaylen Waddle|DEN","TE|Tucker Kraft|GB","WR|DK Metcalf|PIT","K|BAL Team K|BAL","DST|GB D/ST|GB"],
-      bench:["QB|Jordan Love|GB","RB|Keaton Mitchell|LAC","RB|Blake Corum|LAR","RB|Jaydon Blue|PHI","RB|Sean Tucker|TB","WR|Jordyn Tyson|NO","WR|Romeo Doubs|NE","WR|Travis Hunter|JAX","TE|Kenyon Sadiq|NYJ","TE|Gunnar Helm|TEN"] },
+      bench:["QB|Jordan Love|GB","RB|Keaton Mitchell|LAC","RB|Blake Corum|LAR","RB|Malik Davis|DAL","WR|Jordyn Tyson|NO","WR|Romeo Doubs|NE","WR|Travis Hunter|JAX","WR|Ja'Kobi Lane|BAL","WR|Pat Bryant|DEN","TE|Kenyon Sadiq|NYJ"] },
 
-    { site:"NFFC", buyin:250, label:"Personal Cash League",
-      starters:["QB|Matthew Stafford|LAR","RB|Jeremiyah Love|","RB|RJ Harvey|DEN","WR|Amon-Ra St. Brown|DET","WR|Drake London|ATL","WR|Ladd McConkey|LAC","TE|Tyler Warren|IND","WR|Luther Burden III|CHI"],
-      bench:["RB|Kenneth Gainwell|","WR|Matthew Golden|GB","RB|Rachaad White|","QB|Jordan Love|GB","TE|Terrance Ferguson|LAR","WR|Ryan Flournoy|DAL","RB|Kimani Vidal|LAC"] },
+    /* $250 Cash League #1525 (personal). Full roster from 9/9 screenshot. */
+    { site:"NFFC", buyin:250, label:"Bene Gesserit (NFFC)", cfg:"NFFC", proj:"Full PPR Proj",
+      starters:["QB|Matthew Stafford|LAR","RB|Jeremiyah Love|ARI","RB|RJ Harvey|DEN","WR|Amon-Ra St. Brown|DET","WR|Drake London|ATL","WR|Ladd McConkey|LAC","TE|Tyler Warren|IND","WR|Luther Burden III|CHI","K|SEA Team K|SEA","DST|JAX D/ST|JAX"],
+      bench:["RB|Kenneth Gainwell|TB","WR|Matthew Golden|GB","RB|Rachaad White|WAS","QB|Jordan Love|GB","TE|Terrance Ferguson|LAR","WR|Ryan Flournoy|DAL","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","WR|Jaylin Noel|HOU","WR|Travis Hunter|JAX"] },
 
-    { site:"NFFC", buyin:83, label:"Shared Team",
+    /* $250 Cash League #1289, shared entry at $83. */
+    { site:"NFFC", buyin:83, label:"Drake Maye Fan Club", cfg:"NFFC", proj:"Full PPR Proj",
       starters:["QB|Josh Allen|BUF","RB|Bijan Robinson|ATL","RB|Bucky Irving|TB","WR|Emeka Egbuka|TB","WR|Carnell Tate|TEN","WR|Josh Downs|IND","TE|Brock Bowers|LV","WR|Jayden Reed|GB","K|SF Team K|SF","DST|TEN D/ST|TEN"],
       bench:["QB|Aaron Rodgers|PIT","RB|Jonah Coleman|DEN","RB|Emmett Johnson|KC","RB|Kimani Vidal|LAC","WR|Romeo Doubs|NE","WR|Denzel Boston|CLE","WR|Ryan Flournoy|DAL","WR|Omar Cooper Jr.|NYJ","WR|Jalen Nailor|LV","WR|Travis Hunter|JAX"] },
 
-    { site:"NFFC", buyin:225, label:"Cousin Greg",
+    /* $500 Cash League #1937, split entry at $225. */
+    { site:"NFFC", buyin:225, label:"Cousin Greg IX", cfg:"NFFC", proj:"Full PPR Proj",
       starters:["QB|Drake Maye|NE","RB|Christian McCaffrey|SF","RB|Breece Hall|NYJ","WR|Nico Collins|HOU","WR|Jameson Williams|DET","WR|Parker Washington|JAX","TE|Tucker Kraft|GB","RB|Jaylen Warren|PIT","K|LAC Team K|LAC","DST|PHI D/ST|PHI"],
       bench:["QB|Patrick Mahomes|KC","RB|Keaton Mitchell|LAC","RB|Kaleb Johnson|GB","WR|Makai Lemon|PHI","WR|Khalil Shakir|BUF","WR|Denzel Boston|CLE","WR|Jauan Jennings|MIN","WR|Antonio Williams|WAS","TE|Kenyon Sadiq|NYJ","TE|AJ Barner|SEA"] },
 
     /* Roster view showed no lineup split, so all 15 are recorded as active. */
-    { site:"ESPN", buyin:150, label:"Dynasty (ESPN)",
-      starters:["WR|Ja'Marr Chase|CIN","QB|Josh Allen|BUF","RB|D'Andre Swift|CHI","RB|Rhamondre Stevenson|NE","WR|Parker Washington|JAX","RB|Blake Corum|LAR","WR|Jaxon Smith-Njigba|SEA","TE|Harold Fannin Jr.|CLE","WR|Jayden Reed|GB","TE|Dalton Kincaid|BUF","RB|Jonah Coleman|DEN","RB|Emmett Johnson|KC","K|Jason Myers|SEA","DST|LAC D/ST|LAC","WR|Jalen Coker|CAR"],
-      bench:[] },
-
-    { site:"ESPN", buyin:50, label:"2 QB Justin League",
-      starters:["QB|Jaxson Dart|NYG","QB|Justin Herbert|LAC","RB|Bijan Robinson|ATL","RB|D'Andre Swift|CHI","WR|A.J. Brown|NE","WR|Zay Flowers|BAL","TE|Terrance Ferguson|LAR","RB|Rhamondre Stevenson|NE","WR|Christian Watson|GB","DST|LAC D/ST|LAC","K|Cairo Santos|CHI"],
-      bench:["RB|Blake Corum|LAR","QB|Michael Penix Jr.|ATL","WR|Wan'Dale Robinson|TEN","RB|RJ Harvey|DEN","RB|Chris Rodriguez Jr.|JAX","TE|Kenyon Sadiq|NYJ","WR|Adonai Mitchell|NYJ"] },
-
-    { site:"NFFC", buyin:250, label:"Bene Tleilax",
+    { site:"NFFC", buyin:250, label:"Bene Tleilax", cfg:"NFFC", proj:"Full PPR Proj",
       starters:["QB|Matthew Stafford|LAR","RB|Breece Hall|NYJ","RB|Bucky Irving|TB","WR|Ja'Marr Chase|CIN","WR|Drake London|ATL","WR|Davante Adams|LAR","TE|Colston Loveland|CHI","RB|Jaylen Warren|PIT","K|DAL Team K|DAL","DST|PHI D/ST|PHI"],
-      bench:["QB|Jaxson Dart|NYG","RB|Chuba Hubbard|CAR","RB|Tyjae Spears|TEN","WR|Josh Downs|IND","WR|Jayden Reed|GB","WR|Pat Bryant|DEN","WR|Calvin Ridley|TEN","WR|Jahan Dotson|ATL","TE|Chig Okonkwo|WAS","TE|Terrance Ferguson|LAR"] }
+      bench:["QB|Jaxson Dart|NYG","RB|Chuba Hubbard|CAR","RB|Tyjae Spears|TEN","WR|Josh Downs|IND","WR|Jayden Reed|GB","WR|Pat Bryant|DEN","WR|Calvin Ridley|TEN","WR|Jahan Dotson|ATL","TE|Chig Okonkwo|WAS","TE|Terrance Ferguson|LAR"] },
+
+    { site:"ESPN", buyin:150, label:"Dynasty (ESPN)", cfg:"ESPN_STD", proj:"Full PPR Proj",
+      starters:["QB|Josh Allen|BUF","RB|D'Andre Swift|CHI","RB|Rhamondre Stevenson|NE","WR|Ja'Marr Chase|CIN","WR|Jaxon Smith-Njigba|SEA","TE|Harold Fannin Jr.|CLE","RB|Blake Corum|LAR","DST|LAC D/ST|LAC","K|Jason Myers|SEA"],
+      bench:["WR|Parker Washington|JAX","WR|Jayden Reed|GB","TE|Dalton Kincaid|BUF","RB|Jonah Coleman|DEN","RB|Emmett Johnson|KC","WR|Jalen Coker|CAR"] },
+
+    { site:"ESPN", buyin:50, label:"2 QB Justin League", cfg:"ESPN_2QB", proj:"Half PPR Proj",
+      starters:["QB|Jaxson Dart|NYG","QB|Justin Herbert|LAC","RB|Bijan Robinson|ATL","RB|D'Andre Swift|CHI","WR|A.J. Brown|NE","WR|Zay Flowers|BAL","TE|Terrance Ferguson|LAR","RB|Rhamondre Stevenson|NE","WR|Christian Watson|GB","DST|LAC D/ST|LAC","K|Cairo Santos|CHI"],
+      bench:["RB|Blake Corum|LAR","QB|Michael Penix Jr.|ATL","WR|Wan'Dale Robinson|TEN","RB|RJ Harvey|DEN","RB|Chris Rodriguez Jr.|JAX","TE|Kenyon Sadiq|NYJ","WR|Adonai Mitchell|NYJ"] }
   ]
 };
 
@@ -300,6 +345,152 @@ function roster(t){
 }
 const TEAMS=SEED.teams;
 function bankroll(){ return TEAMS.reduce((a,t)=>a+(+t.buyin||0),0); }
+
+/* ======================= start/sit engine =======================
+   Lineup shapes per league type. FLEX takes RB/WR/TE everywhere.
+   A team with cfg:null gets projections only, no optimizer.
+================================================================== */
+const LINEUPS={
+  FFPC:    ['QB','RB','RB','WR','WR','TE','FLEX','FLEX','K','DST'],
+  NFFC:    ['QB','RB','RB','WR','WR','WR','TE','FLEX','K','DST'],
+  ESPN_STD:['QB','RB','RB','WR','WR','TE','FLEX','K','DST'],
+  ESPN_2QB:['QB','QB','RB','RB','WR','WR','TE','FLEX','FLEX','K','DST']
+};
+const FLEX_OK=new Set(['RB','WR','TE']);
+const PROJ_KEY='ffx.proj.v1';
+
+function csvParse(text){
+  const rows=[]; let row=[],cell='',q=false;
+  const s=String(text).replace(/^\uFEFF/,'');
+  for(let i=0;i<s.length;i++){
+    const c=s[i];
+    if(q){ if(c==='"'){ if(s[i+1]==='"'){cell+='"';i++;} else q=false; } else cell+=c; }
+    else if(c==='"') q=true;
+    else if(c===','){ row.push(cell); cell=''; }
+    else if(c==='\n'||c==='\r'){ if(c==='\r'&&s[i+1]==='\n') i++;
+      row.push(cell); cell=''; if(row.some(v=>v!=='')) rows.push(row); row=[]; }
+    else cell+=c;
+  }
+  row.push(cell); if(row.some(v=>v!=='')) rows.push(row);
+  if(!rows.length) return [];
+  const head=rows[0];
+  return rows.slice(1).map(r=>{ const o={}; head.forEach((h,i)=>o[h]=r[i]??''); return o; });
+}
+
+let PROJ=null, PROJMETA=null, PROJIDX=null;
+function indexProj(rows){
+  const idx={};
+  rows.forEach(r=>{ const k=key(r.Player); (idx[k]=idx[k]||[]).push(r); });
+  return idx;
+}
+function loadStoredProj(){
+  try{ const raw=localStorage.getItem(PROJ_KEY); if(!raw) return;
+    const o=JSON.parse(raw); PROJ=csvParse(o.csv); PROJIDX=indexProj(PROJ);
+    PROJMETA={name:o.name,ts:o.ts};
+  }catch(e){ PROJ=null; }
+}
+function setProj(name,csv){
+  PROJ=csvParse(csv); PROJIDX=indexProj(PROJ); PROJMETA={name,ts:Date.now()};
+  try{ localStorage.setItem(PROJ_KEY,JSON.stringify({name,ts:PROJMETA.ts,csv})); }catch(e){}
+}
+function clearProj(){ PROJ=PROJIDX=PROJMETA=null; try{ localStorage.removeItem(PROJ_KEY); }catch(e){} }
+
+/* ---- FFPC live sync ----
+   /api/rosters (Vercel serverless) returns fresh starters/bench parsed
+   from the five public FFPC lineup links, CDN-cached ~6h. Any team that
+   fails validation keeps the roster baked into this file. */
+let FFPC_SYNC=null;
+/* positions the baked-in rosters already know, keyed by normalized name —
+   the last-resort fallback when a synced player has no parsed pos and no CSV row */
+const SEED_POS=(()=>{ const m={};
+  SEED.teams.forEach(t=>[...t.starters,...t.bench].forEach(s=>{
+    const [pos,name]=s.split('|'); const k=key(name); if(!m[k]) m[k]=pos;
+  })); return m; })();
+function seedPos(name){ return SEED_POS[key(name)]; }
+async function syncFFPC(){
+  try{
+    const res=await fetch('/api/rosters');
+    if(!res.ok) throw new Error('http '+res.status);
+    const data=await res.json();
+    let applied=[], skipped=[];
+    for(const rt of (data.teams||[])){
+      const t=TEAMS.find(x=>x.label===rt.label&&x.site==='FFPC');
+      if(!t) continue;
+      if(!rt.ok||(rt.starters||[]).length!==10||(rt.bench||[]).length<9){ skipped.push(rt.label); continue; }
+      const fix=list=>list.map(p=>{
+        let pos=p.pos;
+        if(!pos||pos==='?'){ const rows=PROJIDX&&PROJIDX[key(p.name)]; pos=(rows&&rows[0].Pos)||seedPos(p.name)||'?'; }
+        return `${pos}|${p.name}|${p.nfl}`;
+      });
+      t.starters=fix(rt.starters); t.bench=fix(rt.bench); applied.push(rt.label);
+    }
+    FFPC_SYNC={ok:true,applied,skipped,at:data.fetchedAt||Date.now()};
+  }catch(e){ FFPC_SYNC={ok:false}; }
+  renderAll();
+}
+
+/* Roster name -> CSV name aliases (both sides run through key()).
+   Add a line here whenever a projection file spells a player differently. */
+const NAME_ALIASES={
+  kennethgainwell:'kennygainwell'
+};
+
+/* Match a roster entry to a CSV row. Name key first; when one name maps to
+   several rows, prefer matching position, then matching NFL team. Site
+   kickers stored as "XXX Team K" resolve to that team's kicker row. */
+function projRow(p){
+  if(!PROJIDX) return null;
+  const k=key(p.name);
+  let rows=PROJIDX[k]||PROJIDX[NAME_ALIASES[k]];
+  if(!rows && p.pos==='K' && /team k/i.test(p.name)){
+    const t=canon(p.nfl);
+    rows=(PROJ||[]).filter(r=>r.Pos==='K'&&canon(r.Team)===t);
+  }
+  if(!rows||!rows.length) return null;
+  if(rows.length>1){
+    const byPos=rows.filter(r=>r.Pos===p.pos); if(byPos.length) rows=byPos;
+    const byTeam=rows.filter(r=>canon(r.Team)===canon(p.nfl)); if(byTeam.length) rows=byTeam;
+  }
+  return rows[0];
+}
+function projVal(p,col){
+  const r=projRow(p); if(!r) return null;
+  const v=parseFloat(r[col]); return isNaN(v)?null:v;
+}
+
+/* Optimal lineup: fill dedicated slots with the best remaining player at
+   that position, then flex slots with the best remaining flex-eligible.
+   Optimal because flex eligibility is a strict superset of the slots it
+   competes with. Unmatched projections count as 0. */
+function optimizeTeam(t){
+  const cfg=LINEUPS[t.cfg];
+  const players=roster(t).map((p,i)=>({...p,id:i,val:projVal(p,t.proj)}));
+  const currentPts=players.filter(p=>p.starter).reduce((a,p)=>a+(p.val||0),0);
+  if(!cfg) return {players,cfg:null,currentPts};
+  const v=p=>p.val||0;
+  const pool=[...players].sort((a,b)=>v(b)-v(a));
+  const used=new Set();
+  cfg.filter(s=>s!=='FLEX').forEach(s=>{
+    const p=pool.find(x=>!used.has(x.id)&&x.pos===s); if(p) used.add(p.id);
+  });
+  cfg.filter(s=>s==='FLEX').forEach(()=>{
+    const p=pool.find(x=>!used.has(x.id)&&FLEX_OK.has(x.pos)); if(p) used.add(p.id);
+  });
+  const optPts=players.filter(p=>used.has(p.id)).reduce((a,p)=>a+(p.val||0),0);
+  const promote=players.filter(p=>!p.starter&&used.has(p.id));
+  const demote=players.filter(p=>p.starter&&!used.has(p.id));
+  /* pair moves for readability: same position first, then flex-eligible */
+  const moves=[]; const dpool=[...demote].sort((a,b)=>v(a)-v(b));
+  [...promote].sort((a,b)=>v(b)-v(a)).forEach(p=>{
+    let j=dpool.findIndex(d=>d.pos===p.pos);
+    if(j<0) j=dpool.findIndex(d=>FLEX_OK.has(d.pos)&&FLEX_OK.has(p.pos));
+    const d=j>=0?dpool.splice(j,1)[0]:null;
+    moves.push({up:p,down:d});
+  });
+  dpool.forEach(d=>moves.push({up:null,down:d}));
+  return {players,cfg,currentPts,optPts,delta:optPts-currentPts,
+    upSet:new Set(promote.map(p=>p.id)),downSet:new Set(demote.map(p=>p.id)),moves};
+}
 
 /* takes are the only stored state */
 const KEY='exposure-book-takes-v1';
@@ -339,7 +530,7 @@ function exposures(opts){
 }
 
 /* ============================ rendering ============================ */
-let ui={tab:'exp',pos:'ALL',sites:new Set(),sort:'dollars',dir:-1,q:'',startersOnly:false,tq:'',open:new Set()};
+let ui={tab:'exp',pos:'ALL',sites:new Set(),ssSites:new Set(),sort:'dollars',dir:-1,q:'',startersOnly:false,tq:'',open:new Set()};
 
 function renderNote(){
   $('#storeNote').textContent = canPersist
@@ -443,6 +634,76 @@ function renderTeams(){
   }).join('');
 }
 
+function renderSS(){
+  const meta=$('#ssMeta'), host=$('#ssList');
+  $('#ssClear').classList.toggle('hidden',!PROJ);
+  const allSites=[...new Set(TEAMS.map(t=>t.site))];
+  const none=ui.ssSites.size===0;
+  $('#ssSiteFilter').innerHTML=
+    `<button class="chip" data-sssite="ALL" aria-pressed="${none}">All sites</button>`+
+    allSites.map(s=>{
+      const on=ui.ssSites.has(s);
+      return `<button class="chip multi" data-sssite="${esc(s)}" aria-pressed="${on}">${on?'<span class="tick">✓</span>':''}${esc(s)}</button>`;
+    }).join('');
+  if(!PROJ){
+    meta.textContent='No projections loaded yet.';
+    host.innerHTML='<p class="empty">Load the weekly projections CSV (Player / Pos / Team plus the scoring columns) and every team below gets scored in its own format, ordered by buy-in, with recommended lineup swaps flagged.</p>';
+    return;
+  }
+  meta.textContent=`${PROJMETA.name} · loaded ${new Date(PROJMETA.ts).toLocaleDateString('en-US',{month:'short',day:'numeric'})} · ${PROJ.length} players`;
+  if(FFPC_SYNC){
+    if(FFPC_SYNC.ok&&FFPC_SYNC.applied.length){
+      const t=new Date(FFPC_SYNC.at).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+      meta.textContent+=` · FFPC synced ${t} (${FFPC_SYNC.applied.length}/5${FFPC_SYNC.skipped.length?', '+FFPC_SYNC.skipped.length+' kept on file':''})`;
+    } else if(FFPC_SYNC.ok){
+      meta.textContent+=' · FFPC sync returned nothing usable — rosters on file';
+    } else {
+      meta.textContent+=' · FFPC sync offline — rosters on file';
+    }
+  }
+  const pts=n=>(Math.round(n*10)/10).toFixed(1);
+  const teams=[...TEAMS].sort((a,b)=>(+b.buyin||0)-(+a.buyin||0))
+    .filter(t=>ui.ssSites.size===0||ui.ssSites.has(t.site));
+  host.innerHTML=teams.map(t=>{
+    const r=optimizeTeam(t);
+    const line=(p,cls)=>`
+      <div class="slot ${cls}">
+        <span class="pos ${esc(p.pos)}">${esc(p.pos||'?')}</span>
+        ${logo(p.nfl,18)}
+        <span class="nm">${esc(p.name)}</span>
+        <span class="pj ${p.val==null?'na':''}">${p.val==null?'—':pts(p.val)}</span>
+      </div>`;
+    const starters=r.players.filter(p=>p.starter), bench=r.players.filter(p=>!p.starter);
+    let head, movesHtml='', warn='';
+    if(!r.cfg){
+      head=`<span class="ss-ok">projections only · lineup ${pts(r.currentPts)} pts</span>`;
+      warn='<div class="ss-warn">Lineup slots unknown for this league, so no swap advice here yet.</div>';
+    } else if(r.delta>0.05){
+      head=`lineup <b>${pts(r.currentPts)}</b> → <b>${pts(r.optPts)}</b> <span class="ss-delta">(+${pts(r.delta)})</span>`;
+      movesHtml=`<div class="moves">${r.moves.map(m=>{
+        if(m.up&&m.down) return `<div class="mv">Start <b>${esc(m.up.name)}</b> ${pts(m.up.val||0)} over <s>${esc(m.down.name)}</s> ${pts(m.down.val||0)}</div>`;
+        if(m.up) return `<div class="mv">Start <b>${esc(m.up.name)}</b> ${pts(m.up.val||0)}</div>`;
+        return `<div class="mv">Sit <s>${esc(m.down.name)}</s> ${pts(m.down.val||0)}</div>`;
+      }).join('')}</div>`;
+    } else {
+      head=`<span class="ss-ok">lineup optimal at ${pts(r.currentPts)} pts</span>`;
+    }
+    const missing=r.players.filter(p=>p.val==null);
+    if(missing.length) warn+=`<div class="ss-warn">No projection for: ${missing.map(p=>esc(p.name)).join(', ')}.</div>`;
+    return `<div class="team">
+      <div class="team-hd ss-hd">
+        <h3>${esc(t.label)}</h3>
+        <span class="meta">${usd(t.buyin)} at ${esc(t.site)} · ${esc(t.proj||'')} · ${head}</span>
+      </div>
+      ${movesHtml}
+      <div class="roster">
+        <div class="rgroup">Starters</div>${starters.map(p=>line(p,r.downSet&&r.downSet.has(p.id)?'sit':'')).join('')}
+        <div class="rgroup">Bench</div>${bench.map(p=>line(p,(r.upSet&&r.upSet.has(p.id)?'up ':'')+'bn')).join('')}
+      </div>
+      ${warn}</div>`;
+  }).join('');
+}
+
 function fmtDate(d){ const [y,m,dd]=d.split('-').map(Number);
   return new Date(y,m-1,dd).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}); }
 
@@ -470,13 +731,32 @@ function renderTakes(){
   renderNote();
 }
 
-function renderAll(){ renderFilters(); renderExposures(); renderTeams(); renderTakes(); }
+function renderAll(){ renderFilters(); renderExposures(); renderTeams(); renderTakes(); renderSS(); }
+
+$('#ssFile').addEventListener('change',e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=()=>{ setProj(f.name,rd.result); renderSS(); };
+  rd.readAsText(f);
+  e.target.value='';
+});
+$('#ssSiteFilter').addEventListener('click',e=>{
+  const btn=e.target.closest('[data-sssite]'); if(!btn) return;
+  const s=btn.dataset.sssite;
+  if(s==='ALL') ui.ssSites.clear();
+  else {
+    ui.ssSites.has(s)?ui.ssSites.delete(s):ui.ssSites.add(s);
+    if(ui.ssSites.size===new Set(TEAMS.map(t=>t.site)).size) ui.ssSites.clear();
+  }
+  renderSS();
+});
+$('#ssClear').addEventListener('click',()=>{ if(confirm('Clear loaded projections?')){ clearProj(); renderSS(); } });
 
 /* ============================ events ============================ */
 document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
   ui.tab=b.dataset.tab;
   document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===b));
-  ['exp','teams','takes'].forEach(t=>$('#tab-'+t).classList.toggle('hidden',t!==ui.tab));
+  ['exp','ss','teams','takes'].forEach(t=>$('#tab-'+t).classList.toggle('hidden',t!==ui.tab));
 }));
 $('#posFilter').addEventListener('click',e=>{ if(!e.target.dataset.pos) return; ui.pos=e.target.dataset.pos; renderFilters(); renderExposures(); });
 $('#siteFilter').addEventListener('click',e=>{
@@ -521,7 +801,9 @@ $('#takeList').addEventListener('click',e=>{
   if(confirm('Delete this take?')){ takes=takes.filter(t=>t.id!==id); saveTakes(); renderTakes(); }
 });
 
+loadStoredProj();
 renderAll();
+syncFFPC();
 </script>
 </body>
 </html>
