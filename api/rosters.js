@@ -7,8 +7,8 @@
    Labels must match the SEED labels in index.html exactly. */
 
 const FFPC_TEAMS = [
-  { label: 'Bene Gesserit (FFPC)', ltuid: 'B53-6F3DA4E9125F' },
-  { label: 'Lisan al-Gaib (FFPC)', ltuid: '295-CE331642203F' },
+  { label: 'Desert Power', ltuid: 'B53-6F3DA4E9125F' },
+  { label: 'Kwisatz Haderach', ltuid: '295-CE331642203F' },
   { label: 'Shai-Hulud',           ltuid: 'F5E-BAE7894EEF55' },
   { label: 'Spacing Guild',        ltuid: '9F1-5F1862AB9E47' },
   { label: 'Gom Jabbar',           ltuid: 'EB6-3B1DAC0B4F7E' }
