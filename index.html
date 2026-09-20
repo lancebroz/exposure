@@ -192,7 +192,7 @@ h1 span{color:var(--muted);font-weight:500}
   <h1>Exposure Book <span>2026</span></h1>
 
   <nav class="tabs" role="tablist">
-    <button class="tab" role="tab" data-tab="scores" aria-selected="true">Scores</button>
+    <button class="tab" role="tab" data-tab="scores" aria-selected="true">Tracker</button>
     <button class="tab" role="tab" data-tab="exp" aria-selected="false">Exposures</button>
     <button class="tab" role="tab" data-tab="ss" aria-selected="false">Start/Sit</button>
     <button class="tab" role="tab" data-tab="teams" aria-selected="false">Teams</button>
@@ -253,21 +253,21 @@ h1 span{color:var(--muted);font-weight:500}
 const SEED={
   teams:[
     { site:"ESPN", buyin:50, rec:"1-0", label:"Marquee League", cfg:"ESPN_STD", proj:"Full PPR Proj",
-      starters:["QB|Josh Allen|BUF","RB|Jahmyr Gibbs|DET","RB|J.K. Dobbins|DEN","WR|Chris Olave|NO","WR|Luther Burden III|CHI","TE|Tucker Kraft|GB","WR|Parker Washington|JAX","DST|LAC D/ST|LAC","K|Tyler Loop|BAL"],
-      bench:["WR|Jaylen Waddle|DEN","RB|Jordan Mason|MIN","RB|Jacory Croskey-Merritt|WAS","TE|Terrance Ferguson|LAR","WR|KC Concepcion|CLE","RB|Keaton Mitchell|LAC","RB|Kaelon Black|SF"] },
+      starters:["QB|Josh Allen|BUF","RB|Jahmyr Gibbs|DET","RB|Jacory Croskey-Merritt|WAS","WR|Chris Olave|NO","WR|Parker Washington|JAX","TE|Tucker Kraft|GB","WR|Jaylen Waddle|DEN","DST|LAC D/ST|LAC","K|Tyler Loop|BAL"],
+      bench:["WR|Luther Burden III|CHI","RB|J.K. Dobbins|DEN","RB|Jordan Mason|MIN","TE|Terrance Ferguson|LAR","WR|KC Concepcion|CLE","RB|Keaton Mitchell|LAC","RB|Kaelon Black|SF"] },
 
     /* FFPC Big Gorilla #104907, double-TE build. Live lineup 9/9: Bowers (knee) and Henderson (out) benched; Mayer and Harvey in. */
     { site:"FFPC", buyin:350, rec:"0-1", label:"Desert Power", cfg:"FFPC", proj:"FFPC Proj",
-      starters:["QB|Jaxson Dart|NYG","RB|Travis Etienne|NO","RB|RJ Harvey|DEN","WR|Jaylen Waddle|DEN","WR|Pat Bryant|DEN","TE|Colston Loveland|CHI","WR|DK Metcalf|PIT","TE|Michael Mayer|LV","K|Cameron Dicker|LAC","DST|LAC D/ST|LAC"],
-      bench:["QB|Patrick Mahomes|KC","RB|TreVeyon Henderson|NE","RB|Keaton Mitchell|LAC","RB|Emmett Johnson|KC","RB|Kimani Vidal|LAC","RB|Kendre Miller|NO","WR|Davante Adams|LAR","WR|Josh Downs|IND","WR|Makai Lemon|PHI","TE|Brock Bowers|LV"] },
+      starters:["QB|Patrick Mahomes|KC","RB|Travis Etienne|NO","RB|RJ Harvey|DEN","WR|Jaylen Waddle|DEN","WR|Davante Adams|LAR","TE|Colston Loveland|CHI","WR|DK Metcalf|PIT","TE|Michael Mayer|LV","K|Cameron Dicker|LAC","DST|LAC D/ST|LAC"],
+      bench:["QB|Jaxson Dart|NYG","RB|TreVeyon Henderson|NE","RB|Keaton Mitchell|LAC","RB|Emmett Johnson|KC","RB|Kimani Vidal|LAC","RB|Kendre Miller|NO","WR|Josh Downs|IND","WR|Makai Lemon|PHI","WR|Pat Bryant|DEN","TE|Brock Bowers|LV"] },
 
     { site:"FFPC", buyin:350, rec:"1-0", label:"Kwisatz Haderach", cfg:"FFPC", proj:"FFPC Proj",
-      starters:["QB|Matthew Stafford|LAR","RB|James Cook|BUF","RB|Ashton Jeanty|LV","WR|Zay Flowers|BAL","WR|Josh Downs|IND","TE|Tucker Kraft|GB","WR|Jordan Addison|MIN","TE|Sam LaPorta|DET","K|Jason Myers|SEA","DST|JAX D/ST|JAX"],
-      bench:["QB|Bo Nix|DEN","RB|Blake Corum|LAR","RB|Aaron Jones|MIN","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","WR|Ladd McConkey|LAC","WR|De'Zhaun Stribling|SF","WR|Pat Bryant|DEN","WR|Demarcus Robinson|SF","TE|AJ Barner|SEA"] },
+      starters:["QB|Matthew Stafford|LAR","RB|James Cook|BUF","RB|Ashton Jeanty|LV","WR|Ladd McConkey|LAC","WR|Josh Downs|IND","TE|Tucker Kraft|GB","RB|Aaron Jones|MIN","TE|Sam LaPorta|DET","K|Jason Myers|SEA","DST|JAX D/ST|JAX"],
+      bench:["QB|Bo Nix|DEN","RB|Blake Corum|LAR","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","WR|Zay Flowers|BAL","WR|De'Zhaun Stribling|SF","WR|Jordan Addison|MIN","WR|Pat Bryant|DEN","WR|Demarcus Robinson|SF","TE|AJ Barner|SEA"] },
 
     { site:"FFPC", buyin:350, rec:"1-0", label:"Shai-Hulud", cfg:"FFPC", proj:"FFPC Proj",
-      starters:["QB|Jalen Hurts|PHI","RB|Kenneth Walker|KC","RB|Travis Etienne|NO","WR|CeeDee Lamb|DAL","WR|Zay Flowers|BAL","TE|Dallas Goedert|PHI","WR|Parker Washington|JAX","WR|Christian Watson|GB","K|Will Reichard|MIN","DST|JAX D/ST|JAX"],
-      bench:["QB|Jordan Love|GB","RB|Blake Corum|LAR","RB|Tank Bigsby|PHI","RB|Brian Robinson|ATL","RB|Kaleb Johnson|GB","WR|Matthew Golden|GB","WR|Khalil Shakir|BUF","TE|Chig Okonkwo|WAS","TE|Cade Otton|TB","TE|Eli Raridon|NE"] },
+      starters:["QB|Jalen Hurts|PHI","RB|Kenneth Walker|KC","RB|Travis Etienne|NO","WR|CeeDee Lamb|DAL","WR|Parker Washington|JAX","TE|Dallas Goedert|PHI","WR|Christian Watson|GB","WR|Matthew Golden|GB","K|Will Reichard|MIN","DST|JAX D/ST|JAX"],
+      bench:["QB|Jordan Love|GB","RB|Blake Corum|LAR","RB|Tank Bigsby|PHI","RB|Brian Robinson|ATL","RB|Kaleb Johnson|GB","WR|Zay Flowers|BAL","WR|Khalil Shakir|BUF","TE|Chig Okonkwo|WAS","TE|Cade Otton|TB","TE|Eli Raridon|NE"] },
 
     /* FFPC Big Gorilla #105275, drafted overnight 9/10 — roster from screenshot; public link lagged the draft. */
     { site:"FFPC", buyin:350, rec:"1-0", label:"Spacing Guild", cfg:"FFPC", proj:"FFPC Proj",
@@ -276,28 +276,28 @@ const SEED={
 
     /* FFPC Big Gorilla #105165 (leaderboard shows Baby Gorilla contest — buy-in TBC), drafted morning 9/10. */
     { site:"FFPC", buyin:350, rec:"0-1", label:"Gom Jabbar", cfg:"FFPC", proj:"FFPC Proj",
-      starters:["QB|Jalen Hurts|PHI","RB|Christian McCaffrey|SF","RB|Saquon Barkley|PHI","WR|George Pickens|DAL","WR|Garrett Wilson|NYJ","TE|Sam LaPorta|DET","WR|Rome Odunze|CHI","WR|Jayden Reed|GB","K|Will Reichard|MIN","DST|LAC D/ST|LAC"],
-      bench:["QB|Kyler Murray|MIN","RB|Rico Dowdle|PIT","RB|Emmett Johnson|KC","WR|Makai Lemon|PHI","WR|Ja'Kobi Lane|BAL","WR|Omar Cooper Jr.|NYJ","WR|Antonio Williams|WAS","WR|Demarcus Robinson|SF","TE|Hunter Henry|NE","TE|Cade Otton|TB"] },
+      starters:["QB|Jalen Hurts|PHI","RB|Christian McCaffrey|SF","RB|Saquon Barkley|PHI","WR|George Pickens|DAL","WR|Garrett Wilson|NYJ","TE|Sam LaPorta|DET","WR|Rome Odunze|CHI","TE|Hunter Henry|NE","K|Will Reichard|MIN","DST|LAC D/ST|LAC"],
+      bench:["QB|Kyler Murray|MIN","RB|Rico Dowdle|PIT","RB|Emmett Johnson|KC","WR|Jayden Reed|GB","WR|Makai Lemon|PHI","WR|Ja'Kobi Lane|BAL","WR|Omar Cooper Jr.|NYJ","WR|Antonio Williams|WAS","WR|Demarcus Robinson|SF","TE|Cade Otton|TB"] },
 
     /* $250 Keeper League #16. Bench refreshed 9/9. */
     { site:"NFFC", buyin:250, rec:"0-1", label:"Lisan al-Gaib", cfg:"NFFC", proj:"Full PPR Proj",
-      starters:["QB|Justin Herbert|LAC","RB|Saquon Barkley|PHI","RB|Bhayshul Tuten|JAX","WR|CeeDee Lamb|DAL","WR|Zay Flowers|BAL","WR|Jaylen Waddle|DEN","TE|Tucker Kraft|GB","WR|DK Metcalf|PIT","K|BAL Team K|BAL","DST|GB D/ST|GB"],
-      bench:["QB|Jordan Love|GB","RB|Keaton Mitchell|LAC","RB|Blake Corum|LAR","WR|Jordyn Tyson|NO","WR|Romeo Doubs|NE","WR|Ja'Kobi Lane|BAL","WR|Pat Bryant|DEN","WR|Kalif Raymond|CHI","TE|Kenyon Sadiq|NYJ","TE|Michael Mayer|LV"] },
+      starters:["QB|Justin Herbert|LAC","RB|Saquon Barkley|PHI","RB|Bhayshul Tuten|JAX","WR|CeeDee Lamb|DAL","WR|DK Metcalf|PIT","WR|Jaylen Waddle|DEN","TE|Michael Mayer|LV","TE|Tucker Kraft|GB","K|BAL Team K|BAL","DST|GB D/ST|GB"],
+      bench:["QB|Jordan Love|GB","RB|Keaton Mitchell|LAC","RB|Blake Corum|LAR","WR|Jordyn Tyson|NO","WR|Romeo Doubs|NE","WR|Ja'Kobi Lane|BAL","WR|Pat Bryant|DEN","WR|Zay Flowers|BAL","WR|Kalif Raymond|CHI","TE|Kenyon Sadiq|NYJ"] },
 
     /* $250 Cash League #1525 (personal). Full roster from 9/9 screenshot. */
     { site:"NFFC", buyin:250, rec:"1-0", label:"Bene Gesserit", cfg:"NFFC", proj:"Full PPR Proj",
-      starters:["QB|Matthew Stafford|LAR","RB|Jeremiyah Love|ARI","RB|Rachaad White|WAS","WR|Amon-Ra St. Brown|DET","WR|Drake London|ATL","WR|Luther Burden III|CHI","TE|Tyler Warren|IND","WR|Matthew Golden|GB","K|SEA Team K|SEA","DST|JAX D/ST|JAX"],
-      bench:["RB|Kenneth Gainwell|TB","WR|Ladd McConkey|LAC","RB|RJ Harvey|DEN","QB|Jordan Love|GB","TE|Terrance Ferguson|LAR","WR|Ryan Flournoy|DAL","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","WR|Jaylin Noel|HOU","WR|Demarcus Robinson|SF"] },
+      starters:["QB|Matthew Stafford|LAR","RB|Jeremiyah Love|ARI","RB|Kenneth Gainwell|TB","WR|Amon-Ra St. Brown|DET","WR|Drake London|ATL","WR|Luther Burden III|CHI","TE|Tyler Warren|IND","WR|Ladd McConkey|LAC","K|SEA Team K|SEA","DST|JAX D/ST|JAX"],
+      bench:["RB|Rachaad White|WAS","WR|Matthew Golden|GB","RB|RJ Harvey|DEN","QB|Jordan Love|GB","TE|Terrance Ferguson|LAR","WR|Ryan Flournoy|DAL","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","WR|Jaylin Noel|HOU","WR|Demarcus Robinson|SF"] },
 
     /* $250 Cash League #1289, shared entry at $83. */
     { site:"NFFC", buyin:83, rec:"1-0", label:"Drake Maye Fan Club", cfg:"NFFC", proj:"Full PPR Proj",
-      starters:["QB|Josh Allen|BUF","RB|Bijan Robinson|ATL","RB|Bucky Irving|TB","WR|Emeka Egbuka|TB","WR|Carnell Tate|TEN","WR|Josh Downs|IND","TE|Michael Mayer|LV","WR|Jayden Reed|GB","K|SF Team K|SF","DST|SF D/ST|SF"],
-      bench:["WR|Romeo Doubs|NE","WR|Denzel Boston|CLE","RB|Jonah Coleman|DEN","WR|Ryan Flournoy|DAL","WR|Omar Cooper Jr.|NYJ","RB|Emmett Johnson|KC","WR|Jalen Nailor|LV","RB|Kimani Vidal|LAC","QB|Aaron Rodgers|PIT","TE|Brock Bowers|LV"] },
+      starters:["QB|Josh Allen|BUF","RB|Bijan Robinson|ATL","RB|Bucky Irving|TB","WR|Emeka Egbuka|TB","WR|Jayden Reed|GB","WR|Josh Downs|IND","TE|Michael Mayer|LV","WR|Romeo Doubs|NE","K|SF Team K|SF","DST|SF D/ST|SF"],
+      bench:["WR|Carnell Tate|TEN","WR|Denzel Boston|CLE","RB|Jonah Coleman|DEN","WR|Ryan Flournoy|DAL","WR|Omar Cooper Jr.|NYJ","RB|Emmett Johnson|KC","WR|Jalen Nailor|LV","RB|Kimani Vidal|LAC","QB|Aaron Rodgers|PIT","TE|Brock Bowers|LV"] },
 
     /* $500 Cash League #1937, split entry at $225. */
     { site:"NFFC", buyin:225, rec:"0-1", label:"Cousin Greg IX", cfg:"NFFC", proj:"Full PPR Proj",
-      starters:["QB|Drake Maye|NE","RB|Christian McCaffrey|SF","RB|Breece Hall|NYJ","WR|Nico Collins|HOU","WR|Jameson Williams|DET","WR|Parker Washington|JAX","TE|Tucker Kraft|GB","RB|Jaylen Warren|PIT","K|LAC Team K|LAC","DST|PHI D/ST|PHI"],
-      bench:["WR|Makai Lemon|PHI","WR|Khalil Shakir|BUF","WR|Denzel Boston|CLE","RB|Keaton Mitchell|LAC","QB|Patrick Mahomes|KC","TE|Kenyon Sadiq|NYJ","WR|Antonio Williams|WAS","K|KC Team K|KC","WR|Demarcus Robinson|SF","RB|Kendre Miller|NO"] },
+      starters:["QB|Drake Maye|NE","RB|Christian McCaffrey|SF","RB|Breece Hall|NYJ","WR|Khalil Shakir|BUF","WR|Jameson Williams|DET","WR|Parker Washington|JAX","TE|Tucker Kraft|GB","RB|Jaylen Warren|PIT","K|LAC Team K|LAC","DST|PHI D/ST|PHI"],
+      bench:["WR|Makai Lemon|PHI","WR|Nico Collins|HOU","WR|Denzel Boston|CLE","RB|Keaton Mitchell|LAC","QB|Patrick Mahomes|KC","TE|Kenyon Sadiq|NYJ","WR|Antonio Williams|WAS","K|KC Team K|KC","WR|Demarcus Robinson|SF","RB|Kendre Miller|NO"] },
 
     /* Roster view showed no lineup split, so all 15 are recorded as active. */
     { site:"NFFC", buyin:250, rec:"0-1", label:"Bene Tleilax", cfg:"NFFC", proj:"Full PPR Proj",
@@ -309,8 +309,8 @@ const SEED={
       bench:["RB|Blake Corum|LAR","TE|Harold Fannin Jr.|CLE","WR|Jayden Reed|GB","RB|Jonah Coleman|DEN","RB|Emmett Johnson|KC","WR|Jalen Coker|CAR"] },
 
     { site:"ESPN", buyin:50, rec:"1-0", label:"2 QB Justin League", cfg:"ESPN_2QB", proj:"Half PPR Proj",
-      starters:["QB|Jaxson Dart|NYG","QB|Justin Herbert|LAC","RB|Bijan Robinson|ATL","RB|D'Andre Swift|CHI","WR|Zay Flowers|BAL","WR|Christian Watson|GB","TE|Michael Mayer|LV","RB|Rhamondre Stevenson|NE","WR|Wan'Dale Robinson|TEN","DST|LAC D/ST|LAC","K|Cairo Santos|CHI"],
-      bench:["WR|A.J. Brown|NE","RB|Blake Corum|LAR","QB|Michael Penix Jr.|ATL","RB|RJ Harvey|DEN","TE|Terrance Ferguson|LAR","RB|Kaelon Black|SF","WR|Pat Bryant|DEN"] }
+      starters:["QB|Jaxson Dart|NYG","QB|Justin Herbert|LAC","RB|Bijan Robinson|ATL","RB|D'Andre Swift|CHI","WR|Christian Watson|GB","WR|Pat Bryant|DEN","TE|Michael Mayer|LV","RB|Rhamondre Stevenson|NE","RB|Blake Corum|LAR","DST|LAC D/ST|LAC","K|Cairo Santos|CHI"],
+      bench:["WR|A.J. Brown|NE","WR|Zay Flowers|BAL","QB|Michael Penix Jr.|ATL","RB|RJ Harvey|DEN","TE|Terrance Ferguson|LAR","RB|Kaelon Black|SF","WR|Wan'Dale Robinson|TEN"] }
   ]
 };
 
@@ -747,21 +747,21 @@ $('#expList').addEventListener('click',e=>{
    Teams with no entry for a week show an em dash in the grid.
 ================================================================ */
 const SCORES={
- weeks:[1],
+ weeks:[1,2],
  data:{
-  "Bene Tleilax":{"1":{actual:105.7,proj:138.0}},
-  "Lisan al-Gaib":{"1":{actual:116.45,proj:132.0}},
-  "Bene Gesserit":{"1":{actual:138.35,proj:131.8}},
-  "Drake Maye Fan Club":{"1":{actual:147.2,proj:125.3}},
-  "Cousin Greg IX":{"1":{actual:134.9,proj:134.8}},
-  "Kwisatz Haderach":{"1":{actual:146.55,proj:142.5}},
-  "Spacing Guild":{"1":{actual:145.05,proj:139.2}},
-  "Gom Jabbar":{"1":{actual:99.45,proj:147.5}},
-  "Desert Power":{"1":{actual:84.4,proj:125.2}},
-  "Shai-Hulud":{"1":{actual:216.55,proj:146.9}},
-  "ESPN Dynasty":{"1":{actual:142.0,proj:128.1}},
-  "2 QB Justin League":{"1":{actual:180.36,proj:142.7}},
-  "Marquee League":{"1":{actual:135.26,proj:122.7}}
+  "Bene Tleilax":{"1":{actual:105.7,proj:138.0},"2":{proj:139.4}},
+  "Lisan al-Gaib":{"1":{actual:116.45,proj:132.0},"2":{proj:128.1}},
+  "Bene Gesserit":{"1":{actual:138.35,proj:131.8},"2":{proj:119.8}},
+  "Drake Maye Fan Club":{"1":{actual:147.2,proj:125.3},"2":{proj:137.9}},
+  "Cousin Greg IX":{"1":{actual:134.9,proj:134.8},"2":{proj:131.3}},
+  "Kwisatz Haderach":{"1":{actual:146.55,proj:142.5},"2":{proj:138.3}},
+  "Spacing Guild":{"1":{actual:145.05,proj:139.2},"2":{proj:135.7}},
+  "Gom Jabbar":{"1":{actual:99.45,proj:147.5},"2":{proj:142.1}},
+  "Desert Power":{"1":{actual:84.4,proj:125.2},"2":{proj:122.2}},
+  "Shai-Hulud":{"1":{actual:216.55,proj:146.9},"2":{proj:136.5}},
+  "ESPN Dynasty":{"1":{actual:142.0,proj:128.1},"2":{proj:130.9}},
+  "2 QB Justin League":{"1":{actual:180.36,proj:142.7},"2":{proj:135.1}},
+  "Marquee League":{"1":{actual:135.26,proj:122.7},"2":{proj:131.0}}
  }
 };
 
@@ -783,6 +783,7 @@ function renderScores(){
         weeks.map(w=>{
           const c=d[w];
           if(!c) return '<td class="sc-cell na">—</td>';
+          if(c.actual==null) return `<td class="sc-cell"><span class="sc-a na">—</span><span class="sc-p">${c.proj.toFixed(1)}</span></td>`;
           const diff=c.actual-c.proj;
           const cls=diff>10?'up':diff<-10?'dn':'';
           return `<td class="sc-cell"><span class="sc-a ${cls}">${c.actual.toFixed(1)}</span><span class="sc-p">${c.proj.toFixed(1)}</span></td>`;
