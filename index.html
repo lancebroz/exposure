@@ -257,70 +257,69 @@ h1 span{color:var(--muted);font-weight:500}
 ================================================================== */
 const SEED={
   teams:[
-    /* W7: Rodgers in for bye Allen; Gibbs back. */
+    /* W8: Allen back; P.Washington in at WR2. */
     { site:"ESPN", buyin:50, rec:"5-2", label:"Marquee League", cfg:"ESPN_STD", proj:"Full PPR Proj",
-      starters:["QB|Aaron Rodgers|PIT","RB|Jahmyr Gibbs|DET","RB|J.K. Dobbins|DEN","WR|Chris Olave|NO","WR|Luther Burden III|CHI","TE|Tucker Kraft|GB","WR|Jaylen Waddle|DEN","DST|PIT D/ST|PIT","K|Tyler Loop|BAL"],
-      bench:["QB|Josh Allen|BUF","WR|Parker Washington|JAX","RB|Jordan Mason|MIN","WR|KC Concepcion|CLE","RB|Keaton Mitchell|LAC","RB|Jonah Coleman|DEN","WR|Antonio Williams|WAS"] },
+      starters:["QB|Josh Allen|BUF","RB|Jahmyr Gibbs|DET","RB|J.K. Dobbins|DEN","WR|Luther Burden III|CHI","WR|Parker Washington|JAX","TE|Tucker Kraft|GB","WR|Jaylen Waddle|DEN","DST|PIT D/ST|PIT","K|Tyler Loop|BAL"],
+      bench:["WR|Chris Olave|NO","RB|Jordan Mason|MIN","WR|KC Concepcion|CLE","RB|Jonah Coleman|DEN","WR|Antonio Williams|WAS","WR|Brian Thomas|JAX","RB|Seth McGowan|IND"] },
 
-    /* W7: JAX DST on bye — CAR DST on bench. */
     { site:"FFPC", buyin:350, rec:"1-6", pb:[["3","-83"],["4","-117"],["5","-124"],["6","-194"],["7","-222"]], label:"Desert Power", cfg:"FFPC", proj:"FFPC Proj",
-      starters:["QB|Patrick Mahomes|KC","RB|TreVeyon Henderson|NE","RB|RJ Harvey|DEN","WR|Jaylen Waddle|DEN","WR|DK Metcalf|PIT","TE|Brock Bowers|LV","TE|Hunter Henry|NE","TE|Colston Loveland|CHI","K|Tyler Loop|BAL","DST|CAR D/ST|CAR"],
-      bench:["QB|Jacoby Brissett|ARI","RB|Travis Etienne|NO","RB|Keaton Mitchell|LAC","RB|Emmett Johnson|KC","RB|Kimani Vidal|LAC","WR|Makai Lemon|PHI","WR|Pat Bryant|DEN","WR|Josh Downs|IND","TE|Michael Mayer|LV","DST|JAX D/ST|JAX"] },
+      starters:["QB|Patrick Mahomes|KC","RB|TreVeyon Henderson|NE","RB|RJ Harvey|DEN","WR|Jaylen Waddle|DEN","WR|DK Metcalf|PIT","TE|Brock Bowers|LV","TE|Colston Loveland|CHI","TE|Hunter Henry|NE","K|Tyler Loop|BAL","DST|JAX D/ST|JAX"],
+      bench:["QB|Jacoby Brissett|ARI","RB|Travis Etienne|NO","RB|Keaton Mitchell|LAC","RB|Emmett Johnson|KC","RB|Kimani Vidal|LAC","WR|Josh Downs|IND","WR|Makai Lemon|PHI","WR|Pat Bryant|DEN","TE|Michael Mayer|LV","DST|CAR D/ST|CAR"] },
 
-    /* W7: James Cook benched for bye; LaPorta + Addison in FLEX; JAX DST bye with no backup DST on roster. */
+    /* W8: McConkey to WR2, Corum FLEX; JAX DST back from bye. */
     { site:"FFPC", buyin:350, rec:"2-5", pb:[["3","-38"],["4","-35"],["5","+7"],["6","+5"],["7","-13"]], label:"Kwisatz Haderach", cfg:"FFPC", proj:"FFPC Proj",
-      starters:["QB|Matthew Stafford|LAR","RB|Ashton Jeanty|LV","RB|Aaron Jones|MIN","WR|Zay Flowers|BAL","WR|Josh Downs|IND","TE|Tucker Kraft|GB","WR|Chris Godwin|TB","TE|Sam LaPorta|DET","K|Jason Myers|SEA","DST|MIA D/ST|MIA"],
-      bench:["QB|Bo Nix|DEN","RB|James Cook|BUF","RB|Blake Corum|LAR","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","RB|Dameon Pierce|PHI","WR|Ladd McConkey|LAC","WR|Jordan Addison|MIN","TE|Eli Raridon|NE","TE|Tyler Higbee|LAR"] },
+      starters:["QB|Matthew Stafford|LAR","RB|James Cook|BUF","RB|Ashton Jeanty|LV","WR|Zay Flowers|BAL","WR|Ladd McConkey|LAC","TE|Tucker Kraft|GB","RB|Blake Corum|LAR","TE|Sam LaPorta|DET","K|Jason Myers|SEA","DST|JAX D/ST|JAX"],
+      bench:["QB|Bo Nix|DEN","RB|Aaron Jones|MIN","RB|Keaton Mitchell|LAC","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","WR|Chris Godwin|TB","WR|Josh Downs|IND","WR|Jordan Addison|MIN","WR|Travis Hunter|JAX","TE|Eli Raridon|NE"] },
 
-    /* W7: JAX DST on bye — CAR DST on bench. */
+    /* W8: Mayfield + Dulcich stashed; same starters as W7 with JAX DST back. */
     { site:"FFPC", buyin:350, rec:"5-2", pb:[["3","+97"],["4","+119"],["5","+123"],["6","+105"],["7","+179"]], label:"Shai-Hulud", cfg:"FFPC", proj:"FFPC Proj",
-      starters:["QB|Jordan Love|GB","RB|Kenneth Walker|KC","RB|Blake Corum|LAR","WR|CeeDee Lamb|DAL","WR|Christian Watson|GB","TE|Dallas Goedert|PHI","WR|Zay Flowers|BAL","WR|Matthew Golden|GB","K|Will Reichard|MIN","DST|CAR D/ST|CAR"],
-      bench:["QB|Jalen Hurts|PHI","RB|Travis Etienne|NO","RB|Brian Robinson|ATL","RB|Austin Ekeler|WAS","WR|Parker Washington|JAX","WR|Khalil Shakir|BUF","WR|Ryan Flournoy|DAL","TE|Chig Okonkwo|WAS","TE|Cade Otton|TB","DST|JAX D/ST|JAX"] },
+      starters:["QB|Jordan Love|GB","RB|Kenneth Walker|KC","RB|Blake Corum|LAR","WR|CeeDee Lamb|DAL","WR|Christian Watson|GB","TE|Dallas Goedert|PHI","WR|Zay Flowers|BAL","WR|Matthew Golden|GB","K|Will Reichard|MIN","DST|JAX D/ST|JAX"],
+      bench:["QB|Baker Mayfield|TB","RB|Travis Etienne|NO","RB|Brian Robinson|ATL","WR|Parker Washington|JAX","WR|Khalil Shakir|BUF","WR|Ryan Flournoy|DAL","TE|Chig Okonkwo|WAS","TE|Greg Dulcich|MIA","TE|Cade Otton|TB","DST|CAR D/ST|CAR"] },
 
-    /* W7: James Cook starting but on BUF bye; Jacobs in; CLE DST in. */
+    /* W8: Cook back, Jacobs RB2. */
     { site:"FFPC", buyin:350, rec:"2-5", pb:[["3","-41"],["4","-62"],["5","-76"],["6","-81"],["7","-64"]], label:"Spacing Guild", cfg:"FFPC", proj:"FFPC Proj",
-      starters:["QB|Jordan Love|GB","RB|Zonovan Knight|ARI","RB|Josh Jacobs|GB","WR|Christian Watson|GB","WR|Matthew Golden|GB","TE|Colston Loveland|CHI","WR|Tetairoa McMillan|CAR","WR|DK Metcalf|PIT","K|Brandon Aubrey|DAL","DST|CLE D/ST|CLE"],
-      bench:["QB|Caleb Williams|CHI","RB|Jadarian Price|SEA","RB|Keaton Mitchell|LAC","RB|Tyrone Tracy|NYG","RB|Seth McGowan|IND","RB|James Cook|BUF","WR|Ladd McConkey|LAC","WR|Denzel Boston|CLE","WR|Antonio Williams|WAS","TE|Eli Raridon|NE"] },
+      starters:["QB|Jordan Love|GB","RB|James Cook|BUF","RB|Josh Jacobs|GB","WR|Christian Watson|GB","WR|Matthew Golden|GB","TE|Colston Loveland|CHI","WR|Tetairoa McMillan|CAR","WR|DK Metcalf|PIT","K|Brandon Aubrey|DAL","DST|CLE D/ST|CLE"],
+      bench:["QB|Caleb Williams|CHI","RB|Jadarian Price|SEA","RB|Keaton Mitchell|LAC","RB|Tyrone Tracy|NYG","RB|Seth McGowan|IND","RB|Zonovan Knight|ARI","WR|Ladd McConkey|LAC","WR|Denzel Boston|CLE","WR|Antonio Williams|WAS","TE|Eli Raridon|NE"] },
 
-    /* W7: Keaton Mitchell (bye) and JAX DST (bye) both starting; NYJ DST + Reichard on bench; Penix added. */
+    /* W8: CMC benched on SF bye; Dowdle RB2; JAX DST back. */
     { site:"FFPC", buyin:350, rec:"2-5", pb:[["3","-106"],["4","-147"],["5","-93"],["6","-131"],["7","-131"]], label:"Gom Jabbar", cfg:"FFPC", proj:"FFPC Proj",
-      starters:["QB|Deshaun Watson|CLE","RB|Christian McCaffrey|SF","RB|Saquon Barkley|PHI","WR|George Pickens|DAL","WR|Garrett Wilson|NYJ","TE|Hunter Henry|NE","WR|Rome Odunze|CHI","TE|Sam LaPorta|DET","K|Will Reichard|MIN","DST|NYJ D/ST|NYJ"],
-      bench:["QB|Michael Penix Jr.|ATL","RB|Keaton Mitchell|LAC","RB|Rico Dowdle|PIT","RB|Emmett Johnson|KC","WR|Makai Lemon|PHI","WR|Ted Hurst|TB","WR|Antonio Williams|WAS","TE|Cade Otton|TB","K|Dominic Zvada|NYG","DST|JAX D/ST|JAX"] },
+      starters:["QB|Deshaun Watson|CLE","RB|Saquon Barkley|PHI","RB|Rico Dowdle|PIT","WR|George Pickens|DAL","WR|Garrett Wilson|NYJ","TE|Hunter Henry|NE","WR|Rome Odunze|CHI","TE|Sam LaPorta|DET","K|Will Reichard|MIN","DST|JAX D/ST|JAX"],
+      bench:["QB|Michael Penix Jr.|ATL","RB|Christian McCaffrey|SF","RB|Keaton Mitchell|LAC","RB|Emmett Johnson|KC","WR|Makai Lemon|PHI","WR|Ted Hurst|TB","WR|Antonio Williams|WAS","TE|Cade Otton|TB","K|Dominic Zvada|NYG","DST|NYJ D/ST|NYJ"] },
 
-    /* $250 Keeper League #16. W7: Mason (IR tag) + Barkley (Q) starting at RB. */
+    /* $250 Keeper League #16. W8: Hunter Henry stashed. */
     { site:"NFFC", buyin:250, rec:"2-5", pb:[["3","-91"],["4","-63"],["5","-134"],["6","-119"],["7","-71"]], label:"Lisan al-Gaib", cfg:"NFFC", proj:"Full PPR Proj", qbProj:"FFPC Proj",
-      starters:["QB|Jordan Love|GB","RB|Blake Corum|LAR","RB|Saquon Barkley|PHI","WR|CeeDee Lamb|DAL","WR|Zay Flowers|BAL","WR|DK Metcalf|PIT","TE|Tucker Kraft|GB","WR|Jaylen Waddle|DEN","K|BAL Team K|BAL","DST|CLE D/ST|CLE"],
-      bench:["WR|Jordyn Tyson|NO","RB|Keaton Mitchell|LAC","RB|Bhayshul Tuten|JAX","QB|Justin Herbert|LAC","TE|Kenyon Sadiq|NYJ","WR|Kalif Raymond|CHI","WR|Ja'Kobi Lane|BAL","WR|Romeo Doubs|NE","RB|Jordan Mason|MIN","RB|De'Von Achane|MIA"] },
+      starters:["QB|Jordan Love|GB","RB|Saquon Barkley|PHI","RB|Blake Corum|LAR","WR|CeeDee Lamb|DAL","WR|Zay Flowers|BAL","WR|DK Metcalf|PIT","TE|Tucker Kraft|GB","WR|Jaylen Waddle|DEN","K|BAL Team K|BAL","DST|CLE D/ST|CLE"],
+      bench:["WR|Jordyn Tyson|NO","RB|Keaton Mitchell|LAC","RB|Bhayshul Tuten|JAX","QB|Justin Herbert|LAC","TE|Kenyon Sadiq|NYJ","WR|Ja'Kobi Lane|BAL","WR|Romeo Doubs|NE","RB|Jordan Mason|MIN","RB|De'Von Achane|MIA","TE|Hunter Henry|NE"] },
 
-    /* $250 Cash League #1525. W7: Harvey + Gainwell at RB; ARSB back; NO DST in. */
+    /* $250 Cash League #1525. W8: JAX DST back in. */
     { site:"NFFC", buyin:250, rec:"4-3", pb:[["3","-32"],["4","-55"],["5","-40"],["6","-44"],["7","-22"]], label:"Bene Gesserit", cfg:"NFFC", proj:"Full PPR Proj", qbProj:"FFPC Proj",
-      starters:["QB|Jordan Love|GB","RB|RJ Harvey|DEN","RB|Kenneth Gainwell|TB","WR|Amon-Ra St. Brown|DET","WR|Drake London|ATL","WR|Luther Burden III|CHI","TE|Dalton Schultz|HOU","WR|Matthew Golden|GB","K|SEA Team K|SEA","DST|NO D/ST|NO"],
-      bench:["RB|Jeremiyah Love|ARI","RB|Rachaad White|WAS","QB|Matthew Stafford|LAR","TE|Tyler Warren|IND","WR|Ryan Flournoy|DAL","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","WR|Ladd McConkey|LAC","TE|Brenton Strange|JAX","DST|JAX D/ST|JAX"] },
+      starters:["QB|Jordan Love|GB","RB|RJ Harvey|DEN","RB|Jeremiyah Love|ARI","WR|Amon-Ra St. Brown|DET","WR|Drake London|ATL","WR|Luther Burden III|CHI","TE|Tyler Warren|IND","WR|Matthew Golden|GB","K|SEA Team K|SEA","DST|JAX D/ST|JAX"],
+      bench:["RB|Kenneth Gainwell|TB","RB|Rachaad White|WAS","QB|Matthew Stafford|LAR","WR|Ryan Flournoy|DAL","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","WR|Ladd McConkey|LAC","TE|Brenton Strange|JAX","TE|Chig Okonkwo|WAS","RB|Elijah Mitchell|PHI"] },
 
-    /* $250 Cash League #1289. W7: Brissett in for bye Allen; NO DST. */
+    /* $250 Cash League #1289. W8: CHI DST back. */
     { site:"NFFC", buyin:83, rec:"6-1", pb:[["3","-31"],["4","-19"],["5","-48"],["6","-39"],["7","-36"]], label:"Drake Maye Fan Club", cfg:"NFFC", proj:"Full PPR Proj", qbProj:"FFPC Proj",
-      starters:["QB|Jacoby Brissett|ARI","RB|Bijan Robinson|ATL","RB|Bucky Irving|TB","WR|Ryan Flournoy|DAL","WR|Carnell Tate|TEN","WR|Denzel Boston|CLE","TE|Brock Bowers|LV","WR|Josh Downs|IND","K|MIN Team K|MIN","DST|NO D/ST|NO"],
-      bench:["WR|Romeo Doubs|NE","RB|Jonah Coleman|DEN","WR|Emeka Egbuka|TB","RB|Emmett Johnson|KC","RB|Kimani Vidal|LAC","TE|Michael Mayer|LV","TE|Pat Freiermuth|PIT","TE|Terrance Ferguson|LAR","QB|Josh Allen|BUF","RB|Jaylen Wright|MIA"] },
+      starters:["QB|Jacoby Brissett|ARI","RB|Bijan Robinson|ATL","RB|Bucky Irving|TB","WR|Emeka Egbuka|TB","WR|Carnell Tate|TEN","WR|Denzel Boston|CLE","TE|Brock Bowers|LV","WR|Ryan Flournoy|DAL","K|MIN Team K|MIN","DST|CHI D/ST|CHI"],
+      bench:["WR|Romeo Doubs|NE","RB|Jonah Coleman|DEN","TE|Pat Freiermuth|PIT","RB|Emmett Johnson|KC","RB|Kimani Vidal|LAC","TE|Michael Mayer|LV","WR|Josh Downs|IND","TE|Terrance Ferguson|LAR","QB|Josh Allen|BUF","RB|Jaylen Wright|MIA"] },
 
-    /* $500 Cash League #1937, split entry at $225. W7: Jameson Williams back; Kendre Miller in FLEX. */
+    /* $500 Cash League #1937, split entry at $225. W8: Collins + CMC benched (HOU/SF byes); Breece Hall in. */
     { site:"NFFC", buyin:225, rec:"4-3", pb:[["3","-50"],["4","-54"],["5","+28"],["6","+62"],["7","+72"]], label:"Cousin Greg IX", cfg:"NFFC", proj:"Full PPR Proj", qbProj:"FFPC Proj",
-      starters:["QB|Drake Maye|NE","RB|Christian McCaffrey|SF","RB|Jaylen Warren|PIT","WR|Nico Collins|HOU","WR|Denzel Boston|CLE","WR|Jameson Williams|DET","TE|Tucker Kraft|GB","WR|Makai Lemon|PHI","K|IND Team K|IND","DST|KC D/ST|KC"],
-      bench:["RB|Kendre Miller|NO","WR|Parker Washington|JAX","TE|Kenyon Sadiq|NYJ","RB|Keaton Mitchell|LAC","QB|Patrick Mahomes|KC","RB|Breece Hall|NYJ","WR|Antonio Williams|WAS","TE|Terrance Ferguson|LAR","WR|Khalil Shakir|BUF","RB|Dameon Pierce|PHI"] },
+      starters:["QB|Drake Maye|NE","RB|Breece Hall|NYJ","RB|Jaylen Warren|PIT","WR|Parker Washington|JAX","WR|Makai Lemon|PHI","WR|Jameson Williams|DET","TE|Tucker Kraft|GB","WR|Antonio Williams|WAS","K|IND Team K|IND","DST|KC D/ST|KC"],
+      bench:["RB|Kendre Miller|NO","WR|Nico Collins|HOU","TE|Kenyon Sadiq|NYJ","RB|Keaton Mitchell|LAC","QB|Patrick Mahomes|KC","RB|Christian McCaffrey|SF","WR|Denzel Boston|CLE","TE|Terrance Ferguson|LAR","WR|Khalil Shakir|BUF","RB|Elijah Mitchell|PHI"] },
 
-    /* $250 Cash League #2333. W7: Chase back from bye; Adams dropped; Travis Hunter stashed. */
+    /* $250 Cash League #2333. W8: starters unchanged; Herbert + McGowan stashed. */
     { site:"NFFC", buyin:250, rec:"4-3", pb:[["3","+2"],["4","-10"],["5","+26"],["6","+45"],["7","+79"]], label:"Bene Tleilax", cfg:"NFFC", proj:"Full PPR Proj", qbProj:"FFPC Proj",
       starters:["QB|Matthew Stafford|LAR","RB|Chuba Hubbard|CAR","RB|Jaylen Warren|PIT","WR|Ja'Marr Chase|CIN","WR|Drake London|ATL","WR|Josh Downs|IND","TE|Colston Loveland|CHI","RB|Bucky Irving|TB","K|DAL Team K|DAL","DST|CLE D/ST|CLE"],
-      bench:["RB|Breece Hall|NYJ","RB|Tyjae Spears|TEN","TE|Chig Okonkwo|WAS","TE|Terrance Ferguson|LAR","WR|Roman Wilson|PIT","DST|KC D/ST|KC","RB|Jonah Coleman|DEN","WR|Kendrick Bourne|ARI","RB|Kimani Vidal|LAC","WR|Travis Hunter|JAX"] },
+      bench:["RB|Breece Hall|NYJ","TE|Chig Okonkwo|WAS","TE|Terrance Ferguson|LAR","DST|KC D/ST|KC","RB|Jonah Coleman|DEN","WR|Kendrick Bourne|ARI","RB|Kimani Vidal|LAC","WR|Travis Hunter|JAX","RB|Seth McGowan|IND","QB|Justin Herbert|LAC"] },
 
-    /* W7: Rodgers added over Zvada, starts for bye Allen; Chase + Fannin + CLE DST in. */
+    /* W8: Allen back from bye; Rodgers dropped; P.Washington FLEX. */
     { site:"ESPN", buyin:150, rec:"5-2", label:"ESPN Dynasty", cfg:"ESPN_STD", proj:"Full PPR Proj",
-      starters:["QB|Aaron Rodgers|PIT","RB|D'Andre Swift|CHI","RB|Rhamondre Stevenson|NE","WR|Ja'Marr Chase|CIN","WR|Jaxon Smith-Njigba|SEA","TE|Harold Fannin Jr.|CLE","WR|Jalen Coker|CAR","DST|CLE D/ST|CLE","K|Will Reichard|MIN"],
-      bench:["QB|Josh Allen|BUF","WR|Parker Washington|JAX","RB|Blake Corum|LAR","TE|Dalton Kincaid|BUF","RB|Emmett Johnson|KC","WR|Germie Bernard|PIT"] },
+      starters:["QB|Josh Allen|BUF","RB|D'Andre Swift|CHI","RB|Rhamondre Stevenson|NE","WR|Ja'Marr Chase|CIN","WR|Jaxon Smith-Njigba|SEA","TE|Dalton Kincaid|BUF","WR|Parker Washington|JAX","DST|CLE D/ST|CLE","K|Will Reichard|MIN"],
+      bench:["RB|Blake Corum|LAR","TE|Harold Fannin Jr.|CLE","RB|Jonah Coleman|DEN","RB|Emmett Johnson|KC","WR|Jalen Coker|CAR","WR|Germie Bernard|PIT"] },
 
-    /* W7: Bernard into FLEX; Herbert on bye. */
+    /* W8: Herbert back; Strange at TE; JAX DST in. */
     { site:"ESPN", buyin:50, rec:"4-3", label:"2 QB Justin League", cfg:"ESPN_2QB", proj:"Half PPR Proj",
-      starters:["QB|Michael Penix Jr.|ATL","QB|Jameis Winston|NYG","RB|Bijan Robinson|ATL","RB|D'Andre Swift|CHI","WR|Zay Flowers|BAL","WR|Christian Watson|GB","TE|Tyler Higbee|LAR","RB|Rhamondre Stevenson|NE","WR|A.J. Brown|NE","DST|HOU D/ST|HOU","K|Spencer Shrader|IND"],
-      bench:["QB|Justin Herbert|LAC","WR|Germie Bernard|PIT","RB|Blake Corum|LAR","RB|RJ Harvey|DEN","RB|Dameon Pierce|PHI","TE|Dalton Kincaid|BUF","WR|Antonio Williams|WAS"] }
+      starters:["QB|Justin Herbert|LAC","QB|Michael Penix Jr.|ATL","RB|Bijan Robinson|ATL","RB|D'Andre Swift|CHI","WR|A.J. Brown|NE","WR|Zay Flowers|BAL","TE|Brenton Strange|JAX","RB|Rhamondre Stevenson|NE","WR|Christian Watson|GB","DST|JAX D/ST|JAX","K|Spencer Shrader|IND"],
+      bench:["RB|Blake Corum|LAR","RB|RJ Harvey|DEN","WR|Germie Bernard|PIT","TE|Dalton Kincaid|BUF","WR|Antonio Williams|WAS","RB|Jonah Coleman|DEN","RB|Samaje Perine|CIN"] }
   ]
 };
 
@@ -765,19 +764,19 @@ $('#expList').addEventListener('click',e=>{
 const SCORES={
  weeks:[1,2,3,4,5,6,7,8],
  data:{
-  "Bene Tleilax":{"1":{actual:105.7,proj:140.5},"2":{actual:140.2,proj:142.3},"3":{actual:168.5,proj:146.3},"4":{actual:115.05,proj:146.9},"5":{actual:192.75,proj:147.2},"6":{actual:122.2,proj:145.7},"7":{actual:157.15,proj:145.2}},
-  "Lisan al-Gaib":{"1":{actual:116.45,proj:134.6},"2":{actual:114.5,proj:130.5},"3":{actual:110.8,proj:129.8},"4":{actual:166.15,proj:132.7},"5":{actual:113.85,proj:129.4},"6":{actual:141.2,proj:130.5},"7":{actual:152.6,proj:123.6}},
-  "Bene Gesserit":{"1":{actual:138.35,proj:134.5},"2":{actual:117.05,proj:122.3},"3":{actual:149.7,proj:131.1},"4":{actual:111.45,proj:138.8},"5":{actual:150.35,proj:141.0},"6":{actual:128.9,proj:135.5},"7":{actual:146.9,proj:130.6}},
-  "Drake Maye Fan Club":{"1":{actual:147.2,proj:127.8},"2":{actual:130.2,proj:140.7},"3":{actual:139.5,proj:136},"4":{actual:143.65,proj:141.2},"5":{actual:140.3,proj:141.8},"6":{actual:108.55,proj:146.7},"7":{actual:126.0,proj:126.1}},
-  "Cousin Greg IX":{"1":{actual:134.9,proj:137.2},"2":{actual:123.7,proj:134.6},"3":{actual:120.7,proj:142.4},"4":{actual:130.85,proj:143.6},"5":{actual:219.9,proj:141.3},"6":{actual:146.85,proj:144.9},"7":{actual:151.55,proj:132.1}},
-  "Kwisatz Haderach":{"1":{actual:146.55,proj:142.5},"2":{actual:115.4,proj:139.0},"3":{actual:141.2,proj:139.7},"4":{actual:148.8,proj:148.1},"5":{actual:173.05,proj:149.2},"6":{actual:118.4,proj:140.7},"7":{actual:116.45,proj:131.7}},
-  "Spacing Guild":{"1":{actual:145.05,proj:139.2},"2":{actual:101.6,proj:135.7},"3":{actual:141.0,proj:135.9},"4":{actual:144.85,proj:123},"5":{actual:134.15,proj:129.0},"6":{actual:133.45,proj:139.3},"7":{actual:129.2,proj:133.1}},
-  "Gom Jabbar":{"1":{actual:99.45,proj:147.5},"2":{actual:119.5,proj:143.6},"3":{actual:134.95,proj:148.4},"4":{actual:117.55,proj:139.2},"5":{actual:155.85,proj:132.8},"6":{actual:99.0,proj:127.8},"7":{actual:127.4,proj:126.7}},
-  "Desert Power":{"1":{actual:84.4,proj:125.2},"2":{actual:136.1,proj:130.5},"3":{actual:134.4,proj:134.9},"4":{actual:127.55,proj:139.1},"5":{actual:118.0,proj:140.5},"6":{actual:93.7,proj:130.6},"7":{actual:106.05,proj:124.1}},
-  "Shai-Hulud":{"1":{actual:216.55,proj:146.9},"2":{actual:144.9,proj:136.5},"3":{actual:166.65,proj:144.5},"4":{actual:159.45,proj:136.5},"5":{actual:160.65,proj:125.7},"6":{actual:150.0,proj:148.8},"7":{actual:144.4,proj:151.9}},
-  "ESPN Dynasty":{"1":{actual:142.0,proj:128.1},"2":{actual:175.7,proj:130.9},"3":{actual:120.3,proj:130},"4":{actual:73.2,proj:134},"5":{actual:152.3,proj:133.8},"6":{actual:113.0,proj:131.6},"7":{actual:134.6,proj:125.4}},
-  "2 QB Justin League":{"1":{actual:180.36,proj:142.7},"2":{actual:67.78,proj:135.1},"3":{actual:109.56,proj:123.7},"4":{actual:130.18,proj:131.7},"5":{actual:153.24,proj:133.0},"6":{actual:100.28,proj:139.6},"7":{actual:122.12,proj:129.6}},
-  "Marquee League":{"1":{actual:135.26,proj:122.7},"2":{actual:143.62,proj:131.0},"3":{actual:128.86,proj:133.4},"4":{actual:108.82,proj:141.6},"5":{actual:144.5,proj:131.4},"6":{actual:95.3,proj:114.5},"7":{actual:113.58,proj:120.7}}
+  "Bene Tleilax":{"1":{actual:105.7,proj:140.5},"2":{actual:140.2,proj:142.3},"3":{actual:168.5,proj:146.3},"4":{actual:115.05,proj:146.9},"5":{actual:192.75,proj:147.2},"6":{actual:122.2,proj:145.7},"7":{actual:157.15,proj:145.2},"8":{proj:142.9}},
+  "Lisan al-Gaib":{"1":{actual:116.45,proj:134.6},"2":{actual:114.5,proj:130.5},"3":{actual:110.8,proj:129.8},"4":{actual:166.15,proj:132.7},"5":{actual:113.85,proj:129.4},"6":{actual:141.2,proj:130.5},"7":{actual:152.6,proj:123.6},"8":{proj:117.6}},
+  "Bene Gesserit":{"1":{actual:138.35,proj:134.5},"2":{actual:117.05,proj:122.3},"3":{actual:149.7,proj:131.1},"4":{actual:111.45,proj:138.8},"5":{actual:150.35,proj:141.0},"6":{actual:128.9,proj:135.5},"7":{actual:146.9,proj:130.6},"8":{proj:118.3}},
+  "Drake Maye Fan Club":{"1":{actual:147.2,proj:127.8},"2":{actual:130.2,proj:140.7},"3":{actual:139.5,proj:136},"4":{actual:143.65,proj:141.2},"5":{actual:140.3,proj:141.8},"6":{actual:108.55,proj:146.7},"7":{actual:126.0,proj:126.1},"8":{proj:131.4}},
+  "Cousin Greg IX":{"1":{actual:134.9,proj:137.2},"2":{actual:123.7,proj:134.6},"3":{actual:120.7,proj:142.4},"4":{actual:130.85,proj:143.6},"5":{actual:219.9,proj:141.3},"6":{actual:146.85,proj:144.9},"7":{actual:151.55,proj:132.1},"8":{proj:125.5}},
+  "Kwisatz Haderach":{"1":{actual:146.55,proj:142.5},"2":{actual:115.4,proj:139.0},"3":{actual:141.2,proj:139.7},"4":{actual:148.8,proj:148.1},"5":{actual:173.05,proj:149.2},"6":{actual:118.4,proj:140.7},"7":{actual:116.45,proj:131.7},"8":{proj:133.9}},
+  "Spacing Guild":{"1":{actual:145.05,proj:139.2},"2":{actual:101.6,proj:135.7},"3":{actual:141.0,proj:135.9},"4":{actual:144.85,proj:123},"5":{actual:134.15,proj:129.0},"6":{actual:133.45,proj:139.3},"7":{actual:129.2,proj:133.1},"8":{proj:140.3}},
+  "Gom Jabbar":{"1":{actual:99.45,proj:147.5},"2":{actual:119.5,proj:143.6},"3":{actual:134.95,proj:148.4},"4":{actual:117.55,proj:139.2},"5":{actual:155.85,proj:132.8},"6":{actual:99.0,proj:127.8},"7":{actual:127.4,proj:126.7},"8":{proj:106.4}},
+  "Desert Power":{"1":{actual:84.4,proj:125.2},"2":{actual:136.1,proj:130.5},"3":{actual:134.4,proj:134.9},"4":{actual:127.55,proj:139.1},"5":{actual:118.0,proj:140.5},"6":{actual:93.7,proj:130.6},"7":{actual:106.05,proj:124.1},"8":{proj:117.1}},
+  "Shai-Hulud":{"1":{actual:216.55,proj:146.9},"2":{actual:144.9,proj:136.5},"3":{actual:166.65,proj:144.5},"4":{actual:159.45,proj:136.5},"5":{actual:160.65,proj:125.7},"6":{actual:150.0,proj:148.8},"7":{actual:144.4,proj:151.9},"8":{proj:148.9}},
+  "ESPN Dynasty":{"1":{actual:142.0,proj:128.1},"2":{actual:175.7,proj:130.9},"3":{actual:120.3,proj:130},"4":{actual:73.2,proj:134},"5":{actual:152.3,proj:133.8},"6":{actual:113.0,proj:131.6},"7":{actual:134.6,proj:125.4},"8":{proj:138.0}},
+  "2 QB Justin League":{"1":{actual:180.36,proj:142.7},"2":{actual:67.78,proj:135.1},"3":{actual:109.56,proj:123.7},"4":{actual:130.18,proj:131.7},"5":{actual:153.24,proj:133.0},"6":{actual:100.28,proj:139.6},"7":{actual:122.12,proj:129.6},"8":{proj:139.4}},
+  "Marquee League":{"1":{actual:135.26,proj:122.7},"2":{actual:143.62,proj:131.0},"3":{actual:128.86,proj:133.4},"4":{actual:108.82,proj:141.6},"5":{actual:144.5,proj:131.4},"6":{actual:95.3,proj:114.5},"7":{actual:113.58,proj:120.7},"8":{proj:122.5}}
  }
 };
 
@@ -785,17 +784,28 @@ const SCORES={
 /* margin-vs-4th trendline: small inline chart shown when the chip is clicked */
 function pbChart(pb){
   const vals=pb.map(e=>parseInt(e[1],10));
-  const W=24+pb.length*30, H=58, P=16;
+  const PL=34, PR=16, W=PL+PR+pb.length*30, H=58;
   const lo=Math.min(0,...vals), hi=Math.max(0,...vals), span=(hi-lo)||1;
-  const x=i=>P+i*(W-2*P)/Math.max(1,pb.length-1);
+  const x=i=>PL+i*(W-PL-PR)/Math.max(1,pb.length-1);
   const y=v=>7+(H-24)*(1-(v-lo)/span);
   const pts=vals.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
-  const zero=y(0).toFixed(1);
+  const zero=y(0);
+  const fmt=v=>(v>0?'+':'')+v;
   let s=`<svg class="sc-pbg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="margin vs 4th place by week">`;
-  s+=`<line x1="${P-8}" y1="${zero}" x2="${W-P+8}" y2="${zero}" stroke="var(--muted)" stroke-opacity=".35" stroke-dasharray="3 3"/>`;
+  s+=`<line x1="${PL-4}" y1="${zero.toFixed(1)}" x2="${W-PR+8}" y2="${zero.toFixed(1)}" stroke="var(--muted)" stroke-opacity=".35" stroke-dasharray="3 3"/>`;
+  // y-axis labels: max, 0, min (skip 0 when it sits on max/min; skip a bound too close to 0)
+  const ticks=[];
+  if(hi>0) ticks.push([hi,y(hi)]);
+  ticks.push([0,zero]);
+  if(lo<0) ticks.push([lo,y(lo)]);
+  const seen=[];
+  ticks.forEach(([v,yy])=>{
+    if(seen.some(p=>Math.abs(p-yy)<9)) return; seen.push(yy);
+    s+=`<text x="${PL-7}" y="${(yy+2.5).toFixed(1)}" font-size="8" text-anchor="end" fill="var(--muted)">${fmt(v)}</text>`;
+  });
   s+=`<polyline points="${pts}" fill="none" stroke="var(--bar)" stroke-width="1.5" stroke-linejoin="round"/>`;
   vals.forEach((v,i)=>{
-    s+=`<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="2.8" fill="${v<0?'var(--qb)':'var(--rb)'}"><title>W${pb[i][0]}: ${v>0?'+':''}${v}</title></circle>`;
+    s+=`<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="2.8" fill="${v<0?'var(--qb)':'var(--rb)'}"><title>W${pb[i][0]}: ${fmt(v)}</title></circle>`;
     s+=`<text x="${x(i).toFixed(1)}" y="${H-1}" font-size="8" text-anchor="middle" fill="var(--muted)">W${pb[i][0]}</text>`;
   });
   return s+'</svg>';
