@@ -152,6 +152,8 @@ h1 span{color:var(--muted);font-weight:500}
 .sc-buy{color:var(--muted);font-weight:400;font-size:12px;margin-left:8px}
 .sc-pb{font-size:12px;font-weight:600;margin-left:6px;cursor:pointer}
 .sc-pbh{color:var(--muted);font-size:11px;margin-left:6px;font-weight:400}
+.sc-row.sc-dead,.sc-detail.sc-dead{opacity:.45}
+.sc-site.sc-dead{opacity:.6}
 .sc-pbg{vertical-align:middle;margin-left:8px;background:var(--panel2);border:1px solid var(--line-soft);border-radius:6px}
 .sc-pb.up{color:var(--rb)}
 .sc-pb.dn{color:var(--qb)}
@@ -500,6 +502,7 @@ function optimizeTeam(t){
 
 
 /* ---- exposure math ---- */
+const RETIRED_TEAMS=new Set(["Gom Jabbar","Desert Power","Lisan al-Gaib"]);
 const ITM_TEAMS=new Set(["Bene Tleilax","Cousin Greg IX","Drake Maye Fan Club","Bene Gesserit","Shai-Hulud","Spacing Guild","ESPN Dynasty","Kwisatz Haderach"]);
 
 function exposures(opts){
@@ -814,17 +817,19 @@ function renderScores(){
   const host=$('#scoreGrid'); if(!host) return;
   const weeks=SCORES.weeks;
   let h=`<table class="sc"><thead><tr><th class="sc-name">Team</th>${weeks.map(w=>`<th>W${w}</th>`).join('')}</tr></thead><tbody>`;
-  ['FFPC','NFFC','ESPN'].forEach(site=>{
+  ['FFPC','NFFC','ESPN','RETIRED'].forEach(site=>{
     const pts=t=>{ const d=SCORES.data[t.label]||{}; return SCORES.weeks.reduce((a,w)=>a+((d[w]&&d[w].actual)||0),0); };
-    const ts=TEAMS.filter(t=>t.site===site).sort(site==='ESPN'
+    const dead=site==='RETIRED';
+    const ts=(dead?TEAMS.filter(t=>RETIRED_TEAMS.has(t.label))
+                  :TEAMS.filter(t=>t.site===site&&!RETIRED_TEAMS.has(t.label))).sort(site==='ESPN'
       ? (a,b)=>(+b.buyin||0)-(+a.buyin||0)
       : (a,b)=>(pts(b)-pts(a))||((+b.buyin||0)-(+a.buyin||0)));
     if(!ts.length) return;
-    h+=`<tr class="sc-site"><td colspan="${weeks.length+1}">${esc(site)}</td></tr>`;
+    h+=`<tr class="sc-site${dead?' sc-dead':''}"><td colspan="${weeks.length+1}">${dead?'ELIMINATED':esc(site)}</td></tr>`;
     ts.forEach(t=>{
       const d=SCORES.data[t.label]||{};
       const open=ui.scOpen.has(t.label);
-      h+=`<tr class="sc-row" data-scteam="${esc(t.label)}"><td class="sc-name"><span class="caret">${open?'▾':'▸'}</span>${esc(t.label)}${t.rec?`<span class="sc-buy">${esc(t.rec)}</span>`:''}${(t.pb&&t.pb.length)?(()=>{const cur=t.pb[t.pb.length-1];const open=ui.pbOpen.has(t.label);return `<span class="sc-pb ${cur[1].startsWith('-')?'dn':'up'}" data-pbteam="${esc(t.label)}" title="vs 4th place — click for history">${esc(cur[1])}</span>`+((open&&t.pb.length>1)?pbChart(t.pb):'');})():''}</td>`+
+      h+=`<tr class="sc-row${dead?' sc-dead':''}" data-scteam="${esc(t.label)}"><td class="sc-name"><span class="caret">${open?'▾':'▸'}</span>${esc(t.label)}${t.rec?`<span class="sc-buy">${esc(t.rec)}</span>`:''}${(t.pb&&t.pb.length)?(()=>{const cur=t.pb[t.pb.length-1];const open=ui.pbOpen.has(t.label);return `<span class="sc-pb ${cur[1].startsWith('-')?'dn':'up'}" data-pbteam="${esc(t.label)}" title="vs 4th place — click for history">${esc(cur[1])}</span>`+((open&&t.pb.length>1)?pbChart(t.pb):'');})():''}</td>`+
         weeks.map(w=>{
           const c=d[w];
           if(!c) return '<td class="sc-cell na">—</td>';
@@ -835,7 +840,7 @@ function renderScores(){
         }).join('')+'</tr>';
       if(open){
         const starters=roster(t).filter(p=>p.starter);
-        h+=`<tr class="sc-detail"><td colspan="${weeks.length+1}"><div class="rgroup">Current starting lineup</div>`+
+        h+=`<tr class="sc-detail${dead?' sc-dead':''}"><td colspan="${weeks.length+1}"><div class="rgroup">Current starting lineup</div>`+
           starters.map(p=>`<div class="slot"><span class="pos ${esc(p.pos)}">${esc(p.pos)}</span>${logo(p.nfl,18)}<span class="nm">${esc(p.name)}</span></div>`).join('')+'</td></tr>';
       }
     });
