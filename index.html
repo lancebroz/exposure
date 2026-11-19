@@ -235,11 +235,7 @@ h1 span{color:var(--muted);font-weight:500}
 
   <section id="tab-ss" class="hidden">
     <div class="controls">
-      <label class="save" style="margin-top:0">Load projections CSV
-        <input type="file" id="ssFile" accept=".csv,text/csv" hidden>
-      </label>
       <span class="note" id="ssMeta" style="margin-top:0"></span>
-      <button class="chip hidden" id="ssClear">Clear</button>
       <div class="chipbar" id="ssSiteFilter"></div>
     </div>
     <div id="ssList"></div>
@@ -261,67 +257,67 @@ const SEED={
   teams:[
     /* W9: Olave back; Jonah Coleman RB2; BUF DST + Zvada in. */
     { site:"ESPN", buyin:50, rec:"8-2", label:"Marquee League", cfg:"ESPN_STD", proj:"Full PPR Proj",
-      starters:["QB|Josh Allen|BUF","RB|Jahmyr Gibbs|DET","RB|Kaleb Johnson|GB","WR|Chris Olave|NO","WR|Parker Washington|JAX","TE|Tucker Kraft|GB","WR|KC Concepcion|CLE","DST|BUF D/ST|BUF","K|Dominic Zvada|NYG"],
-      bench:["WR|Luther Burden III|CHI","WR|Jaylen Waddle|DEN","WR|Jordyn Tyson|NO","DST|PIT D/ST|PIT","RB|Jonah Coleman|DEN","WR|Antonio Williams|WAS","RB|Seth McGowan|IND"] },
+      starters:["QB|Josh Allen|BUF","RB|Jahmyr Gibbs|DET","RB|Jonah Coleman|DEN","WR|Chris Olave|NO","WR|Parker Washington|JAX","TE|Gunnar Helm|TEN","WR|Luther Burden III|CHI","DST|BUF D/ST|BUF","K|Chase McLaughlin|TB"],
+      bench:["WR|Jaylen Waddle|DEN","TE|Tucker Kraft|GB","WR|KC Concepcion|CLE","WR|Jordyn Tyson|NO","DST|PIT D/ST|PIT","WR|Antonio Williams|WAS","TE|Hunter Henry|NE"] },
 
     /* W9: Metcalf starting on PIT bye; Loop on IR. */
     { site:"FFPC", buyin:350, rec:"1-9", pb:[["3","-83"],["4","-117"],["5","-124"],["6","-194"],["7","-222"],["8","-232"],["9","-200"],["10","-300"]], label:"Desert Power", cfg:"FFPC", proj:"FFPC Proj",
-      starters:["QB|Patrick Mahomes|KC","RB|Emmett Johnson|KC","RB|Kimani Vidal|LAC","WR|Josh Downs|KC","WR|DK Metcalf|PIT","TE|Brock Bowers|LV","TE|Michael Mayer|LV","TE|Hunter Henry|NE","K|Tyler Loop|BAL","DST|JAX D/ST|JAX"],
+      starters:["QB|Patrick Mahomes|KC","RB|Emmett Johnson|KC","RB|Kimani Vidal|LAC","WR|DK Metcalf|PIT","WR|Josh Downs|KC","TE|Brock Bowers|LV","TE|Hunter Henry|NE","TE|Michael Mayer|LV","K|Tyler Loop|BAL","DST|JAX D/ST|JAX"],
       bench:["QB|Jacoby Brissett|BAL","RB|Travis Etienne|NO","RB|TreVeyon Henderson|NE","RB|RJ Harvey|DEN","RB|Keaton Mitchell|LAC","WR|Jaylen Waddle|DEN","WR|Makai Lemon|PHI","WR|Pat Bryant|DEN","TE|Colston Loveland|CHI","DST|CAR D/ST|CAR"] },
 
     { site:"FFPC", buyin:350, rec:"2-8", pb:[["3","-38"],["4","-35"],["5","+7"],["6","+5"],["7","-13"],["8","-57"],["9","-82"],["10","-140"]], label:"Kwisatz Haderach", cfg:"FFPC", proj:"FFPC Proj",
-      starters:["QB|Matthew Stafford|LAR","RB|James Cook|BUF","RB|Ashton Jeanty|LV","WR|Zay Flowers|BAL","WR|Ladd McConkey|LAC","TE|Tucker Kraft|GB","RB|Blake Corum|LAR","TE|Sam LaPorta|DET","K|Jason Myers|SEA","DST|JAX D/ST|JAX"],
-      bench:["QB|Bo Nix|DEN","WR|Jordan Addison|MIN","RB|Aaron Jones|MIN","RB|Keaton Mitchell|LAC","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","WR|Chris Godwin|TB","WR|Josh Downs|KC","TE|Colby Parkinson|LAR","TE|Eli Raridon|NE"] },
+      starters:["QB|Bo Nix|DEN","RB|James Cook|BUF","RB|Ashton Jeanty|LV","WR|Zay Flowers|BAL","WR|Josh Downs|KC","TE|Sam LaPorta|DET","RB|Seth McGowan|IND","WR|Ladd McConkey|LAC","K|Chase McLaughlin|TB","DST|JAX D/ST|JAX"],
+      bench:["QB|Matthew Stafford|LAR","QB|Cam Ward|TEN","RB|Blake Corum|LAR","RB|Aaron Jones|MIN","RB|Keaton Mitchell|LAC","RB|Kimani Vidal|LAC","WR|Chris Godwin|TB","WR|Jordan Addison|MIN","TE|Tucker Kraft|GB","K|Jason Myers|SEA"] },
 
     /* W9: Flowers benched; P.Washington + Golden in FLEX. */
     { site:"FFPC", buyin:350, rec:"6-4", pb:[["3","+97"],["4","+119"],["5","+123"],["6","+105"],["7","+179"],["8","+166"],["9","+282"],["10","+259"]], label:"Shai-Hulud", cfg:"FFPC", proj:"FFPC Proj",
-      starters:["QB|Jordan Love|GB","RB|Travis Etienne|NO","RB|Blake Corum|LAR","WR|CeeDee Lamb|DAL","WR|Christian Watson|GB","TE|Colby Parkinson|LAR","WR|Zay Flowers|BAL","WR|Matthew Golden|GB","K|Will Reichard|MIN","DST|JAX D/ST|JAX"],
-      bench:["QB|Baker Mayfield|TB","RB|Kenneth Walker|KC","RB|Brian Robinson|ATL","RB|Corey Kiner|NE","WR|Parker Washington|JAX","WR|Khalil Shakir|BUF","WR|Ryan Flournoy|DAL","TE|Dallas Goedert|PHI","TE|Chig Okonkwo|WAS","TE|Cade Otton|TB"] },
+      starters:["QB|Justin Herbert|LAC","RB|Travis Etienne|NO","RB|Emari Demercado|HOU","WR|CeeDee Lamb|DAL","WR|Zay Flowers|BAL","TE|Chig Okonkwo|WAS","WR|Parker Washington|JAX","WR|Ryan Flournoy|DAL","K|Will Reichard|MIN","DST|JAX D/ST|JAX"],
+      bench:["QB|Jordan Love|GB","RB|Kenneth Walker|KC","RB|Blake Corum|LAR","RB|Brian Robinson|ATL","RB|Corey Kiner|NE","WR|Christian Watson|GB","WR|Matthew Golden|GB","WR|Khalil Shakir|BUF","TE|Dallas Goedert|PHI","TE|Cade Otton|TB"] },
 
     /* W9: McConkey WR2; CHI DST in for CLE. */
     { site:"FFPC", buyin:350, rec:"4-6", pb:[["3","-41"],["4","-62"],["5","-76"],["6","-81"],["7","-64"],["8","-37"],["9","-11"],["10","-36"]], label:"Spacing Guild", cfg:"FFPC", proj:"FFPC Proj",
-      starters:["QB|Jordan Love|GB","RB|James Cook|BUF","RB|Jadarian Price|SEA","WR|Christian Watson|GB","WR|Matthew Golden|GB","TE|Colby Parkinson|LAR","WR|Tetairoa McMillan|CAR","WR|DK Metcalf|PIT","K|Brandon Aubrey|DAL","DST|MIA D/ST|MIA"],
-      bench:["QB|Caleb Williams|CHI","RB|Josh Jacobs|GB","RB|Keaton Mitchell|LAC","RB|Zonovan Knight|ARI","WR|Ladd McConkey|LAC","WR|Antonio Williams|WAS","WR|Denzel Boston|CLE","WR|Adonai Mitchell|NYJ","TE|Colston Loveland|CHI","TE|Brevyn Spann-Ford|DAL","DST|CHI D/ST|CHI"] },
+      starters:["QB|Caleb Williams|CHI","RB|James Cook|BUF","RB|Zonovan Knight|ARI","WR|Tetairoa McMillan|CAR","WR|DK Metcalf|PIT","TE|Colston Loveland|CHI","WR|Adonai Mitchell|NYJ","WR|Elic Ayomanor|TEN","K|Brandon Aubrey|DAL","DST|CHI D/ST|CHI"],
+      bench:["QB|Jordan Love|GB","RB|Jadarian Price|SEA","RB|Josh Jacobs|GB","RB|Keaton Mitchell|LAC","RB|Emari Demercado|HOU","WR|Ladd McConkey|LAC","WR|Christian Watson|GB","WR|Matthew Golden|GB","WR|Denzel Boston|CLE","WR|Antonio Williams|WAS"] },
 
     /* W9: Dowdle starting on PIT bye; Watson (Q) at QB. */
     { site:"FFPC", buyin:350, rec:"4-6", pb:[["3","-106"],["4","-147"],["5","-93"],["6","-131"],["7","-131"],["8","-157"],["9","-220"],["10","-227"]], label:"Gom Jabbar", cfg:"FFPC", proj:"FFPC Proj",
       starters:["QB|Deshaun Watson|CLE","RB|Christian McCaffrey|SF","RB|Rico Dowdle|PIT","WR|George Pickens|DAL","WR|Antonio Williams|WAS","TE|Hunter Henry|NE","WR|Garrett Wilson|NYJ","TE|Sam LaPorta|DET","K|Will Reichard|MIN","DST|JAX D/ST|JAX"],
-      bench:["QB|Michael Penix Jr.|ATL","RB|Saquon Barkley|PHI","RB|Keaton Mitchell|LAC","RB|Emmett Johnson|KC","WR|Makai Lemon|PHI","WR|Ted Hurst|TB","WR|Rome Odunze|CHI","TE|Cade Otton|TB","K|Dominic Zvada|NYG","DST|NYJ D/ST|NYJ"] },
+      bench:["QB|Michael Penix Jr.|ATL","RB|Saquon Barkley|PHI","RB|Keaton Mitchell|LAC","RB|Emmett Johnson|KC","WR|Rome Odunze|CHI","WR|Makai Lemon|PHI","WR|Ted Hurst|TB","TE|Cade Otton|TB","K|Dominic Zvada|NYG","DST|NYJ D/ST|NYJ"] },
 
     /* $250 Keeper League #16. W9: Waddle WR3 (Metcalf bye); BUF K + GB DST in. */
     { site:"NFFC", buyin:250, rec:"3-7", pb:[["3","-91"],["4","-63"],["5","-134"],["6","-119"],["7","-71"],["8","-102"],["9","-108"],["10","-134"]], label:"Lisan al-Gaib", cfg:"NFFC", proj:"Full PPR Proj", qbProj:"FFPC Proj",
-      starters:["QB|Jordan Love|GB","RB|Bhayshul Tuten|JAX","RB|Blake Corum|LAR","WR|CeeDee Lamb|DAL","WR|Zay Flowers|BAL","WR|DK Metcalf|PIT","WR|Jordyn Tyson|NO","TE|Tucker Kraft|GB","K|BUF Team K|BUF","DST|GB D/ST|GB"],
-      bench:["TE|Hunter Henry|NE","RB|Keaton Mitchell|LAC","WR|Jaylen Waddle|DEN","QB|Justin Herbert|LAC","TE|Kenyon Sadiq|NYJ","WR|Ja'Kobi Lane|BAL","WR|Romeo Doubs|NE","RB|Saquon Barkley|PHI","RB|De'Von Achane|MIA","RB|Jordan Mason|MIN"] },
+      starters:["QB|Jordan Love|GB","RB|Bhayshul Tuten|JAX","RB|Blake Corum|LAR","WR|CeeDee Lamb|DAL","WR|Zay Flowers|BAL","WR|DK Metcalf|PIT","TE|Tucker Kraft|GB","WR|Jordyn Tyson|NO","K|BUF Team K|BUF","DST|GB D/ST|GB"],
+      bench:["TE|Hunter Henry|NE","RB|Keaton Mitchell|LAC","WR|Jaylen Waddle|DEN","QB|Justin Herbert|LAC","TE|Kenyon Sadiq|NYJ","WR|Ja'Kobi Lane|BAL","RB|Saquon Barkley|PHI","RB|De'Von Achane|MIA","RB|Jordan Mason|MIN","WR|Michael Wilson|ARI"] },
 
     /* $250 Cash League #1525. W9: Vidal RB2. */
     { site:"NFFC", buyin:250, rec:"5-5", pb:[["3","-32"],["4","-55"],["5","-40"],["6","-44"],["7","-22"],["8","-21"],["9","-10"],["10","-33"]], label:"Bene Gesserit", cfg:"NFFC", proj:"Full PPR Proj", qbProj:"FFPC Proj",
-      starters:["QB|Jordan Love|GB","RB|Rachaad White|WAS","RB|Kimani Vidal|LAC","WR|Amon-Ra St. Brown|DET","WR|Drake London|ATL","WR|Matthew Golden|GB","TE|Tyler Warren|IND","WR|Ryan Flournoy|DAL","K|SEA Team K|SEA","DST|JAX D/ST|JAX"],
-      bench:["RB|Kenneth Gainwell|TB","RB|RJ Harvey|DEN","QB|Matthew Stafford|LAR","WR|Luther Burden III|CHI","WR|Ladd McConkey|LAC","TE|Brenton Strange|JAX","RB|Seth McGowan|IND","RB|Corey Kiner|NE","TE|Colby Parkinson|LAR","RB|Jeremiyah Love|ARI"] },
+      starters:["QB|Jalon Daniels|TB","RB|Rachaad White|WAS","RB|Kenneth Gainwell|TB","WR|Amon-Ra St. Brown|DET","WR|Ryan Flournoy|DAL","WR|Luther Burden III|CHI","TE|Tyler Warren|IND","TE|Chig Okonkwo|WAS","K|SEA Team K|SEA","DST|JAX D/ST|JAX"],
+      bench:["RB|RJ Harvey|DEN","QB|Matthew Stafford|LAR","WR|Matthew Golden|GB","WR|Ladd McConkey|LAC","WR|Drake London|ATL","RB|Corey Kiner|NE","RB|Jeremiyah Love|ARI","TE|Kenyon Sadiq|NYJ","QB|Jordan Love|GB","TE|Brenton Strange|JAX"] },
 
     /* $250 Cash League #1289. */
     { site:"NFFC", buyin:83, rec:"8-2", pb:[["3","-31"],["4","-19"],["5","-48"],["6","-39"],["7","-36"],["8","-33"],["9","+42"],["10","+28"]], label:"Drake Maye Fan Club", cfg:"NFFC", proj:"Full PPR Proj", qbProj:"FFPC Proj",
-      starters:["QB|Josh Allen|BUF","RB|Emmett Johnson|KC","RB|Bijan Robinson|ATL","WR|Josh Downs|KC","WR|Denzel Boston|CLE","WR|Ryan Flournoy|DAL","TE|Brock Bowers|LV","TE|Michael Mayer|LV","K|MIN Team K|MIN","DST|BUF D/ST|BUF"],
-      bench:["WR|Romeo Doubs|NE","WR|Carnell Tate|TEN","RB|Bucky Irving|TB","RB|Kimani Vidal|LAC","RB|Jonah Coleman|DEN","WR|Emeka Egbuka|TB","TE|Terrance Ferguson|LAR","QB|Jacoby Brissett|BAL","WR|Efton Chism|NE","DST|CHI D/ST|CHI"] },
+      starters:["QB|Josh Allen|BUF","RB|Emmett Johnson|KC","RB|Bucky Irving|TB","WR|Josh Downs|KC","WR|Emeka Egbuka|TB","WR|Ryan Flournoy|DAL","TE|Brock Bowers|LV","RB|Jonah Coleman|DEN","K|MIN Team K|MIN","DST|BUF D/ST|BUF"],
+      bench:["WR|Romeo Doubs|NE","WR|Carnell Tate|TEN","RB|Bijan Robinson|ATL","RB|Kimani Vidal|LAC","TE|Michael Mayer|LV","WR|Denzel Boston|CLE","TE|Terrance Ferguson|LAR","QB|Jacoby Brissett|BAL","WR|Efton Chism|NE","DST|CHI D/ST|CHI"] },
 
     /* $500 Cash League #1937, split entry at $225. W9: CMC + Breece Hall at RB; CHI DST. */
     { site:"NFFC", buyin:225, rec:"6-4", pb:[["3","-50"],["4","-54"],["5","+28"],["6","+62"],["7","+72"],["8","+76"],["9","+80"],["10","+47"]], label:"Cousin Greg IX", cfg:"NFFC", proj:"Full PPR Proj", qbProj:"FFPC Proj",
-      starters:["QB|Drake Maye|NE","RB|Christian McCaffrey|SF","RB|Jaylen Warren|PIT","WR|Parker Washington|JAX","WR|Nico Collins|HOU","WR|Jameson Williams|DET","TE|Tucker Kraft|GB","RB|Breece Hall|NYJ","K|IND Team K|IND","DST|KC D/ST|KC"],
-      bench:["WR|Denzel Boston|CLE","RB|Keaton Mitchell|LAC","QB|Patrick Mahomes|KC","WR|Khalil Shakir|BUF","TE|Terrance Ferguson|LAR","WR|Makai Lemon|PHI","DST|CHI D/ST|CHI","WR|Antonio Williams|WAS","WR|Ja'Kobi Lane|BAL","RB|Kaleb Johnson|GB"] },
+      starters:["QB|Patrick Mahomes|KC","RB|Christian McCaffrey|SF","RB|Jaylen Warren|PIT","WR|Parker Washington|JAX","WR|Nico Collins|HOU","WR|Jameson Williams|DET","TE|Gunnar Helm|TEN","RB|Breece Hall|NYJ","K|IND Team K|IND","DST|KC D/ST|KC"],
+      bench:["WR|Denzel Boston|CLE","WR|Khalil Shakir|BUF","TE|Terrance Ferguson|LAR","WR|Makai Lemon|PHI","DST|CHI D/ST|CHI","WR|Antonio Williams|WAS","WR|Ja'Kobi Lane|BAL","TE|Tucker Kraft|GB","QB|Fernando Mendoza|LV","DST|PIT D/ST|PIT"] },
 
     /* $250 Cash League #2333. W9: Irving RB2 (Warren bye); Jonah Coleman FLEX; KC DST. */
     { site:"NFFC", buyin:250, rec:"5-5", pb:[["3","+2"],["4","-10"],["5","+26"],["6","+45"],["7","+79"],["8","+94"],["9","+86"],["10","+143"]], label:"Bene Tleilax", cfg:"NFFC", proj:"Full PPR Proj", qbProj:"FFPC Proj",
-      starters:["QB|Matthew Stafford|LAR","RB|Chuba Hubbard|CAR","RB|Jaylen Warren|PIT","WR|Ja'Marr Chase|CIN","WR|Drake London|ATL","WR|Josh Downs|KC","TE|Chig Okonkwo|WAS","RB|Breece Hall|NYJ","K|DAL Team K|DAL","DST|MIA D/ST|MIA"],
-      bench:["RB|Jonah Coleman|DEN","TE|Colston Loveland|CHI","TE|Terrance Ferguson|LAR","RB|Bucky Irving|TB","RB|Kimani Vidal|LAC","RB|Seth McGowan|IND","QB|Justin Herbert|LAC","DST|CHI D/ST|CHI","WR|Efton Chism|NE","WR|Romeo Doubs|NE","DST|KC D/ST|KC"] },
+      starters:["QB|Cam Ward|TEN","RB|Chuba Hubbard|CAR","RB|Jaylen Warren|PIT","WR|Ja'Marr Chase|CIN","WR|Elic Ayomanor|TEN","WR|Josh Downs|KC","TE|Colston Loveland|CHI","RB|Breece Hall|NYJ","K|DAL Team K|DAL","DST|KC D/ST|KC"],
+      bench:["RB|Jonah Coleman|DEN","TE|Chig Okonkwo|WAS","TE|Terrance Ferguson|LAR","RB|Bucky Irving|TB","RB|Kimani Vidal|LAC","DST|CHI D/ST|CHI","WR|Romeo Doubs|NE","WR|Konata Mumpfield|LAR","QB|Matthew Stafford|LAR","WR|Drake London|ATL"] },
 
     /* W9: CHI DST in for CLE. */
     { site:"ESPN", buyin:150, rec:"7-3", label:"ESPN Dynasty", cfg:"ESPN_STD", proj:"Full PPR Proj",
-      starters:["QB|Josh Allen|BUF","RB|Blake Corum|LAR","RB|Emmett Johnson|KC","WR|Ja'Marr Chase|CIN","WR|Jaxon Smith-Njigba|SEA","TE|Dalton Kincaid|BUF","WR|Parker Washington|JAX","DST|WAS D/ST|WAS","K|Will Reichard|MIN"],
-      bench:["RB|D'Andre Swift|CHI","RB|Rhamondre Stevenson|NE","TE|Harold Fannin Jr.|CLE","RB|Jonah Coleman|DEN","RB|Corey Kiner|NE","DST|CHI D/ST|CHI"] },
+      starters:["QB|Josh Allen|BUF","RB|Jonah Coleman|DEN","RB|Emmett Johnson|KC","WR|Ja'Marr Chase|CIN","WR|Parker Washington|JAX","TE|Dalton Kincaid|BUF","RB|D'Andre Swift|CHI","DST|CHI D/ST|CHI","K|Will Reichard|MIN"],
+      bench:["RB|Rhamondre Stevenson|NE","RB|Blake Corum|LAR","WR|Jaxon Smith-Njigba|SEA","TE|Harold Fannin Jr.|CLE","RB|Corey Kiner|NE","WR|Adonai Mitchell|NYJ"] },
 
     /* W9: Jonah Coleman FLEX; Anthony Richardson stashed. */
     { site:"ESPN", buyin:50, rec:"5-5", label:"2 QB Justin League", cfg:"ESPN_2QB", proj:"Half PPR Proj",
-      starters:["QB|Justin Herbert|LAC","QB|Michael Penix Jr.|ATL","RB|Bijan Robinson|ATL","WR|Germie Bernard|PIT","WR|Zay Flowers|BAL","WR|Christian Watson|GB","TE|Dalton Kincaid|BUF","RB|Blake Corum|LAR","WR|Antonio Williams|WAS","DST|JAX D/ST|JAX","K|Spencer Shrader|IND"],
-      bench:["WR|A.J. Brown|NE","RB|D'Andre Swift|CHI","RB|Rhamondre Stevenson|NE","RB|Austin Ekeler|WAS","RB|Jonah Coleman|DEN","QB|Joe Milton|PHI","QB|Carson Beck|ARI"] }
+      starters:["QB|Justin Herbert|LAC","QB|Joe Milton|PHI","RB|D'Andre Swift|CHI","RB|Jonah Coleman|DEN","WR|Zay Flowers|BAL","WR|Antonio Williams|WAS","TE|Dalton Kincaid|BUF","WR|Germie Bernard|PIT","WR|Elic Ayomanor|TEN","DST|JAX D/ST|JAX","K|Spencer Shrader|IND"],
+      bench:["RB|Bijan Robinson|ATL","WR|A.J. Brown|NE","RB|Rhamondre Stevenson|NE","WR|Christian Watson|GB","RB|Blake Corum|LAR","QB|Michael Penix Jr.|ATL","QB|Carson Beck|ARI"] }
   ]
 };
 
@@ -390,11 +386,399 @@ function indexProj(rows){
   rows.forEach(r=>{ const k=key(r.Player); (idx[k]=idx[k]||[]).push(r); });
   return idx;
 }
+const BAKED_PROJ={week:11,name:"Nov 18",csv:`"Player","Pos","Team","Opp","DK Proj","FD Proj","FFPC Proj","Standard Proj","Half PPR Proj","Full PPR Proj","DK Ceiling","FD Ceiling","Slate"
+"Joe Burrow","QB","CIN","@WAS","27.4","27.2","28.2","24.7","24.7","24.7","38.5","38.4","Monday"
+"Ja'Marr Chase","WR","CIN","@WAS","26.7","22.6","25.0","16.8","20.9","25.0","43.2","37.4","Monday"
+"Jahmyr Gibbs","RB","DET","TB","26.1","23.8","24.7","20.2","22.4","24.6","42.4","39.6","Main"
+"Josh Allen","QB","BUF","MIA","25.0","24.7","26.2","23.6","23.6","23.6","36.6","36.5","Main"
+"Emmett Johnson","RB","KC","ARI","24.5","22.2","23.3","18.9","21.0","23.2","40.2","37.5","Main"
+"Dak Prescott","QB","DAL","TEN","24.1","23.9","25.0","21.9","21.9","21.9","35.6","35.5","Main"
+"CeeDee Lamb","WR","DAL","TEN","23.7","19.9","22.4","14.9","18.6","22.3","39.6","34.3","Main"
+"Jayden Daniels","QB","WAS","CIN","22.4","22.2","23.5","20.9","20.9","20.9","33.3","33.2","Monday"
+"Justin Jefferson","WR","MIN","SF","21.7","18.0","20.4","13.1","16.8","20.4","36.5","31.3","Sunday"
+"Caleb Williams","QB","CHI","NO","21.6","21.4","23.0","20.3","20.3","20.3","32.6","32.5","Main"
+"CJ Stroud","QB","HOU","IND","21.6","21.4","22.8","19.9","19.9","19.9","31.9","31.8","Thursday"
+"Patrick Mahomes","QB","KC","ARI","21.2","21.0","22.6","19.9","19.9","19.9","31.4","31.3","Main"
+"Trevor Lawrence","QB","JAX","@NYG","20.1","19.9","21.2","18.5","18.5","18.5","30.5","30.4","Main"
+"Amon-Ra St Brown","WR","DET","TB","20.0","16.6","19.0","12.2","15.6","19.0","34.6","29.8","Main"
+"Jonah Coleman","RB","DEN","LV","19.8","17.6","19.0","14.8","16.8","18.9","33.3","30.7","Main"
+"Javonte Williams","RB","DAL","TEN","19.3","17.8","18.4","15.7","17.0","18.3","33.7","32.0","Main"
+"Jared Goff","QB","DET","TB","19.2","19.0","20.3","17.4","17.4","17.4","29.5","29.4","Main"
+"Chuba Hubbard","RB","CAR","BAL","19.0","17.2","18.2","14.7","16.4","18.1","32.5","30.3","Main"
+"Tee Higgins","WR","CIN","@WAS","19.0","16.3","18.0","12.5","15.2","18.0","33.9","29.8","Monday"
+"Brock Purdy","QB","SF","MIN","19.0","18.7","20.0","17.4","17.4","17.4","29.3","29.2","Sunday"
+"James Cook","RB","BUF","MIA","18.9","18.0","17.7","16.1","16.8","17.6","33.1","32.0","Main"
+"Bo Nix","QB","DEN","LV","18.8","18.6","20.2","17.6","17.6","17.6","28.7","28.6","Main"
+"Christian McCaffrey","RB","SF","MIN","18.8","16.8","18.4","14.4","16.3","18.3","31.9","29.4","Sunday"
+"Cam Ward","QB","TEN","@DAL","18.7","18.5","19.8","17.1","17.1","17.1","28.6","28.5","Main"
+"Chase Brown","RB","CIN","@WAS","18.4","15.9","18.1","13.2","15.6","18.0","31.1","27.9","Monday"
+"Zay Flowers","WR","BAL","@CAR","18.1","14.7","17.1","10.3","13.7","17.1","33.1","28.2","Main"
+"Nico Collins","WR","HOU","IND","18.0","15.4","17.1","11.8","14.5","17.1","32.3","28.3","Thursday"
+"Bryce Young","QB","CAR","BAL","17.8","17.5","19.0","16.3","16.3","16.3","27.7","27.6","Main"
+"George Pickens","WR","DAL","TEN","17.7","15.1","16.8","11.6","14.2","16.8","32.5","28.4","Main"
+"Bhayshul Tuten","RB","JAX","@NYG","17.2","16.0","16.4","14.2","15.3","16.3","30.4","29.0","Main"
+"Tyler Shough","QB","NO","@CHI","17.1","16.9","18.1","15.5","15.5","15.5","27.1","26.9","Main"
+"Tony Pollard","RB","TEN","@DAL","17.1","15.5","16.5","13.5","15.0","16.4","29.7","27.8","Main"
+"Kirk Cousins","QB","MIN","SF","17.0","16.7","17.9","15.2","15.2","15.2","26.5","26.4","Sunday"
+"Justin Herbert","QB","LAC","NYJ","16.8","16.5","17.9","15.6","15.6","15.6","26.0","25.9","Main"
+"Jalon Daniels","QB","TB","@DET","16.7","16.5","17.8","15.4","15.4","15.4","25.4","25.3","Main"
+"Jaylen Warren","RB","PIT","@PHI","16.4","14.8","15.7","12.7","14.2","15.6","28.8","26.8","Main"
+"Jacoby Brissett","QB","BAL","@CAR","16.3","16.1","17.3","14.7","14.7","14.7","26.5","26.4","Main"
+"JJ McCarthy","QB","NYG","JAX","16.3","16.1","17.4","14.9","14.9","14.9","25.9","25.7","Main"
+"Malik Nabers","WR","NYG","JAX","16.2","13.3","15.5","9.7","12.6","15.5","29.3","25.0","Main"
+"Carnell Tate","WR","TEN","@DAL","16.1","13.4","15.4","9.9","12.6","15.3","29.2","25.1","Main"
+"Parker Washington","WR","JAX","@NYG","15.9","13.5","15.2","10.5","12.8","15.1","29.6","25.9","Main"
+"Cam Skattebo","RB","NYG","JAX","15.9","14.4","15.4","12.6","13.9","15.3","28.0","26.2","Main"
+"D'Andre Swift","RB","CHI","NO","15.3","14.2","14.8","12.7","13.7","14.7","28.0","26.6","Main"
+"Jonathan Taylor","RB","IND","@HOU","15.3","13.3","15.0","11.0","13.0","14.9","26.1","23.6","Thursday"
+"Garrett Wilson","WR","NYJ","@LAC","15.3","12.6","14.6","9.2","11.9","14.6","28.0","23.9","Main"
+"Derrick Henry","RB","BAL","@CAR","15.2","14.2","14.5","12.7","13.6","14.4","27.5","26.4","Main"
+"Joe Milton","QB","PHI","PIT","15.2","14.9","16.2","13.9","13.9","13.9","24.4","24.2","Main"
+"Luther Burden","WR","CHI","NO","15.1","12.7","14.5","9.6","12.1","14.5","28.4","24.7","Main"
+"David Montgomery","RB","HOU","IND","15.0","14.0","14.5","12.6","13.5","14.4","27.4","26.2","Thursday"
+"Trey McBride","TE","ARI","@KC","14.9","11.5","17.8","7.8","11.1","14.5","25.6","20.7","Main"
+"Ollie Gordon","RB","MIA","@BUF","14.6","13.1","14.1","11.3","12.7","14.0","25.6","23.8","Main"
+"Bucky Irving","RB","TB","@DET","14.6","13.2","14.1","11.4","12.7","14.0","25.5","23.8","Main"
+"Tetairoa McMillan","WR","CAR","BAL","14.4","12.0","13.8","9.1","11.4","13.7","27.6","23.9","Main"
+"Geno Smith","QB","NYJ","@LAC","14.4","14.1","15.5","13.1","13.1","13.1","23.2","23.0","Main"
+"George Kittle","TE","SF","MIN","14.3","11.9","16.2","9.1","11.5","13.8","26.6","22.8","Sunday"
+"Chris Olave","WR","NO","@CHI","14.1","11.6","13.6","8.5","11.0","13.5","26.4","22.6","Main"
+"Emeka Egbuka","WR","TB","@DET","14.1","11.7","13.7","8.8","11.2","13.6","26.0","22.4","Main"
+"Rashee Rice","WR","KC","ARI","14.0","11.6","13.6","8.8","11.2","13.6","26.3","22.6","Main"
+"Colston Loveland","TE","CHI","NO","13.8","11.4","15.9","8.7","11.1","13.5","25.7","22.0","Main"
+"Aaron Rodgers","QB","PIT","@PHI","13.8","13.6","15.1","12.8","12.8","12.8","22.3","22.2","Main"
+"Ashton Jeanty","RB","LV","@DEN","13.7","11.7","13.6","9.5","11.5","13.5","23.7","20.8","Main"
+"TJ Hockenson","TE","MIN","SF","13.7","10.9","16.2","7.9","10.7","13.5","24.5","20.4","Sunday"
+"DeVonta Smith","WR","PHI","PIT","13.7","11.1","13.2","7.9","10.6","13.2","25.4","21.5","Main"
+"Jordyn Tyson","WR","NO","@CHI","13.4","10.7","13.0","7.6","10.3","13.0","24.8","20.8","Main"
+"Jaylen Waddle","WR","DEN","LV","13.3","11.1","12.9","8.5","10.7","12.9","25.3","21.9","Main"
+"Fernando Mendoza","QB","LV","@DEN","13.3","13.1","14.4","12.2","12.2","12.2","20.9","20.8","Main"
+"Omarion Hampton","RB","LAC","NYJ","12.9","11.8","12.5","10.6","11.5","12.4","23.7","22.4","Main"
+"Isaiah Likely","TE","NYG","JAX","12.8","10.3","15.1","7.5","10.0","12.5","23.4","19.5","Main"
+"Jameson Williams","WR","DET","TB","12.7","10.8","12.1","8.4","10.3","12.1","25.3","22.2","Main"
+"Saquon Barkley","RB","PHI","PIT","12.7","11.6","12.2","10.1","11.1","12.1","23.8","22.5","Main"
+"DJ Moore","WR","BUF","MIA","12.6","10.7","12.2","8.4","10.3","12.2","24.6","21.6","Main"
+"Breece Hall","RB","NYJ","@LAC","12.6","11.2","12.3","9.7","11.0","12.2","22.8","21.0","Main"
+"Kyle McCord","QB","MIA","@BUF","12.4","12.2","13.3","11.0","11.0","11.0","20.2","20.0","Main"
+"Stefon Diggs","WR","WAS","CIN","12.2","9.9","11.9","7.4","9.7","11.9","23.2","19.7","Monday"
+"Tre' Harris","WR","LAC","NYJ","11.9","9.8","11.5","7.4","9.4","11.5","23.2","19.9","Main"
+"Jalen Coker","WR","CAR","BAL","11.6","9.6","11.3","7.2","9.3","11.3","22.9","19.7","Main"
+"Daniel Jones","QB","IND","@HOU","11.6","11.4","12.4","10.3","10.3","10.3","18.7","18.5","Thursday"
+"Rachaad White","RB","WAS","CIN","11.5","10.3","11.4","9.1","10.2","11.4","21.5","19.8","Monday"
+"DK Metcalf","WR","PIT","@PHI","11.4","9.5","11.1","7.4","9.2","11.1","23.0","20.1","Main"
+"Caleb Douglas","WR","MIA","@BUF","11.2","9.3","10.8","7.0","8.9","10.8","21.8","18.8","Main"
+"Brandon Aubrey","K","DAL","TEN","11.1","11.1","11.9","10.7","10.7","10.7","17.4","17.4","Main"
+"Ka'imi Fairbairn","K","HOU","IND","11.1","11.1","11.9","10.7","10.7","10.7","17.8","17.8","Thursday"
+"Rome Odunze","WR","CHI","NO","11.0","9.5","10.7","7.7","9.2","10.7","23.1","20.6","Main"
+"Carson Beck","QB","ARI","@KC","10.8","10.6","11.7","9.6","9.6","9.6","17.5","17.4","Main"
+"Tyler Warren","TE","IND","@HOU","10.8","8.2","13.3","5.6","8.1","10.7","19.1","15.2","Thursday"
+"Travis Kelce","TE","KC","ARI","10.8","8.9","12.6","6.9","8.8","10.7","21.2","18.1","Main"
+"Chig Okonkwo","TE","WAS","CIN","10.7","8.6","12.8","6.3","8.4","10.6","20.5","17.0","Monday"
+"KC DST","DST","KC","ARI","10.7","10.8","11.8","10.7","10.7","10.7","18.7","18.7","Main"
+"Dalton Kincaid","TE","BUF","MIA","10.5","8.8","12.0","6.9","8.6","10.3","21.0","18.2","Main"
+"Jakobi Meyers","WR","JAX","@NYG","10.5","8.8","10.3","6.9","8.6","10.3","21.1","18.3","Main"
+"Michael Mayer","TE","LV","@DEN","10.5","8.2","12.6","5.8","8.0","10.3","19.2","15.6","Main"
+"Xavier Hutchinson","WR","HOU","IND","10.4","8.7","10.2","6.8","8.5","10.2","20.6","17.9","Thursday"
+"Sam LaPorta","TE","DET","TB","10.2","8.3","11.8","6.3","8.2","10.0","20.1","17.1","Main"
+"Germie Bernard","WR","PIT","@PHI","10.2","8.2","10.1","6.1","8.1","10.1","19.8","16.7","Main"
+"Adonai Mitchell","WR","NYJ","@LAC","10.0","8.4","9.7","6.5","8.1","9.7","20.6","18.0","Main"
+"Deebo Samuel","WR","SF","MIN","10.0","8.5","9.9","6.9","8.4","9.9","19.8","17.5","Sunday"
+"Elic Ayomanor","WR","TEN","@DAL","10.0","8.4","9.8","6.5","8.1","9.8","20.5","17.8","Main"
+"Kyle Monangai","RB","CHI","NO","9.9","9.3","9.8","8.6","9.2","9.7","19.5","18.7","Main"
+"Tank Dell","WR","HOU","IND","9.9","8.4","9.7","6.7","8.2","9.7","20.1","17.7","Thursday"
+"Chris Godwin","WR","TB","@DET","9.9","7.8","9.7","5.7","7.7","9.7","19.0","15.8","Main"
+"Antonio Williams","WR","WAS","CIN","9.9","8.1","9.7","6.1","7.9","9.7","19.9","17.0","Monday"
+"Cairo Santos","K","CHI","NO","9.9","9.9","10.6","9.5","9.5","9.5","15.9","15.9","Main"
+"Ryan Flournoy","WR","DAL","TEN","9.8","8.1","9.6","6.2","7.9","9.6","20.3","17.4","Main"
+"Courtland Sutton","WR","DEN","LV","9.8","8.2","9.6","6.5","8.0","9.6","20.1","17.5","Main"
+"Jordan Mason","RB","MIN","SF","9.8","9.1","9.6","8.2","8.9","9.5","19.0","18.1","Sunday"
+"BUF DST","DST","BUF","MIA","9.8","9.8","10.8","9.8","9.8","9.8","17.8","17.8","Main"
+"Evan McPherson","K","CIN","@WAS","9.8","9.8","10.4","9.4","9.4","9.4","15.9","15.9","Monday"
+"PIT DST","DST","PIT","@PHI","9.7","9.7","10.6","9.7","9.7","9.7","17.7","17.8","Main"
+"Tyler Bass","K","BUF","MIA","9.7","9.7","10.4","9.4","9.4","9.4","15.6","15.6","Main"
+"Cam Little","K","JAX","@NYG","9.6","9.6","10.3","9.2","9.2","9.2","15.9","15.9","Main"
+"Travis Etienne","RB","NO","@CHI","9.5","8.3","9.5","7.0","8.2","9.4","18.3","16.5","Main"
+"Rico Dowdle","RB","PIT","@PHI","9.5","8.3","9.4","7.2","8.2","9.3","18.2","16.5","Main"
+"Keenan Allen","WR","SF","MIN","9.5","7.7","9.4","5.8","7.6","9.4","19.1","16.3","Sunday"
+"HOU DST","DST","HOU","IND","9.5","9.5","10.4","9.5","9.5","9.5","17.3","17.4","Thursday"
+"Wil Lutz","K","DEN","LV","9.5","9.5","10.3","9.2","9.2","9.2","15.8","15.8","Main"
+"Aaron Jones","RB","MIN","SF","9.4","8.2","9.4","7.0","8.2","9.3","17.9","16.2","Sunday"
+"Jake Bates","K","DET","TB","9.4","9.4","10.1","9.1","9.1","9.1","15.6","15.6","Main"
+"Tre Tucker","WR","LV","@DEN","9.3","7.7","9.1","5.9","7.5","9.1","18.6","15.9","Main"
+"Austin Ekeler","RB","WAS","CIN","9.3","8.2","9.2","7.1","8.1","9.2","17.9","16.3","Monday"
+"DEN DST","DST","DEN","LV","9.3","9.3","10.2","9.3","9.3","9.3","16.9","16.9","Main"
+"Cameron Dicker","K","LAC","NYJ","9.3","9.3","10.1","9.0","9.0","9.0","15.9","15.9","Main"
+"Mark Andrews","TE","BAL","@CAR","9.2","7.2","11.0","5.3","7.2","9.1","16.9","13.8","Main"
+"Khalil Shakir","WR","BUF","MIA","9.2","7.5","9.0","5.7","7.3","9.0","18.6","15.9","Main"
+"Josh Downs","WR","KC","ARI","9.2","7.6","9.1","5.9","7.5","9.1","18.9","16.3","Main"
+"Harrison Butker","K","KC","ARI","9.2","9.2","9.9","8.9","8.9","8.9","15.0","15.0","Main"
+"Joey Slye","K","TEN","@DAL","9.0","9.0","9.8","8.7","8.7","8.7","15.5","15.5","Main"
+"Will Reichard","K","MIN","SF","8.9","8.9","9.6","8.5","8.5","8.5","15.5","15.5","Sunday"
+"Malik Washington","WR","MIA","@BUF","8.8","7.0","8.7","5.2","6.9","8.7","17.0","14.2","Main"
+"Eddy Pineiro","K","SF","MIN","8.8","8.8","9.5","8.5","8.5","8.5","14.8","14.8","Sunday"
+"Brenton Strange","TE","JAX","@NYG","8.6","7.0","10.1","5.4","6.9","8.5","17.4","14.8","Main"
+"Chris Boswell","K","PIT","@PHI","8.6","8.6","9.4","8.3","8.3","8.3","14.9","14.9","Main"
+"Jason Sanders","K","NYJ","@LAC","8.5","8.5","9.2","8.2","8.2","8.2","14.9","14.9","Main"
+"Drew Stevens","K","WAS","CIN","8.5","8.5","9.2","8.2","8.2","8.2","14.7","14.7","Monday"
+"CHI DST","DST","CHI","NO","8.4","8.4","9.2","8.4","8.4","8.4","16.3","16.3","Main"
+"Ryan Fitzgerald","K","CAR","BAL","8.4","8.4","9.0","8.1","8.1","8.1","14.5","14.5","Main"
+"Riley Patterson","K","BAL","@CAR","8.3","8.3","8.9","7.9","7.9","7.9","14.4","14.4","Main"
+"Dominic Zvada","K","NYG","JAX","8.2","8.2","8.9","7.8","7.8","7.8","14.7","14.7","Main"
+"Chase McLaughlin","K","TB","@DET","8.2","8.2","8.9","7.9","7.9","7.9","14.6","14.6","Main"
+"Darren Waller","TE","CAR","BAL","8.1","6.6","9.4","5.1","6.5","8.0","16.8","14.3","Main"
+"Tyler Allgeier","RB","ARI","@KC","8.0","7.1","7.9","6.1","7.0","7.9","15.4","14.0","Main"
+"Dalton Schultz","TE","HOU","IND","8.0","6.4","9.5","4.8","6.4","7.9","16.3","13.7","Thursday"
+"Dallas Goedert","TE","PHI","PIT","8.0","6.2","9.7","4.4","6.2","7.9","15.9","13.0","Main"
+"JAX DST","DST","JAX","@NYG","8.0","8.1","8.8","8.0","8.0","8.0","15.9","15.9","Main"
+"Spencer Shrader","K","IND","@HOU","8.0","8.0","8.7","7.7","7.7","7.7","14.7","14.7","Thursday"
+"Braelon Allen","RB","NYJ","@LAC","7.9","7.2","7.8","6.4","7.1","7.8","15.9","14.8","Main"
+"LAC DST","DST","LAC","NYJ","7.9","7.9","8.7","7.9","7.9","7.9","15.2","15.3","Main"
+"Mike Gesicki","TE","CIN","@WAS","7.8","6.4","9.1","5.0","6.3","7.7","16.5","14.1","Monday"
+"Bam Knight","RB","ARI","@KC","7.7","6.6","7.6","5.5","6.5","7.6","14.8","13.2","Main"
+"Matt Gay","K","LV","@DEN","7.7","7.7","8.4","7.3","7.3","7.3","14.0","14.0","Main"
+"Ja'Kobi Lane","WR","BAL","@CAR","7.6","6.3","7.5","4.8","6.2","7.5","16.3","14.0","Main"
+"DET DST","DST","DET","TB","7.6","7.6","8.4","7.6","7.6","7.6","14.9","14.9","Main"
+"Samaje Perine","RB","CIN","@WAS","7.5","6.8","7.4","6.1","6.8","7.4","15.4","14.4","Monday"
+"Charlie Smyth","K","NO","@CHI","7.5","7.5","8.1","7.1","7.1","7.1","13.6","13.6","Main"
+"Greg Dulcich","TE","MIA","@BUF","7.4","5.9","8.9","4.3","5.8","7.3","14.9","12.3","Main"
+"Justice Hill","RB","BAL","@CAR","7.3","5.8","7.3","4.3","5.8","7.3","15.4","13.0","Main"
+"Quentin Johnston","WR","LAC","NYJ","7.3","6.2","7.2","4.9","6.1","7.2","16.4","14.5","Main"
+"Tez Johnson","WR","TB","@DET","7.3","6.2","7.2","4.8","6.0","7.2","16.0","13.9","Main"
+"Cade Otton","TE","TB","@DET","7.3","5.7","8.8","4.1","5.7","7.2","14.7","12.0","Main"
+"Jake Elliott","K","PHI","PIT","7.3","7.3","8.0","7.0","7.0","7.0","13.5","13.5","Main"
+"Treylon Burks","WR","WAS","CIN","7.2","6.1","7.0","4.8","5.9","7.0","16.3","14.3","Monday"
+"Xavier Worthy","WR","KC","ARI","7.1","5.9","7.1","4.6","5.8","7.0","15.8","13.7","Main"
+"Gunnar Helm","TE","TEN","@DAL","7.1","5.6","8.6","4.1","5.6","7.1","14.7","12.2","Main"
+"CAR DST","DST","CAR","BAL","7.1","7.1","7.8","7.1","7.1","7.1","14.4","14.5","Main"
+"Kayshon Boutte","WR","HOU","IND","7.0","6.0","6.9","4.8","5.8","6.9","16.0","14.1","Thursday"
+"NYJ DST","DST","NYJ","@LAC","7.0","7.0","7.7","7.0","7.0","7.0","14.2","14.2","Main"
+"SF DST","DST","SF","MIN","7.0","7.1","7.8","7.0","7.0","7.0","14.5","14.5","Sunday"
+"Keon Coleman","WR","BUF","MIA","6.9","5.8","6.9","4.7","5.8","6.8","15.7","13.7","Main"
+"Malachi Fields","WR","NYG","JAX","6.9","5.7","6.7","4.4","5.6","6.7","15.1","13.0","Main"
+"Jauan Jennings","WR","MIN","SF","6.8","5.6","6.8","4.3","5.5","6.8","14.8","12.7","Sunday"
+"Tyjae Spears","RB","TEN","@DAL","6.8","5.6","6.8","4.5","5.6","6.7","14.1","12.2","Main"
+"Dontayvion Wicks","WR","PHI","PIT","6.7","5.4","6.7","4.0","5.4","6.7","14.4","12.1","Main"
+"BAL DST","DST","BAL","@CAR","6.7","6.8","7.4","6.7","6.7","6.7","13.9","13.9","Main"
+"Pat Freiermuth","TE","PIT","@PHI","6.6","5.4","7.8","4.1","5.3","6.6","14.2","12.1","Main"
+"Zane Gonzalez","K","MIA","@BUF","6.6","6.6","7.2","6.3","6.3","6.3","12.7","12.7","Main"
+"Alvin Kamara","RB","NO","@CHI","6.5","5.0","6.4","3.6","5.0","6.4","13.9","11.5","Main"
+"DAL DST","DST","DAL","TEN","6.5","6.5","7.2","6.5","6.5","6.5","13.8","13.8","Main"
+"Chad Ryland","K","ARI","@KC","6.5","6.5","7.1","6.2","6.2","6.2","12.5","12.5","Main"
+"Brevyn Spann-Ford","TE","DAL","TEN","6.4","5.0","7.6","3.7","5.0","6.3","13.9","11.6","Main"
+"Pat Bryant","WR","DEN","LV","6.4","5.3","6.4","4.1","5.2","6.3","14.4","12.4","Main"
+"Laquon Treadwell","WR","IND","@HOU","6.4","5.2","6.4","3.8","5.1","6.4","13.6","11.4","Thursday"
+"Rashod Bateman","WR","BAL","@CAR","6.3","5.2","6.2","3.9","5.1","6.2","14.5","12.5","Main"
+"Kalif Raymond","WR","CHI","NO","6.3","5.0","6.3","3.7","5.0","6.3","13.8","11.7","Main"
+"Makai Lemon","WR","PHI","PIT","6.3","4.8","6.3","3.3","4.8","6.2","13.1","10.6","Main"
+"Kenny Gainwell","RB","TB","@DET","6.3","5.4","6.2","4.5","5.3","6.2","13.0","11.6","Main"
+"MIN DST","DST","MIN","SF","6.3","6.3","6.9","6.3","6.3","6.3","13.5","13.6","Sunday"
+"Evan Engram","TE","DEN","LV","6.2","5.0","7.5","3.7","4.9","6.2","13.5","11.3","Main"
+"Keaton Mitchell","RB","LAC","NYJ","6.2","5.2","6.2","4.1","5.1","6.2","13.5","11.7","Main"
+"Charlie Kolar","TE","LAC","NYJ","6.2","5.0","7.4","3.9","5.0","6.2","13.7","11.7","Main"
+"Jordan Watkins","WR","SF","MIN","6.2","5.4","6.1","4.4","5.2","6.1","14.9","13.3","Sunday"
+"Darnell Washington","TE","PIT","@PHI","6.1","5.0","7.2","3.9","5.0","6.1","13.8","11.8","Main"
+"CIN DST","DST","CIN","@WAS","6.1","6.1","6.8","6.1","6.1","6.1","13.2","13.2","Monday"
+"Tommy Tremble","TE","CAR","BAL","6.0","4.7","7.2","3.5","4.7","6.0","13.3","11.1","Main"
+"Anthony Gould","WR","IND","@HOU","6.0","4.7","5.9","3.4","4.7","5.9","12.8","10.6","Thursday"
+"Juwan Johnson","TE","NO","@CHI","6.0","4.8","7.2","3.5","4.8","6.0","13.1","11.0","Main"
+"PHI DST","DST","PHI","PIT","6.0","6.0","6.7","6.0","6.0","6.0","12.8","12.8","Main"
+"Dohnte Meyers","WR","CIN","@WAS","5.8","4.8","5.8","3.7","4.8","5.8","13.4","11.5","Monday"
+"Kimani Vidal","RB","LAC","NYJ","5.8","5.0","5.8","4.1","5.0","5.8","12.5","11.2","Main"
+"Kaelon Black","RB","SF","MIN","5.8","5.5","5.8","5.1","5.4","5.7","12.6","12.0","Sunday"
+"Chimere Dike","WR","TEN","@DAL","5.8","4.7","5.7","3.6","4.7","5.7","13.1","11.2","Main"
+"Deion Burks","WR","IND","@HOU","5.6","4.6","5.6","3.5","4.5","5.5","12.5","10.6","Thursday"
+"Jalen Nailor","WR","LV","@DEN","5.6","4.6","5.6","3.5","4.5","5.6","12.6","10.6","Main"
+"Tai Felton","WR","MIN","SF","5.5","4.5","5.5","3.5","4.5","5.5","12.6","10.9","Sunday"
+"Mike Washington","RB","LV","@DEN","5.4","5.1","5.4","4.8","5.0","5.3","11.4","11.0","Main"
+"Kevin Coleman","WR","MIA","@BUF","5.4","4.4","5.4","3.3","4.4","5.4","12.3","10.4","Main"
+"Devaughn Vele","WR","NO","@CHI","5.4","4.4","5.4","3.3","4.4","5.4","12.6","10.7","Main"
+"Ty Johnson","RB","BUF","MIA","5.3","4.4","5.2","3.5","4.4","5.2","12.7","11.1","Main"
+"Mason Taylor","TE","NYJ","@LAC","5.2","4.1","6.3","2.9","4.0","5.2","11.6","9.6","Main"
+"Chris Rodriguez","RB","JAX","@NYG","5.0","4.7","5.0","4.4","4.7","4.9","11.7","11.3","Main"
+"Jack Bech","WR","LV","@DEN","5.0","3.9","5.0","2.9","3.9","5.0","11.0","9.1","Main"
+"NYG DST","DST","NYG","JAX","5.0","5.1","5.7","5.0","5.0","5.0","12.0","12.0","Main"
+"TB DST","DST","TB","@DET","5.0","5.1","5.6","5.0","5.0","5.0","11.5","11.6","Main"
+"Isaac TeSlaa","WR","DET","TB","4.8","4.1","4.8","3.3","4.0","4.8","12.3","10.9","Main"
+"Seth McGowan","RB","IND","@HOU","4.8","4.5","4.8","4.2","4.5","4.8","10.5","10.0","Thursday"
+"Kenyon Sadiq","TE","NYJ","@LAC","4.7","3.7","5.6","2.8","3.7","4.6","10.9","9.1","Main"
+"Audric Estime","RB","NO","@CHI","4.5","4.1","4.5","3.7","4.1","4.4","10.5","10.0","Main"
+"Darnell Mooney","WR","NYG","JAX","4.5","3.8","4.5","3.0","3.7","4.5","10.8","9.3","Main"
+"IND DST","DST","IND","@HOU","4.5","4.5","5.1","4.5","4.5","4.5","11.1","11.1","Thursday"
+"LV DST","DST","LV","@DEN","4.5","4.5","5.1","4.5","4.5","4.5","10.9","10.9","Main"
+"JK Dobbins","RB","DEN","LV","4.4","4.0","4.4","3.7","4.0","4.3","10.6","10.1","Main"
+"Brian Thomas","WR","JAX","@NYG","4.3","3.6","4.3","2.9","3.6","4.3","11.1","9.8","Main"
+"David Njoku","TE","LAC","NYJ","4.3","3.5","5.1","2.7","3.5","4.3","10.6","9.1","Main"
+"Isaiah Williams","WR","NYJ","@LAC","4.3","3.4","4.3","2.5","3.4","4.2","10.0","8.3","Main"
+"Daniel Bellinger","TE","TEN","@DAL","4.3","3.4","5.2","2.6","3.4","4.3","10.4","8.7","Main"
+"Emari Demercado","RB","HOU","IND","4.2","3.8","4.1","3.4","3.7","4.1","10.4","9.7","Thursday"
+"WAS DST","DST","WAS","CIN","4.2","4.3","4.9","4.2","4.2","4.2","10.9","10.9","Monday"
+"Sione Vaki","RB","DET","TB","4.1","3.5","4.1","3.0","3.5","4.0","9.8","8.7","Main"
+"Cyrus Allen","WR","KC","ARI","4.0","3.3","3.9","2.7","3.3","3.9","10.8","9.6","Main"
+"NO DST","DST","NO","@CHI","4.0","4.0","4.6","4.0","4.0","4.0","10.7","10.7","Main"
+"Elijah Higgins","TE","ARI","@KC","3.9","2.9","4.8","2.0","2.9","3.9","8.9","7.1","Main"
+"Dawson Knox","TE","BUF","MIA","3.9","3.2","4.6","2.4","3.2","3.9","9.9","8.5","Main"
+"Noah Gray","TE","KC","ARI","3.9","3.2","4.7","2.5","3.2","3.9","10.2","8.7","Main"
+"Ashton Dulin","WR","IND","@HOU","3.8","3.1","3.8","2.4","3.1","3.8","9.5","8.0","Thursday"
+"Oronde Gadsden","TE","LAC","NYJ","3.8","3.1","4.5","2.4","3.1","3.8","9.9","8.4","Main"
+"Simi Fehoko","WR","ARI","@KC","3.7","3.0","3.7","2.2","3.0","3.7","9.2","7.7","Main"
+"Israel Abanikanda","RB","DAL","TEN","3.7","3.4","3.7","3.0","3.3","3.7","9.3","8.6","Main"
+"Marvin Mims","WR","DEN","LV","3.7","3.1","3.7","2.4","3.1","3.7","9.2","7.9","Main"
+"ARI DST","DST","ARI","@KC","3.7","3.8","4.3","3.7","3.7","3.7","10.1","10.1","Main"
+"Reggie Virgil","WR","ARI","@KC","3.6","2.9","3.6","2.2","2.9","3.6","9.2","7.7","Main"
+"KaVontae Turpin","WR","DAL","TEN","3.6","3.0","3.6","2.5","3.0","3.6","9.6","8.4","Main"
+"Nate Boerkircher","TE","JAX","@NYG","3.6","3.0","4.3","2.3","2.9","3.6","9.5","8.1","Main"
+"Will Shipley","RB","PHI","PIT","3.6","3.0","3.6","2.3","3.0","3.6","8.7","7.4","Main"
+"MIA DST","DST","MIA","@BUF","3.6","3.6","4.2","3.6","3.6","3.6","10.1","10.2","Main"
+"Josh Cameron","WR","JAX","@NYG","3.5","2.9","3.5","2.3","2.9","3.5","9.5","8.2","Main"
+"TEN DST","DST","TEN","@DAL","3.5","3.5","4.1","3.5","3.5","3.5","10.1","10.1","Main"
+"Devin Duvernay","WR","ARI","@KC","3.4","2.6","3.4","1.8","2.6","3.4","8.2","6.5","Main"
+"Ray Davis","RB","BUF","MIA","3.4","3.1","3.3","2.9","3.1","3.3","8.8","8.4","Main"
+"Jonathon Brooks","RB","CAR","BAL","3.4","3.0","3.4","2.7","3.0","3.3","8.5","7.8","Main"
+"Nate Carter","RB","KC","ARI","3.2","3.0","3.1","2.9","3.0","3.1","8.4","8.1","Main"
+"Travis Hunter","WR","JAX","@NYG","3.1","2.5","3.1","2.0","2.5","3.0","8.3","7.1","Main"
+"Jaylen Wright","RB","MIA","@BUF","3.1","2.6","3.1","2.1","2.6","3.1","7.9","6.9","Main"
+"Troy Franklin","WR","DEN","LV","3.0","2.5","3.0","2.0","2.5","3.0","8.5","7.3","Main"
+"Devin Singletary","RB","NYG","JAX","3.0","2.7","3.0","2.4","2.6","2.9","7.9","7.3","Main"
+"Mitchell Evans","TE","CAR","BAL","2.9","2.3","3.5","1.8","2.3","2.9","7.5","6.2","Main"
+"Noah Fant","TE","NO","@CHI","2.9","2.2","3.5","1.6","2.2","2.8","7.7","6.3","Main"
+"Josh Cuevas","TE","BAL","@CAR","2.8","2.2","3.4","1.7","2.2","2.8","7.8","6.4","Main"
+"Derius Davis","WR","LAC","NYJ","2.8","2.2","2.8","1.6","2.2","2.7","7.6","6.3","Main"
+"Luke Schoonmaker","TE","DAL","TEN","2.7","2.1","3.2","1.6","2.1","2.7","7.8","6.6","Main"
+"Adam Trautman","TE","DEN","LV","2.7","2.2","3.3","1.6","2.2","2.7","7.6","6.3","Main"
+"Theo Johnson","TE","NYG","JAX","2.7","2.2","3.3","1.7","2.2","2.7","7.5","6.3","Main"
+"Van Jefferson","WR","WAS","CIN","2.7","2.2","2.7","1.8","2.2","2.7","7.9","6.8","Monday"
+"John Metchie","WR","CAR","BAL","2.6","2.0","2.6","1.5","2.0","2.6","7.4","6.1","Main"
+"Drew Sample","TE","CIN","@WAS","2.6","2.0","3.2","1.4","2.0","2.6","7.1","5.7","Monday"
+"Demarcus Robinson","WR","SF","MIN","2.6","2.2","2.6","1.8","2.2","2.6","7.8","6.8","Sunday"
+"Foster Moreau","TE","HOU","IND","2.5","2.0","3.0","1.6","2.0","2.5","7.6","6.5","Thursday"
+"Brandon Smith","WR","PIT","@PHI","2.5","2.0","2.5","1.6","2.0","2.5","7.5","6.4","Main"
+"Hunter Long","TE","ARI","@KC","2.4","1.8","3.0","1.3","1.8","2.4","6.4","5.1","Main"
+"Sam Roush","TE","CHI","NO","2.4","1.9","2.8","1.5","1.9","2.4","7.1","6.0","Main"
+"Jack Endries","TE","CIN","@WAS","2.4","2.0","2.8","1.5","2.0","2.4","7.2","6.1","Monday"
+"Xavier Legette","WR","CAR","BAL","2.2","1.8","2.2","1.4","1.8","2.2","6.9","5.8","Main"
+"Hunter Luepke","RB","DAL","TEN","2.0","1.7","2.0","1.3","1.7","2.0","6.3","5.4","Main"
+"Will Kacmarek","TE","MIA","@BUF","2.0","1.5","2.4","1.1","1.5","2.0","5.7","4.6","Main"
+"Matt Hibner","TE","BAL","@CAR","1.9","1.5","2.3","1.1","1.5","1.9","5.8","4.8","Main"
+"Kyle Juszczyk","RB","SF","MIN","1.9","1.5","1.9","1.1","1.5","1.8","5.7","4.7","Sunday"
+"Zay Jones","WR","ARI","@KC","1.8","1.4","1.8","1.0","1.4","1.8","5.3","4.3","Main"
+"Dare Ogunbowale","RB","HOU","IND","1.8","1.5","1.8","1.2","1.5","1.8","5.8","5.1","Thursday"
+"Darius Cooper","WR","PHI","PIT","1.8","1.4","1.8","1.1","1.4","1.8","5.7","4.8","Main"
+"Xavier Restrepo","WR","TEN","@DAL","1.8","1.4","1.8","1.1","1.4","1.8","5.7","4.8","Main"
+"Colbie Young","WR","CIN","@WAS","1.7","1.4","1.7","1.1","1.4","1.7","5.8","4.8","Monday"
+"Drew Ogletree","TE","IND","@HOU","1.7","1.3","2.1","1.0","1.3","1.7","5.1","4.1","Thursday"
+"Calvin Ridley","WR","TEN","@DAL","1.7","1.4","1.7","1.1","1.4","1.7","5.7","4.8","Main"
+"Zavion Thomas","WR","CHI","NO","1.5","1.3","1.5","1.0","1.3","1.5","5.2","4.5","Main"
+"Nate Adkins","TE","DEN","LV","1.5","1.2","1.8","0.9","1.2","1.5","5.1","4.3","Main"
+"Ian Thomas","TE","LV","@DEN","1.5","1.1","1.8","0.8","1.1","1.5","4.5","3.7","Main"
+"Ted Hurst","WR","TB","@DET","1.5","1.3","1.5","1.0","1.3","1.5","5.3","4.5","Main"
+"Stephen Carlson","TE","CHI","NO","1.4","1.1","1.6","0.9","1.1","1.4","4.8","4.0","Main"
+"Brock Wright","TE","DET","TB","1.4","1.1","1.7","0.8","1.1","1.4","4.6","3.7","Main"
+"Theo Wease","WR","LAC","NYJ","1.4","1.1","1.4","0.9","1.1","1.4","4.8","4.0","Main"
+"Myles Price","WR","MIN","SF","1.4","1.1","1.4","0.9","1.1","1.4","4.6","3.8","Sunday"
+"Ben Yurosek","TE","MIN","SF","1.4","1.1","1.7","0.8","1.1","1.4","4.7","3.9","Sunday"
+"Robert Henry","RB","WAS","CIN","1.4","1.3","1.4","1.3","1.3","1.4","4.8","4.6","Monday"
+"Nick Westbrook-Ikhine","WR","IND","@HOU","1.3","1.1","1.3","0.8","1.1","1.3","4.5","3.8","Thursday"
+"LeQuint Allen","RB","JAX","@NYG","1.3","1.0","1.3","0.8","1.0","1.3","4.4","3.5","Main"
+"Tanner Koziol","TE","JAX","@NYG","1.3","1.0","1.5","0.8","1.0","1.3","4.4","3.6","Main"
+"Connor Heyward","TE","LV","@DEN","1.3","1.1","1.5","0.8","1.1","1.3","4.2","3.5","Main"
+"Jalen Tolbert","WR","MIA","@BUF","1.3","1.0","1.3","0.8","1.0","1.3","4.4","3.7","Main"
+"Ben Sinnott","TE","WAS","CIN","1.3","1.0","1.5","0.8","1.0","1.3","4.3","3.6","Monday"
+"Tyrell Shavers","WR","BUF","MIA","1.2","1.0","1.2","0.8","1.0","1.2","4.5","3.8","Main"
+"Jackson Hawes","TE","BUF","MIA","1.2","1.0","1.5","0.8","1.0","1.2","4.5","3.7","Main"
+"Jake Briningstool","TE","KC","ARI","1.2","1.0","1.4","0.7","1.0","1.2","4.3","3.6","Main"
+"DeeJay Dallas","RB","MIN","SF","1.2","1.0","1.2","0.7","1.0","1.2","4.1","3.3","Sunday"
+"Tim Patrick","WR","NYJ","@LAC","1.2","0.9","1.2","0.7","0.9","1.2","4.2","3.5","Main"
+"Jacob Cowing","WR","SF","MIN","1.2","1.0","1.2","0.8","1.0","1.2","4.4","3.8","Sunday"
+"John Bates","TE","WAS","CIN","1.2","1.0","1.5","0.7","1.0","1.2","4.2","3.4","Monday"
+"Tyler Conklin","TE","DET","TB","1.1","0.9","1.3","0.7","0.9","1.1","4.1","3.4","Main"
+"Eli Stowers","TE","PHI","PIT","1.1","0.8","1.3","0.6","0.8","1.1","3.7","2.9","Main"
+"Zach Ertz","TE","PHI","PIT","1.1","0.9","1.3","0.6","0.9","1.1","3.9","3.1","Main"
+"Ben Skowronek","WR","PIT","@PHI","1.1","0.9","1.1","0.7","0.9","1.1","4.0","3.2","Main"
+"Jalen Reagor","WR","MIA","@BUF","1.0","0.8","1.0","0.6","0.8","1.0","3.8","3.1","Main"
+"DJ Herman","RB","MIA","@BUF","1.0","0.8","1.0","0.5","0.8","1.0","3.5","2.7","Main"
+"Harrison Wallace","WR","ARI","@KC","0.9","0.7","0.9","0.5","0.7","0.9","3.3","2.6","Main"
+"Mitch Tinsley","WR","CIN","@WAS","0.9","0.8","0.9","0.6","0.8","0.9","3.6","3.0","Monday"
+"Cody White","WR","LV","@DEN","0.9","0.7","0.9","0.5","0.7","0.9","3.3","2.6","Main"
+"Bryce Lance","WR","NO","@CHI","0.9","0.7","0.9","0.6","0.7","0.9","3.5","2.9","Main"
+"Luke Farrell","TE","SF","MIN","0.9","0.7","1.1","0.6","0.7","0.9","3.6","2.9","Sunday"
+"Jahdae Walker","WR","CHI","NO","0.8","0.7","0.8","0.6","0.7","0.8","3.0","2.6","Main"
+"Kaytron Allen","RB","MIA","@BUF","0.8","0.7","0.8","0.6","0.7","0.8","3.1","2.6","Main"
+"Devontez Walker","WR","BAL","@CAR","0.7","0.6","0.7","0.5","0.6","0.7","2.9","2.4","Main"
+"Brycen Tremayne","WR","CAR","BAL","0.7","0.5","0.7","0.4","0.5","0.7","2.7","2.2","Main"
+"Cam Grandy","TE","CIN","@WAS","0.7","0.6","0.9","0.5","0.6","0.7","2.9","2.4","Monday"
+"Andrew Armstrong","WR","KC","ARI","0.7","0.6","0.7","0.5","0.6","0.7","2.9","2.5","Main"
+"Max Bredeson","RB","MIN","SF","0.7","0.5","0.7","0.4","0.5","0.7","2.8","2.1","Sunday"
+"Barion Brown","WR","NO","@CHI","0.7","0.6","0.7","0.4","0.6","0.7","2.8","2.3","Main"
+"Sean Tucker","RB","TB","@DET","0.7","0.6","0.7","0.6","0.6","0.6","2.5","2.4","Main"
+"Payne Durham","TE","TB","@DET","0.7","0.5","0.8","0.4","0.5","0.7","2.7","2.1","Main"
+"Luke McCaffrey","WR","WAS","CIN","0.7","0.6","0.7","0.4","0.6","0.7","2.8","2.3","Monday"
+"Adam Prentice","RB","DEN","LV","0.6","0.5","0.6","0.3","0.5","0.6","2.4","1.9","Main"
+"Marlin Klein","TE","HOU","IND","0.6","0.5","0.7","0.4","0.5","0.6","2.3","1.8","Thursday"
+"Gavin Bartholomew","TE","MIN","SF","0.6","0.4","0.7","0.3","0.4","0.6","2.2","1.8","Sunday"
+"David Sills V","WR","TB","@DET","0.6","0.5","0.6","0.4","0.5","0.6","2.2","1.8","Main"
+"Evan Hull","RB","ARI","@KC","0.5","0.4","0.5","0.4","0.4","0.5","1.9","1.7","Main"
+"Trevor Etienne","RB","CAR","BAL","0.5","0.4","0.5","0.3","0.4","0.5","1.9","1.7","Main"
+"Cody Schrader","RB","DEN","LV","0.5","0.4","0.5","0.3","0.4","0.5","1.9","1.6","Main"
+"Pharaoh Brown","TE","IND","@HOU","0.5","0.4","0.6","0.3","0.4","0.5","1.9","1.5","Thursday"
+"Ameer Abdullah","RB","JAX","@NYG","0.5","0.5","0.5","0.4","0.5","0.5","2.1","1.9","Main"
+"Oscar Delp","TE","NO","@CHI","0.5","0.4","0.6","0.3","0.4","0.5","2.0","1.6","Main"
+"Jalin Hyatt","WR","NYG","JAX","0.5","0.4","0.5","0.3","0.4","0.5","2.0","1.6","Main"
+"Bauer Sharp","TE","TB","@DET","0.5","0.4","0.6","0.3","0.4","0.5","1.9","1.5","Main"
+"Teagan Quitoriano","TE","ARI","@KC","0.4","0.3","0.5","0.2","0.3","0.4","1.8","1.4","Main"
+"Camden Brown","WR","DAL","TEN","0.4","0.4","0.4","0.3","0.4","0.4","1.7","1.4","Main"
+"Nikko Remigio","WR","HOU","IND","0.4","0.3","0.4","0.3","0.3","0.4","1.5","1.2","Thursday"
+"Cade Stover","TE","HOU","IND","0.4","0.3","0.4","0.3","0.3","0.4","1.4","1.2","Thursday"
+"Jalen Royals","WR","KC","ARI","0.4","0.3","0.4","0.2","0.3","0.4","1.4","1.2","Main"
+"Seydou Traore","TE","MIA","@BUF","0.4","0.3","0.5","0.2","0.3","0.4","1.8","1.4","Main"
+"Jameis Winston","QB","NYG","JAX","0.4","0.4","0.4","0.4","0.4","0.4","2.7","2.7","Main"
+"Jeremy Ruckert","TE","NYJ","@LAC","0.4","0.3","0.5","0.2","0.3","0.4","1.7","1.3","Main"
+"LaJohntay Wester","WR","BAL","@CAR","0.3","0.2","0.3","0.2","0.2","0.3","1.2","1.0","Main"
+"Chris Moore","WR","BAL","@CAR","0.3","0.3","0.3","0.2","0.3","0.3","1.3","1.1","Main"
+"Nick Vannett","TE","BAL","@CAR","0.3","0.2","0.3","0.1","0.2","0.3","1.0","0.8","Main"
+"Skyler Bell","WR","BUF","MIA","0.3","0.2","0.3","0.2","0.2","0.3","1.1","0.9","Main"
+"Greg Dortch","WR","BUF","MIA","0.3","0.2","0.3","0.2","0.2","0.3","1.0","0.8","Main"
+"Keleki Latu","TE","BUF","MIA","0.3","0.2","0.3","0.2","0.2","0.3","1.0","0.8","Main"
+"Salvon Ahmed","RB","CHI","NO","0.3","0.3","0.3","0.3","0.3","0.3","1.4","1.4","Main"
+"James Mitchell","TE","DAL","TEN","0.3","0.3","0.4","0.2","0.3","0.3","1.3","1.0","Main"
+"Quez Watkins","WR","IND","@HOU","0.3","0.2","0.3","0.2","0.2","0.3","1.2","0.9","Thursday"
+"Quintin Morris","TE","JAX","@NYG","0.3","0.2","0.3","0.2","0.2","0.3","1.0","0.8","Main"
+"Justin Fields","QB","KC","ARI","0.3","0.2","0.3","0.2","0.2","0.2","2.0","2.0","Main"
+"Dylan Laube","RB","LV","@DEN","0.3","0.2","0.3","0.2","0.2","0.3","1.2","1.0","Main"
+"Dareke Young","WR","LV","@DEN","0.3","0.2","0.3","0.2","0.2","0.3","1.0","0.8","Main"
+"Gregory Desrosiers","RB","NYG","JAX","0.3","0.3","0.3","0.3","0.3","0.3","1.3","1.2","Main"
+"Malik McClain","WR","NYJ","@LAC","0.3","0.2","0.3","0.2","0.2","0.3","1.1","0.9","Main"
+"Riley Nowakowski","RB","PIT","@PHI","0.3","0.2","0.3","0.2","0.2","0.3","1.1","0.9","Main"
+"Brayden Willis","TE","SF","MIN","0.3","0.2","0.3","0.2","0.2","0.3","1.0","0.9","Sunday"
+"David Martin-Robinson","TE","TEN","@DAL","0.3","0.2","0.3","0.2","0.2","0.3","1.1","0.9","Main"
+"Tahj Brooks","RB","CIN","@WAS","0.2","0.2","0.2","0.2","0.2","0.2","0.9","0.9","Monday"
+"Carter Runyon","TE","LV","@DEN","0.2","0.2","0.3","0.1","0.2","0.2","0.9","0.7","Main"
+"Scott Matlock","RB","LAC","NYJ","0.2","0.2","0.2","0.1","0.2","0.2","1.0","0.8","Main"
+"Keandre Lambert-Smith","WR","LAC","NYJ","0.2","0.2","0.2","0.2","0.2","0.2","1.0","0.8","Main"
+"Patrick Ricard","RB","NYG","JAX","0.2","0.2","0.2","0.1","0.2","0.2","0.9","0.7","Main"
+"Chris Manhertz","TE","NYG","JAX","0.2","0.2","0.3","0.1","0.2","0.2","1.0","0.8","Main"
+"Andrew Beck","TE","NYJ","@LAC","0.2","0.2","0.2","0.2","0.2","0.2","0.9","0.9","Main"
+"Elijah Moore","WR","PHI","PIT","0.2","0.2","0.2","0.1","0.2","0.2","0.9","0.7","Main"
+"Robert Tonyan","TE","PIT","@PHI","0.2","0.2","0.3","0.1","0.2","0.2","1.0","0.8","Main"
+"Julius Chestnut","RB","TEN","@DAL","0.2","0.2","0.2","0.2","0.2","0.2","0.9","0.8","Main"
+"Adam Randall","RB","BAL","@CAR","0.1","0.1","0.1","0.1","0.1","0.1","0.3","0.3","Main"
+"Rasheen Ali","RB","BAL","@CAR","0.1","0.1","0.1","0.1","0.1","0.1","0.2","0.2","Main"
+"Feleipe Franks","TE","CAR","BAL","0.1","0.1","0.1","0.1","0.1","0.1","0.5","0.4","Main"
+"Jacob Saylors","RB","DET","TB","0.1","0.1","0.1","0.1","0.1","0.1","0.5","0.5","Main"
+"Tay Martin","WR","DET","TB","0.1","0.1","0.1","0.1","0.1","0.1","0.6","0.5","Main"
+"DeAndre Carter","WR","DET","TB","0.1","0.1","0.1","0.1","0.1","0.1","0.6","0.5","Main"
+"DJ Giddens","RB","IND","@HOU","0.1","0.1","0.1","0.1","0.1","0.1","0.4","0.4","Thursday"
+"Khyiris Tonga","RB","KC","ARI","0.1","0.1","0.1","0.1","0.1","0.1","0.4","0.4","Main"
+"Charlie Jones","WR","NYG","JAX","0.1","0.1","0.1","0.1","0.1","0.1","0.5","0.4","Main"
+"Isaiah Davis","RB","NYJ","@LAC","0.1","0.1","0.1","0.1","0.1","0.1","0.5","0.5","Main"
+"Johnny Mundt","TE","PHI","PIT","0.1","0.1","0.1","0.0","0.1","0.1","0.3","0.2","Main"
+"Grant Calcaterra","TE","PHI","PIT","0.1","0.1","0.1","0.0","0.1","0.1","0.4","0.3","Main"
+"Lew Nichols","RB","PIT","@PHI","0.1","0.1","0.1","0.1","0.1","0.1","0.5","0.5","Main"
+"Jordan James","RB","SF","MIN","0.1","0.1","0.1","0.1","0.1","0.1","0.3","0.3","Sunday"
+"Kameron Johnson","WR","TB","@DET","0.1","0.1","0.1","0.1","0.1","0.1","0.5","0.4","Main"
+"Ko Kieft","TE","TB","@DET","0.1","0.1","0.1","0.1","0.1","0.1","0.3","0.3","Main"`};
 function loadStoredProj(){
-  try{ const raw=localStorage.getItem(PROJ_KEY); if(!raw) return;
-    const o=JSON.parse(raw); PROJ=csvParse(o.csv); PROJIDX=indexProj(PROJ);
-    PROJMETA={name:o.name,ts:o.ts};
-  }catch(e){ PROJ=null; }
+  PROJ=csvParse(BAKED_PROJ.csv); PROJIDX=indexProj(PROJ);
+  PROJMETA={name:BAKED_PROJ.name,ts:null,baked:true};
 }
 function setProj(name,csv){
   PROJ=csvParse(csv); PROJIDX=indexProj(PROJ); PROJMETA={name,ts:Date.now()};
@@ -629,7 +1013,6 @@ function renderTeams(){
 
 function renderSS(){
   const meta=$('#ssMeta'), host=$('#ssList');
-  $('#ssClear').classList.toggle('hidden',!PROJ);
   const allSites=[...new Set(TEAMS.map(t=>t.site))];
   const none=ui.ssSites.size===0;
   $('#ssSiteFilter').innerHTML=
@@ -643,9 +1026,7 @@ function renderSS(){
     host.innerHTML='<p class="empty">Load the weekly projections CSV (Player / Pos / Team plus the scoring columns) and every team below gets scored in its own format, ordered by buy-in, with recommended lineup swaps flagged.</p>';
     return;
   }
-  const ageDays=(Date.now()-PROJMETA.ts)/864e5;
-  meta.innerHTML=`${esc(PROJMETA.name)} · loaded ${new Date(PROJMETA.ts).toLocaleDateString('en-US',{month:'short',day:'numeric'})} · ${PROJ.length} players`+
-    (ageDays>5?` · <span class="stale">⚠ loaded over ${Math.floor(ageDays)} days ago — likely last week's numbers, load this week's file</span>`:'');
+  meta.innerHTML=`Week ${BAKED_PROJ.week} projections (${esc(BAKED_PROJ.name)}) · ${PROJ.length} players · baked into this build`;
   if(FFPC_SYNC){
     if(FFPC_SYNC.ok&&FFPC_SYNC.applied.length){
       const t=new Date(FFPC_SYNC.at).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
@@ -702,13 +1083,6 @@ function renderSS(){
 
 function renderAll(){ renderScores(); renderFilters(); renderExposures(); renderTeams(); renderSS(); }
 
-$('#ssFile').addEventListener('change',e=>{
-  const f=e.target.files&&e.target.files[0]; if(!f) return;
-  const rd=new FileReader();
-  rd.onload=()=>{ setProj(f.name,rd.result); renderSS(); };
-  rd.readAsText(f);
-  e.target.value='';
-});
 $('#ssSiteFilter').addEventListener('click',e=>{
   const btn=e.target.closest('[data-sssite]'); if(!btn) return;
   const s=btn.dataset.sssite;
@@ -719,7 +1093,6 @@ $('#ssSiteFilter').addEventListener('click',e=>{
   }
   renderSS();
 });
-$('#ssClear').addEventListener('click',()=>{ if(confirm('Clear loaded projections?')){ clearProj(); renderSS(); } });
 
 /* ============================ events ============================ */
 document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
@@ -767,19 +1140,19 @@ $('#expList').addEventListener('click',e=>{
 const SCORES={
  weeks:[1,2,3,4,5,6,7,8,9,10,11],
  data:{
-  "Bene Tleilax":{"1":{actual:105.7,proj:140.5},"2":{actual:140.2,proj:142.3},"3":{actual:168.5,proj:146.3},"4":{actual:115.05,proj:146.9},"5":{actual:192.75,proj:147.2},"6":{actual:122.2,proj:145.7},"7":{actual:157.15,proj:145.2},"8":{actual:146.05,proj:141.0},"9":{actual:156.0,proj:150.4},"10":{actual:183.45,proj:132.2}},
-  "Lisan al-Gaib":{"1":{actual:116.45,proj:134.6},"2":{actual:114.5,proj:130.5},"3":{actual:110.8,proj:129.8},"4":{actual:166.15,proj:132.7},"5":{actual:113.85,proj:129.4},"6":{actual:141.2,proj:130.5},"7":{actual:152.6,proj:123.6},"8":{actual:117.2,proj:122.2},"9":{actual:145.8,proj:111.3},"10":{actual:138.8,proj:129.4}},
-  "Bene Gesserit":{"1":{actual:138.35,proj:134.5},"2":{actual:117.05,proj:122.3},"3":{actual:149.7,proj:131.1},"4":{actual:111.45,proj:138.8},"5":{actual:150.35,proj:141.0},"6":{actual:128.9,proj:135.5},"7":{actual:146.9,proj:130.6},"8":{actual:114.85,proj:122.8},"9":{actual:167.8,proj:137.8},"10":{actual:107.8,proj:129.2}},
-  "Drake Maye Fan Club":{"1":{actual:147.2,proj:127.8},"2":{actual:130.2,proj:140.7},"3":{actual:139.5,proj:136},"4":{actual:143.65,proj:141.2},"5":{actual:140.3,proj:141.8},"6":{actual:108.55,proj:146.7},"7":{actual:126.0,proj:126.1},"8":{actual:154.75,proj:135.3},"9":{actual:169.1,proj:141.0},"10":{actual:148.3,proj:114.6}},
-  "Cousin Greg IX":{"1":{actual:134.9,proj:137.2},"2":{actual:123.7,proj:134.6},"3":{actual:120.7,proj:142.4},"4":{actual:130.85,proj:143.6},"5":{actual:219.9,proj:141.3},"6":{actual:146.85,proj:144.9},"7":{actual:151.55,proj:132.1},"8":{actual:130.75,proj:126.6},"9":{actual:128.9,proj:137.0},"10":{actual:157.3,proj:138.9}},
-  "Kwisatz Haderach":{"1":{actual:146.55,proj:142.5},"2":{actual:115.4,proj:139.0},"3":{actual:141.2,proj:139.7},"4":{actual:148.8,proj:148.1},"5":{actual:173.05,proj:149.2},"6":{actual:118.4,proj:140.7},"7":{actual:116.45,proj:131.7},"8":{actual:104.15,proj:133.6},"9":{actual:82.95,proj:127.4},"10":{actual:102.15,proj:130.9}},
-  "Spacing Guild":{"1":{actual:145.05,proj:139.2},"2":{actual:101.6,proj:135.7},"3":{actual:141.0,proj:135.9},"4":{actual:144.85,proj:123},"5":{actual:134.15,proj:129.0},"6":{actual:133.45,proj:139.3},"7":{actual:129.2,proj:133.1},"8":{actual:151.8,proj:140.3},"9":{actual:156.25,proj:145.8},"10":{actual:118.2,proj:136.4}},
-  "Gom Jabbar":{"1":{actual:99.45,proj:147.5},"2":{actual:119.5,proj:143.6},"3":{actual:134.95,proj:148.4},"4":{actual:117.55,proj:139.2},"5":{actual:155.85,proj:132.8},"6":{actual:99.0,proj:127.8},"7":{actual:127.4,proj:126.7},"8":{actual:109.7,proj:107.7},"9":{actual:107.3,proj:135.6},"10":{actual:174.4,proj:127.3}},
-  "Desert Power":{"1":{actual:84.4,proj:125.2},"2":{actual:136.1,proj:130.5},"3":{actual:134.4,proj:134.9},"4":{actual:127.55,proj:139.1},"5":{actual:118.0,proj:140.5},"6":{actual:93.7,proj:130.6},"7":{actual:106.05,proj:124.1},"8":{actual:112.45,proj:116.8},"9":{actual:74.7,proj:88.0},"10":{actual:126.9,proj:96.1}},
-  "Shai-Hulud":{"1":{actual:216.55,proj:146.9},"2":{actual:144.9,proj:136.5},"3":{actual:166.65,proj:144.5},"4":{actual:159.45,proj:136.5},"5":{actual:160.65,proj:125.7},"6":{actual:150.0,proj:148.8},"7":{actual:144.4,proj:151.9},"8":{actual:117.0,proj:152.1},"9":{actual:233.2,proj:149.4},"10":{actual:113.3,proj:127.7}},
-  "ESPN Dynasty":{"1":{actual:142.0,proj:128.1},"2":{actual:175.7,proj:130.9},"3":{actual:120.3,proj:130},"4":{actual:73.2,proj:134},"5":{actual:152.3,proj:133.8},"6":{actual:113.0,proj:131.6},"7":{actual:134.6,proj:125.4},"8":{actual:149.8,proj:136.5},"9":{actual:127.0,proj:139.2},"10":{actual:194.7,proj:124.4}},
-  "2 QB Justin League":{"1":{actual:180.36,proj:142.7},"2":{actual:67.78,proj:135.1},"3":{actual:109.56,proj:123.7},"4":{actual:130.18,proj:131.7},"5":{actual:153.24,proj:133.0},"6":{actual:100.28,proj:139.6},"7":{actual:122.12,proj:129.6},"8":{actual:111.08,proj:135.1},"9":{actual:129.22,proj:128.1},"10":{actual:107.3,proj:125.3}},
-  "Marquee League":{"1":{actual:135.26,proj:122.7},"2":{actual:143.62,proj:131.0},"3":{actual:128.86,proj:133.4},"4":{actual:108.82,proj:141.6},"5":{actual:144.5,proj:131.4},"6":{actual:95.3,proj:114.5},"7":{actual:113.58,proj:120.7},"8":{actual:136.96,proj:128.0},"9":{actual:130.56,proj:135.4},"10":{actual:131.54,proj:125.0}}
+  "Bene Tleilax":{"1":{actual:105.7,proj:140.5},"2":{actual:140.2,proj:142.3},"3":{actual:168.5,proj:146.3},"4":{actual:115.05,proj:146.9},"5":{actual:192.75,proj:147.2},"6":{actual:122.2,proj:145.7},"7":{actual:157.15,proj:145.2},"8":{actual:146.05,proj:141.0},"9":{actual:156.0,proj:150.4},"10":{actual:183.45,proj:132.2},"11":{proj:144.5}},
+  "Lisan al-Gaib":{"1":{actual:116.45,proj:134.6},"2":{actual:114.5,proj:130.5},"3":{actual:110.8,proj:129.8},"4":{actual:166.15,proj:132.7},"5":{actual:113.85,proj:129.4},"6":{actual:141.2,proj:130.5},"7":{actual:152.6,proj:123.6},"8":{actual:117.2,proj:122.2},"9":{actual:145.8,proj:111.3},"10":{actual:138.8,proj:129.4},"11":{proj:89.2}},
+  "Bene Gesserit":{"1":{actual:138.35,proj:134.5},"2":{actual:117.05,proj:122.3},"3":{actual:149.7,proj:131.1},"4":{actual:111.45,proj:138.8},"5":{actual:150.35,proj:141.0},"6":{actual:128.9,proj:135.5},"7":{actual:146.9,proj:130.6},"8":{actual:114.85,proj:122.8},"9":{actual:167.8,proj:137.8},"10":{actual:107.8,proj:129.2},"11":{proj:107.8}},
+  "Drake Maye Fan Club":{"1":{actual:147.2,proj:127.8},"2":{actual:130.2,proj:140.7},"3":{actual:139.5,proj:136},"4":{actual:143.65,proj:141.2},"5":{actual:140.3,proj:141.8},"6":{actual:108.55,proj:146.7},"7":{actual:126.0,proj:126.1},"8":{actual:154.75,proj:135.3},"9":{actual:169.1,proj:141.0},"10":{actual:148.3,proj:114.6},"11":{proj:132.9}},
+  "Cousin Greg IX":{"1":{actual:134.9,proj:137.2},"2":{actual:123.7,proj:134.6},"3":{actual:120.7,proj:142.4},"4":{actual:130.85,proj:143.6},"5":{actual:219.9,proj:141.3},"6":{actual:146.85,proj:144.9},"7":{actual:151.55,proj:132.1},"8":{actual:130.75,proj:126.6},"9":{actual:128.9,proj:137.0},"10":{actual:157.3,proj:138.9},"11":{proj:138.5}},
+  "Kwisatz Haderach":{"1":{actual:146.55,proj:142.5},"2":{actual:115.4,proj:139.0},"3":{actual:141.2,proj:139.7},"4":{actual:148.8,proj:148.1},"5":{actual:173.05,proj:149.2},"6":{actual:118.4,proj:140.7},"7":{actual:116.45,proj:131.7},"8":{actual:104.15,proj:133.6},"9":{actual:82.95,proj:127.4},"10":{actual:102.15,proj:130.9},"11":{proj:112.0}},
+  "Spacing Guild":{"1":{actual:145.05,proj:139.2},"2":{actual:101.6,proj:135.7},"3":{actual:141.0,proj:135.9},"4":{actual:144.85,proj:123},"5":{actual:134.15,proj:129.0},"6":{actual:133.45,proj:139.3},"7":{actual:129.2,proj:133.1},"8":{actual:151.8,proj:140.3},"9":{actual:156.25,proj:145.8},"10":{actual:118.2,proj:136.4},"11":{proj:122.1}},
+  "Gom Jabbar":{"1":{actual:99.45,proj:147.5},"2":{actual:119.5,proj:143.6},"3":{actual:134.95,proj:148.4},"4":{actual:117.55,proj:139.2},"5":{actual:155.85,proj:132.8},"6":{actual:99.0,proj:127.8},"7":{actual:127.4,proj:126.7},"8":{actual:109.7,proj:107.7},"9":{actual:107.3,proj:135.6},"10":{actual:174.4,proj:127.3},"11":{proj:99.1}},
+  "Desert Power":{"1":{actual:84.4,proj:125.2},"2":{actual:136.1,proj:130.5},"3":{actual:134.4,proj:134.9},"4":{actual:127.55,proj:139.1},"5":{actual:118.0,proj:140.5},"6":{actual:93.7,proj:130.6},"7":{actual:106.05,proj:124.1},"8":{actual:112.45,proj:116.8},"9":{actual:74.7,proj:88.0},"10":{actual:126.9,proj:96.1},"11":{proj:93.3}},
+  "Shai-Hulud":{"1":{actual:216.55,proj:146.9},"2":{actual:144.9,proj:136.5},"3":{actual:166.65,proj:144.5},"4":{actual:159.45,proj:136.5},"5":{actual:160.65,proj:125.7},"6":{actual:150.0,proj:148.8},"7":{actual:144.4,proj:151.9},"8":{actual:117.0,proj:152.1},"9":{actual:233.2,proj:149.4},"10":{actual:113.3,proj:127.7},"11":{proj:127.0}},
+  "ESPN Dynasty":{"1":{actual:142.0,proj:128.1},"2":{actual:175.7,proj:130.9},"3":{actual:120.3,proj:130},"4":{actual:73.2,proj:134},"5":{actual:152.3,proj:133.8},"6":{actual:113.0,proj:131.6},"7":{actual:134.6,proj:125.4},"8":{actual:149.8,proj:136.5},"9":{actual:127.0,proj:139.2},"10":{actual:194.7,proj:124.4},"11":{proj:147.7}},
+  "2 QB Justin League":{"1":{actual:180.36,proj:142.7},"2":{actual:67.78,proj:135.1},"3":{actual:109.56,proj:123.7},"4":{actual:130.18,proj:131.7},"5":{actual:153.24,proj:133.0},"6":{actual:100.28,proj:139.6},"7":{actual:122.12,proj:129.6},"8":{actual:111.08,proj:135.1},"9":{actual:129.22,proj:128.1},"10":{actual:107.3,proj:125.3},"11":{proj:122.1}},
+  "Marquee League":{"1":{actual:135.26,proj:122.7},"2":{actual:143.62,proj:131.0},"3":{actual:128.86,proj:133.4},"4":{actual:108.82,proj:141.6},"5":{actual:144.5,proj:131.4},"6":{actual:95.3,proj:114.5},"7":{actual:113.58,proj:120.7},"8":{actual:136.96,proj:128.0},"9":{actual:130.56,proj:135.4},"10":{actual:131.54,proj:125.0},"11":{proj:135.0}}
  }
 };
 
